@@ -104,5 +104,4 @@ public class InputManager : MonoBehaviour
     {
         return playerControls.Game.ChangeItem.ReadValue<float>();
     }
-
 }
