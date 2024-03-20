@@ -1,33 +1,37 @@
 using System.Collections;
 using UnityEngine;
 
-public class Test_PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    private static Test_PlayerController instance;
-    public static Test_PlayerController Instance
+    // Singleton
+    private static PlayerController instance;
+    public static PlayerController Instance
     {
         get { return instance; }
     }
 
     private InputManager inputManager;
     private Vector2 movementInput;
+    private Rigidbody _rb;
+    private Vector3 _velocity;
 
-    [Header("Test Inputs")]
-    public bool isWalking;
-    public bool isAiming;
-    public bool isCrouching;
-    public bool isStealthing;
-    public bool isJumping;
-    public bool isClimbing;
-    public bool isAttacking;
-    public float isChangingItem;
-    public bool isDropingItem;
-    public bool isInteracting;
-    public bool map;
-    public bool pause;
+    [Header("Bools")]
+    [SerializeField] private bool isGrounded;
+    [HideInInspector] private bool isWalking;
+    [HideInInspector] private bool isAiming;
+    [HideInInspector] private bool isCrouching;
+    [HideInInspector] private bool isStealthing;
+    [HideInInspector] private bool isJumping;
+    [HideInInspector] private bool isClimbing;
+    [HideInInspector] private bool isAttacking;
+    [HideInInspector] private bool isDroppingItem;
+    [HideInInspector] private float isChangingItem;
+    [HideInInspector] private bool isInteracting;
 
-    [Space]
-    public GameObject testPauseMenu;
+    // Public Variables
+    [Header("Stadistics")]
+    public float jumpForce;
+    public float speed;
 
     private void Awake()
     {
@@ -38,6 +42,7 @@ public class Test_PlayerController : MonoBehaviour
     private void Start()
     {
         inputManager = InputManager.Instance;
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void OnEnable()
@@ -51,8 +56,6 @@ public class Test_PlayerController : MonoBehaviour
         InputManager.PlayerChangeItem += ChangeItem;
         InputManager.PlayerDrop += DropItem;
         InputManager.PlayerInteract += Interact;
-        InputManager.PlayerMap += OpenCloseMap;
-        InputManager.PlayerPause += PauseGame;
     }
 
     private void OnDisable()
@@ -66,13 +69,14 @@ public class Test_PlayerController : MonoBehaviour
         InputManager.PlayerChangeItem -= ChangeItem;
         InputManager.PlayerDrop -= DropItem;
         InputManager.PlayerInteract -= Interact;
-        InputManager.PlayerMap -= OpenCloseMap;
-        InputManager.PlayerPause -= PauseGame;
     }
 
     private void Update()
     {
         DetectMovement();
+        DetectJump();
+
+        Move();
     }
 
     private void DetectMovement()
@@ -94,9 +98,38 @@ public class Test_PlayerController : MonoBehaviour
         isWalking = false;
     }
 
+    private void Move()
+    {
+        if (isGrounded && _velocity.y < 0)
+        {
+            _velocity.y = 0f;
+        }
+
+        if (movementInput.x != 0.0f || movementInput.y != 0.0f)
+        {
+            Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
+            _rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
+        }
+    }
+
+    private void DetectJump()
+    {
+        isGrounded = IsGrounded();
+        if (isGrounded) isJumping = false;
+    }
+
     public void Jump()
     {
-        isJumping = !isJumping;
+        if (isGrounded && !isCrouching)
+        {
+            isJumping = true;
+            _rb.velocity = Vector3.up * jumpForce;
+        }
+    }
+
+    private bool IsGrounded()
+    {
+        return _rb.velocity.y == 0;
     }
 
     public void Aim()
@@ -133,23 +166,11 @@ public class Test_PlayerController : MonoBehaviour
 
     public void DropItem()
     {
-        isDropingItem = !isDropingItem;
+        isDroppingItem = !isDroppingItem;
     }
 
     public void Interact()
     {
         isInteracting = !isInteracting;
-    }
-
-    public void OpenCloseMap()
-    {
-        map = !map;
-    }
-
-    public void PauseGame()
-    {
-        pause = !pause;
-        if(pause) { testPauseMenu.SetActive(true); }
-        else testPauseMenu.SetActive(false);
     }
 }
