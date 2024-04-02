@@ -134,6 +134,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""241dbdb8-358c-4c79-9adc-484c5350334b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -312,52 +321,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""ChangeItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""MouseLook"",
-            ""id"": ""a2aced68-20e2-4af9-ba0b-1c85dc78fdad"",
-            ""actions"": [
-                {
-                    ""name"": ""MouseX"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""1f44724a-526a-40c8-b1bb-c63085c45ab0"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MouseY"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""cf0569c9-30e4-465b-8dd8-a9f9affdc416"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""96b40abd-ba1f-4aac-a899-45bbc247de2b"",
-                    ""path"": ""<Mouse>/delta/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MouseX"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e4c8e4e3-bb61-48f9-adf4-bbe71c6f8c7d"",
-                    ""path"": ""<Mouse>/delta/y"",
+                    ""id"": ""83567b7f-f8b8-44d9-8dcd-63c9ac4a2614"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MouseY"",
+                    ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -380,10 +352,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Game_Aim = m_Game.FindAction("Aim", throwIfNotFound: true);
         m_Game_DropItem = m_Game.FindAction("DropItem", throwIfNotFound: true);
         m_Game_ChangeItem = m_Game.FindAction("ChangeItem", throwIfNotFound: true);
-        // MouseLook
-        m_MouseLook = asset.FindActionMap("MouseLook", throwIfNotFound: true);
-        m_MouseLook_MouseX = m_MouseLook.FindAction("MouseX", throwIfNotFound: true);
-        m_MouseLook_MouseY = m_MouseLook.FindAction("MouseY", throwIfNotFound: true);
+        m_Game_Look = m_Game.FindAction("Look", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -457,6 +426,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_Aim;
     private readonly InputAction m_Game_DropItem;
     private readonly InputAction m_Game_ChangeItem;
+    private readonly InputAction m_Game_Look;
     public struct GameActions
     {
         private @PlayerControls m_Wrapper;
@@ -473,6 +443,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Aim => m_Wrapper.m_Game_Aim;
         public InputAction @DropItem => m_Wrapper.m_Game_DropItem;
         public InputAction @ChangeItem => m_Wrapper.m_Game_ChangeItem;
+        public InputAction @Look => m_Wrapper.m_Game_Look;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -518,6 +489,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @ChangeItem.started += instance.OnChangeItem;
             @ChangeItem.performed += instance.OnChangeItem;
             @ChangeItem.canceled += instance.OnChangeItem;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
         }
 
         private void UnregisterCallbacks(IGameActions instance)
@@ -558,6 +532,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @ChangeItem.started -= instance.OnChangeItem;
             @ChangeItem.performed -= instance.OnChangeItem;
             @ChangeItem.canceled -= instance.OnChangeItem;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
         }
 
         public void RemoveCallbacks(IGameActions instance)
@@ -575,60 +552,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public GameActions @Game => new GameActions(this);
-
-    // MouseLook
-    private readonly InputActionMap m_MouseLook;
-    private List<IMouseLookActions> m_MouseLookActionsCallbackInterfaces = new List<IMouseLookActions>();
-    private readonly InputAction m_MouseLook_MouseX;
-    private readonly InputAction m_MouseLook_MouseY;
-    public struct MouseLookActions
-    {
-        private @PlayerControls m_Wrapper;
-        public MouseLookActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MouseX => m_Wrapper.m_MouseLook_MouseX;
-        public InputAction @MouseY => m_Wrapper.m_MouseLook_MouseY;
-        public InputActionMap Get() { return m_Wrapper.m_MouseLook; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MouseLookActions set) { return set.Get(); }
-        public void AddCallbacks(IMouseLookActions instance)
-        {
-            if (instance == null || m_Wrapper.m_MouseLookActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_MouseLookActionsCallbackInterfaces.Add(instance);
-            @MouseX.started += instance.OnMouseX;
-            @MouseX.performed += instance.OnMouseX;
-            @MouseX.canceled += instance.OnMouseX;
-            @MouseY.started += instance.OnMouseY;
-            @MouseY.performed += instance.OnMouseY;
-            @MouseY.canceled += instance.OnMouseY;
-        }
-
-        private void UnregisterCallbacks(IMouseLookActions instance)
-        {
-            @MouseX.started -= instance.OnMouseX;
-            @MouseX.performed -= instance.OnMouseX;
-            @MouseX.canceled -= instance.OnMouseX;
-            @MouseY.started -= instance.OnMouseY;
-            @MouseY.performed -= instance.OnMouseY;
-            @MouseY.canceled -= instance.OnMouseY;
-        }
-
-        public void RemoveCallbacks(IMouseLookActions instance)
-        {
-            if (m_Wrapper.m_MouseLookActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IMouseLookActions instance)
-        {
-            foreach (var item in m_Wrapper.m_MouseLookActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_MouseLookActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public MouseLookActions @MouseLook => new MouseLookActions(this);
     public interface IGameActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -643,10 +566,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnDropItem(InputAction.CallbackContext context);
         void OnChangeItem(InputAction.CallbackContext context);
-    }
-    public interface IMouseLookActions
-    {
-        void OnMouseX(InputAction.CallbackContext context);
-        void OnMouseY(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
     }
 }

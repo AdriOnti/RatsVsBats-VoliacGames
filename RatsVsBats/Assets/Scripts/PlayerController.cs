@@ -15,28 +15,30 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Vector3 _velocity;
 
-    [Header("Bools")]
+    [Header("Bools & Test Bools")]
     [SerializeField] private bool isGrounded;
-    [HideInInspector] private bool isWalking;
+    [SerializeField] private bool isWalking;
     [HideInInspector] private bool isAiming;
     [HideInInspector] private bool isCrouching;
     [HideInInspector] private bool isStealthing;
-    [HideInInspector] private bool isJumping;
+    [SerializeField] private bool isJumping;
     [HideInInspector] private bool isClimbing;
     [HideInInspector] private bool isAttacking;
     [HideInInspector] private bool isDroppingItem;
-    [HideInInspector] private float isChangingItem;
+    [SerializeField] private float isChangingItem;
     [HideInInspector] private bool isInteracting;
 
     // Public Variables
     [Header("Stadistics")]
     public float jumpForce;
     public float speed;
+    public Vector3 _playerCamera;
 
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
         else instance = this;
+        _playerCamera = Camera.main.transform.forward;
     }
 
     private void Start()

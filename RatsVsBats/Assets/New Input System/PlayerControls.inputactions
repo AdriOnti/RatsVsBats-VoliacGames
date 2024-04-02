@@ -112,6 +112,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "241dbdb8-358c-4c79-9adc-484c5350334b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -290,52 +299,15 @@
                     "action": "ChangeItem",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "MouseLook",
-            "id": "a2aced68-20e2-4af9-ba0b-1c85dc78fdad",
-            "actions": [
-                {
-                    "name": "MouseX",
-                    "type": "PassThrough",
-                    "id": "1f44724a-526a-40c8-b1bb-c63085c45ab0",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "MouseY",
-                    "type": "PassThrough",
-                    "id": "cf0569c9-30e4-465b-8dd8-a9f9affdc416",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "96b40abd-ba1f-4aac-a899-45bbc247de2b",
-                    "path": "<Mouse>/delta/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MouseX",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "e4c8e4e3-bb61-48f9-adf4-bbe71c6f8c7d",
-                    "path": "<Mouse>/delta/y",
+                    "id": "83567b7f-f8b8-44d9-8dcd-63c9ac4a2614",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MouseY",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
