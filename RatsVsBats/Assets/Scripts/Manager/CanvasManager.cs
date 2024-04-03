@@ -17,6 +17,9 @@ public class CanvasManager : MonoBehaviour
     GameObject pauseMenu;
     GameObject map;
 
+    [SerializeField, /*HideInInspector*/] GameObject inventoryBtn;
+    [SerializeField, /*HideInInspector*/] GameObject inventory;
+
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -46,6 +49,8 @@ public class CanvasManager : MonoBehaviour
     {
         pauseMenu = GameManager.Instance.GetPauseMenu();
         map = GameManager.Instance.GetMap();
+        inventory = GameManager.Instance.GetInventory();
+        inventoryBtn = GameManager.Instance.GetInventoryBtn();
     }
 
     private void SetActiveCanvas()
@@ -56,6 +61,8 @@ public class CanvasManager : MonoBehaviour
         // SET ACTIVE: FALSE
         pauseMenu.SetActive(false);
         map.SetActive(false);
+        inventoryBtn.SetActive(true);
+        inventory.SetActive(false);
     }
 
     public void OpenCloseMap()
@@ -70,5 +77,18 @@ public class CanvasManager : MonoBehaviour
         pauseInput = !pauseInput;
         if (pauseInput && !mapInput) { pauseMenu.SetActive(true); Time.timeScale = 0f; }
         else { pauseMenu.SetActive(false); Time.timeScale = 1f; }
+    }
+
+    public void OpenInventory()
+    {
+        inventoryBtn.SetActive(false);
+        inventory.SetActive(true);
+        InventoryManager.Instance.ListItems();
+    }
+
+    public void CloseInventory()
+    {
+        inventoryBtn.SetActive(true);
+        inventory.SetActive(false);
     }
 }

@@ -14,14 +14,12 @@ public class GameManager : MonoBehaviour
         else instance = this;
     }
 
-    public GameObject GetPauseMenu()
-    {
-        return FindInActiveObjectByName("PauseMenu");
-    }
-    public GameObject GetMap()
-    {
-        return FindInActiveObjectByName("Map");
-    }
+    public GameObject GetPauseMenu() { return FindInActiveObjectByName("PauseMenu"); }
+    public GameObject GetMap() { return FindInActiveObjectByName("Map"); }
+
+    public GameObject GetInventory() { return FindInActiveObjectByName("Inventory"); }
+
+    public GameObject GetInventoryBtn() { return FindInActiveObjectByName("InventoryBtn"); }
 
     public GameObject GetCanvasFather() { return FindInActiveObjectByName("CanvasFather"); }
 
