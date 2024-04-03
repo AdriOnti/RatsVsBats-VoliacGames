@@ -19,6 +19,7 @@ public class CanvasManager : MonoBehaviour
 
     [SerializeField, /*HideInInspector*/] GameObject inventoryBtn;
     [SerializeField, /*HideInInspector*/] GameObject inventory;
+    [/*SerializeField,*/ HideInInspector] bool inventoryOpened;
 
     private void Awake()
     {
@@ -37,12 +38,14 @@ public class CanvasManager : MonoBehaviour
     {
         InputManager.PlayerMap += OpenCloseMap;
         InputManager.PlayerPause += PauseGame;
+        InputManager.PlayerInventory += OpenInventory;
     }
 
     private void OnDisable()
     {
         InputManager.PlayerMap -= OpenCloseMap;
         InputManager.PlayerPause -= PauseGame;
+        InputManager.PlayerInventory -= OpenInventory;
     }
 
     private void CallToGameManager()
@@ -81,14 +84,21 @@ public class CanvasManager : MonoBehaviour
 
     public void OpenInventory()
     {
-        inventoryBtn.SetActive(false);
-        inventory.SetActive(true);
-        InventoryManager.Instance.ListItems();
+        if (inventoryOpened == true) { CloseInventory(); return; }
+        if (inventoryOpened == false)
+        {
+            inventoryOpened = true;
+            inventoryBtn.SetActive(false);
+            inventory.SetActive(true);
+            InventoryManager.Instance.ListItems();
+        }
+
     }
 
     public void CloseInventory()
     {
         inventoryBtn.SetActive(true);
-        inventory.SetActive(false);
+        inventory.SetActive(false); 
+        inventoryOpened = false;
     }
 }

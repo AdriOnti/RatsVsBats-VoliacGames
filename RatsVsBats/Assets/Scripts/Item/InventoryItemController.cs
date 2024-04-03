@@ -27,6 +27,7 @@ public class InventoryItemController : MonoBehaviour
                 break;
         }
         RemoveItem();
+        Debug.Log($"Se ha usado {item.itemName}");
     }
 
 }

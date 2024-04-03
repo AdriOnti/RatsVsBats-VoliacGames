@@ -55,6 +55,10 @@ public class InputManager : MonoBehaviour
     public delegate void OnPlayerPause();
     public static event OnPlayerPause PlayerPause;
 
+    // Inventory
+    public delegate void OnPlayerInventory();
+    public static event OnPlayerInventory PlayerInventory;
+
     private void Awake()
     {
         if(instance != null && instance != this) Destroy(gameObject);
@@ -76,6 +80,7 @@ public class InputManager : MonoBehaviour
         playerControls.Game.Interact.performed += _ => PlayerInteract.Invoke();
         playerControls.Game.Map.performed += _ => PlayerMap.Invoke();
         playerControls.Game.Pause.performed += _ => PlayerPause.Invoke();
+        playerControls.Game.Inventory.performed += _ => PlayerInventory.Invoke();
         playerControls.Enable();
     }
 
@@ -92,6 +97,7 @@ public class InputManager : MonoBehaviour
         playerControls.Game.Interact.performed -= _ => PlayerInteract.Invoke();
         playerControls.Game.Map.performed -= _ => PlayerMap.Invoke();
         playerControls.Game.Pause.performed -= _ => PlayerPause.Invoke();
+        playerControls.Game.Inventory.performed -= _ => PlayerInventory.Invoke();
         playerControls.Disable();
     }
 
