@@ -2,24 +2,28 @@ using UnityEngine;
 
 public class CanvasManager : MonoBehaviour
 {
+    // Instance
     private static CanvasManager instance;
     public static CanvasManager Instance
     {
         get { return instance; }
     }
 
+    // InputManager
     private InputManager inputManager;
 
-    [SerializeField] public bool mapInput;
-    [SerializeField] public bool pauseInput;
+    // Bools
+    [SerializeField] private bool mapInput;
+    [SerializeField] private bool pauseInput;
+    [SerializeField] private bool inventoryOpened;
 
     // Canvas
     GameObject pauseMenu;
     GameObject map;
 
-    [SerializeField, /*HideInInspector*/] GameObject inventoryBtn;
-    [SerializeField, /*HideInInspector*/] GameObject inventory;
-    [/*SerializeField,*/ HideInInspector] bool inventoryOpened;
+    // Inventory
+    [/*SerializeField,*/ HideInInspector] GameObject inventoryBtn;
+    [/*SerializeField,*/ HideInInspector] GameObject inventory;
 
     private void Awake()
     {
@@ -48,6 +52,9 @@ public class CanvasManager : MonoBehaviour
         InputManager.PlayerInventory -= OpenInventory;
     }
 
+    /// <summary>
+    /// Llama al GameManager para obtener distintos GameObjects
+    /// </summary>
     private void CallToGameManager()
     {
         pauseMenu = GameManager.Instance.GetPauseMenu();
@@ -56,18 +63,25 @@ public class CanvasManager : MonoBehaviour
         inventoryBtn = GameManager.Instance.GetInventoryBtn();
     }
 
+    /// <summary>
+    /// Activa y desactiva diversos elementos que necesitan cargarse en el principio del juego
+    /// </summary>
     private void SetActiveCanvas()
     {
         // SET ACTIVE: TRUE
         GameManager.Instance.GetCanvasFather().SetActive(true);
+        inventoryBtn.SetActive(true);
 
         // SET ACTIVE: FALSE
         pauseMenu.SetActive(false);
         map.SetActive(false);
-        inventoryBtn.SetActive(true);
         inventory.SetActive(false);
     }
 
+
+    /// <summary>
+    /// Abre o cierra el mapa segun el input del jugador
+    /// </summary>
     public void OpenCloseMap()
     {
         mapInput = !mapInput;
@@ -75,6 +89,9 @@ public class CanvasManager : MonoBehaviour
         else map.SetActive(false);
     }
 
+    /// <summary>
+    /// Pausa o reanuda el juego según el input del jugador
+    /// </summary>
     public void PauseGame()
     {
         pauseInput = !pauseInput;
@@ -82,6 +99,9 @@ public class CanvasManager : MonoBehaviour
         else { pauseMenu.SetActive(false); Time.timeScale = 1f; }
     }
 
+    /// <summary>
+    /// Abre el inventario o lo cierra si el jugador usa el input del inventario
+    /// </summary>
     public void OpenInventory()
     {
         if (inventoryOpened == true) { CloseInventory(); return; }
@@ -91,14 +111,19 @@ public class CanvasManager : MonoBehaviour
             inventoryBtn.SetActive(false);
             inventory.SetActive(true);
             InventoryManager.Instance.ListItems();
+            Time.timeScale = 0f;
         }
 
     }
 
+    /// <summary>
+    /// Cierra el inventario
+    /// </summary>
     public void CloseInventory()
     {
         inventoryBtn.SetActive(true);
         inventory.SetActive(false); 
-        inventoryOpened = false;
+        inventoryOpened = false; 
+        Time.timeScale = 1f;
     }
 }

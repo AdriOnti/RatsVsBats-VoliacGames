@@ -14,15 +14,26 @@ public class GameManager : MonoBehaviour
         else instance = this;
     }
 
+    // Obtiene el menu de pausa
     public GameObject GetPauseMenu() { return FindInActiveObjectByName("PauseMenu"); }
+
+    // Obtiene el mapa
     public GameObject GetMap() { return FindInActiveObjectByName("Map"); }
 
+    // Obtiene el inventario
     public GameObject GetInventory() { return FindInActiveObjectByName("Inventory"); }
 
+    // Obtiene el boton del inventario
     public GameObject GetInventoryBtn() { return FindInActiveObjectByName("InventoryBtn"); }
 
+    // Obtiene el objeto donde estan todos los canvas
     public GameObject GetCanvasFather() { return FindInActiveObjectByName("CanvasFather"); }
 
+    /// <summary>
+    /// Busca entre todos los objetos, tanto los activos como inactivos, el que se busca
+    /// </summary>
+    /// <param name="name">Nombre del GameObject que se busca</param>
+    /// <returns>El gameobject que se buscaba</returns>
     GameObject FindInActiveObjectByName(string name)
     {
         Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];

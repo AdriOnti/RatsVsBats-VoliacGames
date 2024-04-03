@@ -50,10 +50,11 @@ public class InventoryManager : MonoBehaviour
         SetInventoryItems();
     }
 
-    // Funcion para que se puedan borrar los items sin usarlos
+    // Delete all the items without use them
     public void EnableItemsRemove()
     {
-        // Si el toggle esta en ON, el boton para quitar items aparece. Si esta en OFF, estara desactivado el boton
+        // If is on, the remove button appears
+        // If is off, the remove button disappears
         if (EnableRemove.isOn)
         {
             foreach (Transform item in ItemContent) item.Find("RmBtn").gameObject.SetActive(true);
@@ -64,7 +65,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // Pone los items que estan como hijos del contenido del canvas
+    // Set the items like childs of the Content
     public void SetInventoryItems()
     {
         InventoryItems = ItemContent.GetComponentsInChildren<InventoryItemController>();
@@ -75,6 +76,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // Clear all the inventory items
     public void ClearInventoryItems()
     {
         // Este foreach estaba justo al principio de ListItems pero eso provacaba errores, en un comentario del tutorial salia esto y ¡HA FUNCIONADO!
