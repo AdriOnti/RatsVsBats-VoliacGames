@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,11 +29,10 @@ public class InventoryItemController : MonoBehaviour
         switch (item.itemType)
         {
             case Item.ItemType.Speed:
-                GameManager.Instance.IncreasePlayerSpeed(item.value, item.waitTime);
+                GameManager.Instance.IncreasePlayerSpeed(item);
                 break;
         }
         RemoveItem();
-        //CanvasManager.Instance.CloseInventory();
         Debug.Log($"Se ha usado {item.itemName}");
     }
 

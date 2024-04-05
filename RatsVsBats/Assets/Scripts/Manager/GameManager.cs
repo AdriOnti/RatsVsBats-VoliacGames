@@ -1,5 +1,7 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +18,9 @@ public class GameManager : MonoBehaviour
         if (instance != null && instance != this) Destroy(gameObject);
         else instance = this;
     }
+
+    [Header("Bools")]
+    public bool speedUsed;
 
     // Obtiene el menu de pausa
     public GameObject GetPauseMenu() { return FindInActiveObjectByName("PauseMenu"); }
@@ -53,15 +58,23 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
-    public void IncreasePlayerSpeed(float itemValue, float waitTime)
+    public void IncreasePlayerSpeed(Item item)
     {
-        StartCoroutine(IncreaseSpeedCoroutine(itemValue, waitTime));
+        if (speedUsed)
+        {
+            Debug.Log("Ya se había consumido uno de estos objetos");
+            InventoryManager.Instance.Add(item);
+            return;
+        }
+        StartCoroutine(IncreaseSpeedCoroutine(item.value, item.waitTime));
     }
 
     IEnumerator IncreaseSpeedCoroutine(float itemValue, float waitTime)
     {
         PlayerController.Instance.speed += itemValue;
+        speedUsed = true;
         yield return new WaitForSeconds(waitTime);
         PlayerController.Instance.speed -= itemValue;
+        speedUsed = false;
     }
 }
