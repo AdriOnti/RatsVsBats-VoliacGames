@@ -6,8 +6,8 @@ public class ItemPickup : MonoBehaviour
 
     public void Pickup()
     {
-        InventoryManager.Instance.Add(item);
-        if (item.itemType != Item.ItemType.Key) Destroy(gameObject);
+        InventoryManager.Instance.Add(item); 
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider collision)

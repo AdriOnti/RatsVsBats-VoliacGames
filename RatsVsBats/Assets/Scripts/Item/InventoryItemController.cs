@@ -13,20 +13,26 @@ public class InventoryItemController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Añade un nuevo item al inventario
+    /// <summary>
+    /// Add a new item to the inventory
+    /// </summary>
+    /// <param name="newItem">The new Item to show in the inventory</param>
     public void AddItem(Item newItem) { item = newItem; }
 
-    // Funcion para usar un item. Una vez que se usa, se elimina del inventario
+    /// <summary>
+    /// Use an item.
+    /// When is used, it's removed from the inventory
+    /// </summary>
     public void UseItem()
     {
-        if (item.itemType == Item.ItemType.Key) { return; }
         switch (item.itemType)
         {
-            case Item.ItemType.Heart:
-                //PlayerController.Instance.IncreaseMaxHealth(item.value);
+            case Item.ItemType.Speed:
+                GameManager.Instance.IncreasePlayerSpeed(item.value, item.waitTime);
                 break;
         }
         RemoveItem();
+        //CanvasManager.Instance.CloseInventory();
         Debug.Log($"Se ha usado {item.itemName}");
     }
 

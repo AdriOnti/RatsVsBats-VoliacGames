@@ -5,16 +5,13 @@ public class Item : ScriptableObject
 {
     public int id;
     public string itemName;
-    public int value;
+    public float value;
+    public float waitTime;
     public Sprite icon;
     public ItemType itemType;
 
     public enum ItemType
     {
-        Heart,
-        HealthPot,
-        StrengthPot,
-        SpeedPot,
-        Key
+        Speed,
     }
 }

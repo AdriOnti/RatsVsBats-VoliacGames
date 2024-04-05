@@ -769,6 +769,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1793270598047137696, guid: a7f3c8084b99e3445b74ace09b46cda8,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -265158658, guid: f56cde7156b1908438cb4933d203ce23,
+        type: 3}
     - target: {fileID: 5381351739023056758, guid: a7f3c8084b99e3445b74ace09b46cda8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -822,7 +828,7 @@ PrefabInstance:
     - target: {fileID: 8335746972421739037, guid: a7f3c8084b99e3445b74ace09b46cda8,
         type: 3}
       propertyPath: m_Name
-      value: HealthPotion
+      value: SpeedPotion
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1728,6 +1734,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1793270598047137696, guid: a7f3c8084b99e3445b74ace09b46cda8,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -265158658, guid: f56cde7156b1908438cb4933d203ce23,
+        type: 3}
     - target: {fileID: 5381351739023056758, guid: a7f3c8084b99e3445b74ace09b46cda8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1781,7 +1793,7 @@ PrefabInstance:
     - target: {fileID: 8335746972421739037, guid: a7f3c8084b99e3445b74ace09b46cda8,
         type: 3}
       propertyPath: m_Name
-      value: HealthPotion (2)
+      value: SpeedPotion (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1796,6 +1808,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1793270598047137696, guid: a7f3c8084b99e3445b74ace09b46cda8,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -265158658, guid: f56cde7156b1908438cb4933d203ce23,
+        type: 3}
     - target: {fileID: 5381351739023056758, guid: a7f3c8084b99e3445b74ace09b46cda8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1849,7 +1867,7 @@ PrefabInstance:
     - target: {fileID: 8335746972421739037, guid: a7f3c8084b99e3445b74ace09b46cda8,
         type: 3}
       propertyPath: m_Name
-      value: HealthPotion (1)
+      value: SpeedPotion (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

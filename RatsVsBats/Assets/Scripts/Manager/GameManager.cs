@@ -1,13 +1,16 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // SINGLETON
     private static GameManager instance;
     public static GameManager Instance
     {
         get { return instance; }
     }
 
+    // AWAKE
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -48,5 +51,17 @@ public class GameManager : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public void IncreasePlayerSpeed(float itemValue, float waitTime)
+    {
+        StartCoroutine(IncreaseSpeedCoroutine(itemValue, waitTime));
+    }
+
+    IEnumerator IncreaseSpeedCoroutine(float itemValue, float waitTime)
+    {
+        PlayerController.Instance.speed += itemValue;
+        yield return new WaitForSeconds(waitTime);
+        PlayerController.Instance.speed -= itemValue;
     }
 }
