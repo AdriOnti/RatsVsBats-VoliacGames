@@ -32,13 +32,12 @@ public class PlayerController : MonoBehaviour
     [Header("Stadistics")]
     public float jumpForce;
     public float speed;
-    public Vector3 _playerCamera;
+    public Transform playerCamera;
 
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
         else instance = this;
-        _playerCamera = Camera.main.transform.forward;
     }
 
     private void Start()
@@ -110,7 +109,15 @@ public class PlayerController : MonoBehaviour
         if (movementInput.x != 0.0f || movementInput.y != 0.0f)
         {
             Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
-            _rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
+            Vector3 cameraDirection = playerCamera.forward;
+            Debug.Log(cameraDirection.x + ", " + cameraDirection.y + ", " + cameraDirection.z);
+            cameraDirection.y = 0; // Make sure the direction is parallel to the ground
+            Quaternion rotation = Quaternion.LookRotation(cameraDirection);
+            direction = rotation * direction;
+
+            _rb.MovePosition(transform.position + direction.normalized * speed * Time.deltaTime);
+
+            this.transform.rotation = rotation;
         }
     }
 
