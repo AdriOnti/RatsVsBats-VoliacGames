@@ -9,9 +9,16 @@ public class Item : ScriptableObject
     public float waitTime;
     public Sprite icon;
     public ItemType itemType;
+    public ItemStatus status;
 
     public enum ItemType
     {
-        Speed,
+        Speed
+    }
+
+    public enum ItemStatus
+    {
+        Normal,
+        Mission
     }
 }

@@ -1,7 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class GameManager : MonoBehaviour
 {
@@ -42,7 +40,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="name">Nombre del GameObject que se busca</param>
     /// <returns>El gameobject que se buscaba</returns>
-    GameObject FindInActiveObjectByName(string name)
+    public GameObject FindInActiveObjectByName(string name)
     {
         Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
         for (int i = 0; i < objs.Length; i++)

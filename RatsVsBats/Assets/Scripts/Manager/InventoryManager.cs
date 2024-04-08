@@ -14,6 +14,9 @@ public class InventoryManager : MonoBehaviour
     public InventoryItemController[] InventoryItems;
     public GameObject Inventory;
 
+    [Header("MissionItem")]
+    public GameObject missionItem;
+
     private void Awake()
     {
         if (Instance == null)
@@ -31,7 +34,15 @@ public class InventoryManager : MonoBehaviour
         Items.Add(newItem);
     }
 
-    public void Remove(Item item) { Items.Remove(item); }
+    public void Remove(Item item)
+    {
+        Items.Remove(item);
+        
+        if (missionItem != null)
+        {
+            missionItem.GetComponent<ItemPickup>().Pickup();
+        }
+    }
 
     public void ListItems()
     {
@@ -82,5 +93,17 @@ public class InventoryManager : MonoBehaviour
         // Este foreach estaba justo al principio de ListItems pero eso provacaba errores, en un comentario del tutorial salia esto y ¡HA FUNCIONADO!
         foreach (Transform item in ItemContent) Destroy(item.gameObject);
         CanvasManager.Instance.CloseInventory();
+    }
+
+    public void ClearMissionItem(Item former)
+    {
+        foreach (Item item in Items)
+        {
+            if (item.status == former.status)
+            {
+                Items.Remove(item);
+                return;
+            }
+        }
     }
 }
