@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
     [Header("Items")]
     public Item actualItem;
     public int inventoryIndex;
-    public Transform dropTarget;
 
     private void Awake()
     {

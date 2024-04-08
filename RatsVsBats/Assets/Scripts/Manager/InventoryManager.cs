@@ -32,6 +32,7 @@ public class InventoryManager : MonoBehaviour
     {
         Item newItem = Instantiate(item);
         Items.Add(newItem);
+        PlayerController.Instance.ChangeItem();
     }
 
     public void Remove(Item item)
