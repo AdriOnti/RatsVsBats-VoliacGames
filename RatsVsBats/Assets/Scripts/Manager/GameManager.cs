@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,29 +22,31 @@ public class GameManager : MonoBehaviour
     public bool speedUsed;
 
     // Get the pause menu
-    public GameObject GetPauseMenu() { return FindInActiveObjectByName("PauseMenu"); }
+    public GameObject GetPauseMenu() { return FindObjectsByName("PauseMenu"); }
 
     // Get the map
-    public GameObject GetMap() { return FindInActiveObjectByName("Map"); }
+    public GameObject GetMap() { return FindObjectsByName("Map"); }
 
     // Get the inventory
-    public GameObject GetInventory() { return FindInActiveObjectByName("Inventory"); }
+    public GameObject GetInventory() { return FindObjectsByName("Inventory"); }
 
     // Get the inventory button
-    public GameObject GetInventoryBtn() { return FindInActiveObjectByName("InventoryBtn"); }
+    public GameObject GetInventoryBtn() { return FindObjectsByName("InventoryBtn"); }
 
     // Get the GameObject that contains all the canvas.
-    public GameObject GetCanvasFather() { return FindInActiveObjectByName("CanvasFather"); }
+    public GameObject GetCanvasFather() { return FindObjectsByName("CanvasFather"); }
 
     // Get the GameObject on the missionItem will be instantiate
-    public Transform MissionItemTransform() { return FindInActiveObjectByName("MissionItems").transform; }
+    public Transform MissionItemTransform() { return FindObjectsByName("MissionItems").transform; }
+
+    public GameObject GetHUD() { return FindObjectsByName("HUD"); }
 
     /// <summary>
     /// Busca entre todos los objetos, tanto los activos como inactivos, el que se busca
     /// </summary>
     /// <param name="name">Nombre del GameObject que se busca</param>
     /// <returns>El gameobject que se buscaba</returns>
-    public GameObject FindInActiveObjectByName(string name)
+    public GameObject FindObjectsByName(string name)
     {
         Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
         for (int i = 0; i < objs.Length; i++)
@@ -85,13 +88,22 @@ public class GameManager : MonoBehaviour
         // Increment
         PlayerController.Instance.speed += itemValue;
         speedUsed = true;
-        FindInActiveObjectByName("TEST_Effect").SetActive(true);
+        FindObjectsByName("TEST_Effect").SetActive(true);
 
         yield return new WaitForSeconds(waitTime);
 
         // Decrement
         PlayerController.Instance.speed -= itemValue;
         speedUsed = false;
-        FindInActiveObjectByName("TEST_Effect").SetActive(false);
+        FindObjectsByName("TEST_Effect").SetActive(false);
+    }
+
+    // Actualizar el item
+    public void UpdateItem(Item item)
+    {
+        Image actualItem = FindObjectsByName("ActualItem").GetComponent<Image>();
+
+        if (item != null) actualItem.sprite = item.icon;
+        else  actualItem.sprite = null;
     }
 }

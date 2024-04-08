@@ -34,6 +34,10 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public Vector3 _playerCamera;
 
+    [Header("Items")]
+    public Item actualItem;
+    public int inventoryIndex;
+
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -161,9 +165,26 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeItem()
     {
-        isChangingItem = inputManager.GetMouseScroll();
-        if (isChangingItem > 0) Debug.Log("Scroll Up");
-        if (isChangingItem < 0) Debug.Log("Scroll Down");
+        try
+        {
+            isChangingItem = inputManager.GetMouseScroll();
+            if (isChangingItem > 0)
+            {
+                if (inventoryIndex + 1 <= InventoryManager.Instance.Items.Count) inventoryIndex++; 
+
+                if (inventoryIndex + 1 > InventoryManager.Instance.Items.Count) inventoryIndex = 0;
+            }
+            if (isChangingItem < 0)
+            {
+                if (inventoryIndex-- < 0) inventoryIndex = InventoryManager.Instance.Items.Count - 1;
+            }
+
+            if(InventoryManager.Instance.Items.Count > 0)  actualItem = InventoryManager.Instance.Items[inventoryIndex];
+            else actualItem = null;
+            
+            GameManager.Instance.UpdateItem(actualItem);
+        }
+        catch { }
     }
 
     public void DropItem()
