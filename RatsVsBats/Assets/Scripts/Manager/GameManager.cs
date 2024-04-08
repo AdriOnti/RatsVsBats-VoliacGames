@@ -73,8 +73,10 @@ public class GameManager : MonoBehaviour
     {
         PlayerController.Instance.speed += itemValue;
         speedUsed = true;
+        FindInActiveObjectByName("TEST_Effect").SetActive(true);
         yield return new WaitForSeconds(waitTime);
         PlayerController.Instance.speed -= itemValue;
         speedUsed = false;
+        FindInActiveObjectByName("TEST_Effect").SetActive(false);
     }
 }

@@ -31,7 +31,7 @@ public class InventoryManager : MonoBehaviour
         Items.Add(newItem);
     }
 
-    public void Remove(Item item) { Items.Remove(item); Debug.Log($"Se ha eliminado el {item.itemName}"); }
+    public void Remove(Item item) { Items.Remove(item); }
 
     public void ListItems()
     {
