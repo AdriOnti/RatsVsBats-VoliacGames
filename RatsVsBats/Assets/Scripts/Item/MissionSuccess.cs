@@ -16,6 +16,7 @@ public class MissionSuccess : MonoBehaviour
             InventoryManager.Instance.missionItem = null;
             InventoryManager.Instance.ClearMissionItem(item.GetComponent<ItemPickup>().item);
             if(item != null) Destroy(item);
+            PlayerController.Instance.ChangeItem();
 
         }
     }

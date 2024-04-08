@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,7 +25,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isJumping;
     [HideInInspector] private bool isClimbing;
     [HideInInspector] private bool isAttacking;
-    [HideInInspector] private bool isDroppingItem;
     [SerializeField] private float isChangingItem;
     [HideInInspector] private bool isInteracting;
 
@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     [Header("Items")]
     public Item actualItem;
     public int inventoryIndex;
+    public Transform dropTarget;
 
     private void Awake()
     {
@@ -60,7 +61,6 @@ public class PlayerController : MonoBehaviour
         InputManager.PlayerClimb += Climb;
         InputManager.PlayerAttack += Attack;
         InputManager.PlayerChangeItem += ChangeItem;
-        InputManager.PlayerDrop += DropItem;
         InputManager.PlayerInteract += Interact;
     }
 
@@ -73,7 +73,6 @@ public class PlayerController : MonoBehaviour
         InputManager.PlayerClimb -= Climb;
         InputManager.PlayerAttack -= Attack;
         InputManager.PlayerChangeItem -= ChangeItem;
-        InputManager.PlayerDrop -= DropItem;
         InputManager.PlayerInteract -= Interact;
     }
 
@@ -165,31 +164,26 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeItem()
     {
-        try
+        int itemCount = InventoryManager.Instance.Items.Count;
+
+        // If itemCount is 0, the actualItem on the hud would be null
+        if (itemCount == 0)
         {
-            isChangingItem = inputManager.GetMouseScroll();
-            if (isChangingItem > 0)
-            {
-                if (inventoryIndex + 1 <= InventoryManager.Instance.Items.Count) inventoryIndex++; 
-
-                if (inventoryIndex + 1 > InventoryManager.Instance.Items.Count) inventoryIndex = 0;
-            }
-            if (isChangingItem < 0)
-            {
-                if (inventoryIndex-- < 0) inventoryIndex = InventoryManager.Instance.Items.Count - 1;
-            }
-
-            if(InventoryManager.Instance.Items.Count > 0)  actualItem = InventoryManager.Instance.Items[inventoryIndex];
-            else actualItem = null;
-            
+            actualItem = null;
             GameManager.Instance.UpdateItem(actualItem);
+            return;
         }
-        catch { }
-    }
 
-    public void DropItem()
-    {
-        isDroppingItem = !isDroppingItem;
+        // Obtain the mouse scroll
+        isChangingItem = inputManager.GetMouseScroll();
+
+        // If the mouse scroll is greater than 0, add 1 to the inventory index
+        if (isChangingItem > 0) inventoryIndex = (inventoryIndex + 1) % itemCount;
+        // If the mouse scroll is lesser than 0, rest 1 to the inventory index
+        else if (isChangingItem < 0) inventoryIndex = (inventoryIndex - 1 + itemCount) % itemCount;
+
+        actualItem = InventoryManager.Instance.Items[inventoryIndex];
+        GameManager.Instance.UpdateItem(actualItem);
     }
 
     public void Interact()

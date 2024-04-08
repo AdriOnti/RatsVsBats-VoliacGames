@@ -127,15 +127,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DropItem"",
-                    ""type"": ""Button"",
-                    ""id"": ""d3032b55-d792-4b6e-9991-d0a81c187355"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""ChangeItem"",
                     ""type"": ""PassThrough"",
                     ""id"": ""e1691041-7481-43ba-a95b-b1d8f232b721"",
@@ -311,17 +302,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5bc75251-e610-4733-a056-c5d772da0837"",
-                    ""path"": ""<Mouse>/middleButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DropItem"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""46dcb3bc-6267-4b58-a890-21c0aed63136"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
@@ -371,7 +351,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Game_Inventory = m_Game.FindAction("Inventory", throwIfNotFound: true);
         m_Game_Attack = m_Game.FindAction("Attack", throwIfNotFound: true);
         m_Game_Aim = m_Game.FindAction("Aim", throwIfNotFound: true);
-        m_Game_DropItem = m_Game.FindAction("DropItem", throwIfNotFound: true);
         m_Game_ChangeItem = m_Game.FindAction("ChangeItem", throwIfNotFound: true);
         m_Game_Look = m_Game.FindAction("Look", throwIfNotFound: true);
     }
@@ -446,7 +425,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_Inventory;
     private readonly InputAction m_Game_Attack;
     private readonly InputAction m_Game_Aim;
-    private readonly InputAction m_Game_DropItem;
     private readonly InputAction m_Game_ChangeItem;
     private readonly InputAction m_Game_Look;
     public struct GameActions
@@ -464,7 +442,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Inventory => m_Wrapper.m_Game_Inventory;
         public InputAction @Attack => m_Wrapper.m_Game_Attack;
         public InputAction @Aim => m_Wrapper.m_Game_Aim;
-        public InputAction @DropItem => m_Wrapper.m_Game_DropItem;
         public InputAction @ChangeItem => m_Wrapper.m_Game_ChangeItem;
         public InputAction @Look => m_Wrapper.m_Game_Look;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
@@ -509,9 +486,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
-            @DropItem.started += instance.OnDropItem;
-            @DropItem.performed += instance.OnDropItem;
-            @DropItem.canceled += instance.OnDropItem;
             @ChangeItem.started += instance.OnChangeItem;
             @ChangeItem.performed += instance.OnChangeItem;
             @ChangeItem.canceled += instance.OnChangeItem;
@@ -555,9 +529,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
-            @DropItem.started -= instance.OnDropItem;
-            @DropItem.performed -= instance.OnDropItem;
-            @DropItem.canceled -= instance.OnDropItem;
             @ChangeItem.started -= instance.OnChangeItem;
             @ChangeItem.performed -= instance.OnChangeItem;
             @ChangeItem.canceled -= instance.OnChangeItem;
@@ -594,7 +565,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnInventory(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
-        void OnDropItem(InputAction.CallbackContext context);
         void OnChangeItem(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
     }

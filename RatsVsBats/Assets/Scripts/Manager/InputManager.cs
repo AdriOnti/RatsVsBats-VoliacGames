@@ -39,10 +39,6 @@ public class InputManager : MonoBehaviour
     public delegate void OnPlayerChangeItem();
     public static event OnPlayerChangeItem PlayerChangeItem;
 
-    // Drop Item
-    public delegate void OnPlayerDrop();
-    public static event OnPlayerDrop PlayerDrop;
-
     // Interact
     public delegate void OnPlayerInteract();
     public static event OnPlayerInteract PlayerInteract;
@@ -76,7 +72,6 @@ public class InputManager : MonoBehaviour
         playerControls.Game.Stealth.performed += _ => PlayerStealth.Invoke();
         playerControls.Game.Attack.performed += _ => PlayerAttack.Invoke();
         playerControls.Game.ChangeItem.performed += _ => PlayerChangeItem.Invoke();
-        playerControls.Game.DropItem.performed += _ => PlayerDrop.Invoke();
         playerControls.Game.Interact.performed += _ => PlayerInteract.Invoke();
         playerControls.Game.Map.performed += _ => PlayerMap.Invoke();
         playerControls.Game.Pause.performed += _ => PlayerPause.Invoke();
@@ -93,7 +88,6 @@ public class InputManager : MonoBehaviour
         playerControls.Game.Stealth.performed -= _ => PlayerStealth.Invoke();
         playerControls.Game.Attack.performed -= _ => PlayerAttack.Invoke();
         playerControls.Game.ChangeItem.performed -= _ => PlayerChangeItem.Invoke();
-        playerControls.Game.DropItem.performed -= _ => PlayerDrop.Invoke();
         playerControls.Game.Interact.performed -= _ => PlayerInteract.Invoke();
         playerControls.Game.Map.performed -= _ => PlayerMap.Invoke();
         playerControls.Game.Pause.performed -= _ => PlayerPause.Invoke();

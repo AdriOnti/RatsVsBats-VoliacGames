@@ -37,11 +37,12 @@ public class InventoryManager : MonoBehaviour
     public void Remove(Item item)
     {
         Items.Remove(item);
-        
+
         if (missionItem != null && missionItem.GetComponent<ItemPickup>().item.status == item.status)
         {
             missionItem.GetComponent<ItemPickup>().Pickup();
         }
+        PlayerController.Instance.ChangeItem();
     }
 
     public void ListItems()
