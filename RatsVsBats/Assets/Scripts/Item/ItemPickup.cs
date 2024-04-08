@@ -12,7 +12,7 @@ public class ItemPickup : MonoBehaviour
 
     public void Pickup()
     {
-        if(isFromMission) { InventoryManager.Instance.missionItem = Instantiate(gameObject, GameManager.Instance.FindInActiveObjectByName("MissionItems").transform); }
+        if(isFromMission) { InventoryManager.Instance.missionItem = Instantiate(gameObject, GameManager.Instance.MissionItemTransform()); }
         InventoryManager.Instance.Add(item); 
         Destroy(gameObject);
     }

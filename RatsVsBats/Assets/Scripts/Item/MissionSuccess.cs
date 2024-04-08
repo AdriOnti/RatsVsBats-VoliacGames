@@ -10,12 +10,7 @@ public class MissionSuccess : MonoBehaviour
         {
             item = InventoryManager.Instance.missionItem;
             InventoryManager.Instance.missionItem = null;
-
-
-            //InventoryManager.Instance.Remove(item.GetComponent<ItemPickup>().item);
-
             InventoryManager.Instance.ClearMissionItem(item.GetComponent<ItemPickup>().item);
-
             Destroy(item);
 
         }

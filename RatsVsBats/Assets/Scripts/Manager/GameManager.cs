@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     // Obtiene el objeto donde estan todos los canvas
     public GameObject GetCanvasFather() { return FindInActiveObjectByName("CanvasFather"); }
 
+    public Transform MissionItemTransform() { return FindInActiveObjectByName("MissionItems").transform; }
+
     /// <summary>
     /// Busca entre todos los objetos, tanto los activos como inactivos, el que se busca
     /// </summary>
