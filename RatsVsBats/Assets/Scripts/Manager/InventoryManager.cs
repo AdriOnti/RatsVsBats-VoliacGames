@@ -95,6 +95,10 @@ public class InventoryManager : MonoBehaviour
         CanvasManager.Instance.CloseInventory();
     }
 
+    /// <summary>
+    /// Search in any of the items in the inventory and remove the missionItem
+    /// </summary>
+    /// <param name="former"></param>
     public void ClearMissionItem(Item former)
     {
         foreach (Item item in Items)

@@ -20,21 +20,22 @@ public class GameManager : MonoBehaviour
     [Header("Bools")]
     public bool speedUsed;
 
-    // Obtiene el menu de pausa
+    // Get the pause menu
     public GameObject GetPauseMenu() { return FindInActiveObjectByName("PauseMenu"); }
 
-    // Obtiene el mapa
+    // Get the map
     public GameObject GetMap() { return FindInActiveObjectByName("Map"); }
 
-    // Obtiene el inventario
+    // Get the inventory
     public GameObject GetInventory() { return FindInActiveObjectByName("Inventory"); }
 
-    // Obtiene el boton del inventario
+    // Get the inventory button
     public GameObject GetInventoryBtn() { return FindInActiveObjectByName("InventoryBtn"); }
 
-    // Obtiene el objeto donde estan todos los canvas
+    // Get the GameObject that contains all the canvas.
     public GameObject GetCanvasFather() { return FindInActiveObjectByName("CanvasFather"); }
 
+    // Get the GameObject on the missionItem will be instantiate
     public Transform MissionItemTransform() { return FindInActiveObjectByName("MissionItems").transform; }
 
     /// <summary>
@@ -58,6 +59,10 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Incrementa la velocidad del jugador
+    /// </summary>
+    /// <param name="item">Item que se consume</param>
     public void IncreasePlayerSpeed(Item item)
     {
         if (speedUsed)
@@ -69,12 +74,22 @@ public class GameManager : MonoBehaviour
         StartCoroutine(IncreaseSpeedCoroutine(item.value, item.waitTime));
     }
 
+    /// <summary>
+    /// Incrementa la velocidad y luega la decrementa
+    /// </summary>
+    /// <param name="itemValue">Valor del item</param>
+    /// <param name="waitTime">Tiempo de espero del item</param>
+    /// <returns>Es una corrutina</returns>
     IEnumerator IncreaseSpeedCoroutine(float itemValue, float waitTime)
     {
+        // Increment
         PlayerController.Instance.speed += itemValue;
         speedUsed = true;
         FindInActiveObjectByName("TEST_Effect").SetActive(true);
+
         yield return new WaitForSeconds(waitTime);
+
+        // Decrement
         PlayerController.Instance.speed -= itemValue;
         speedUsed = false;
         FindInActiveObjectByName("TEST_Effect").SetActive(false);

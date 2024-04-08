@@ -22,8 +22,8 @@ public class CanvasManager : MonoBehaviour
     GameObject map;
 
     // Inventory
-    [/*SerializeField,*/ HideInInspector] GameObject inventoryBtn;
-    [/*SerializeField,*/ HideInInspector] GameObject inventory;
+    [HideInInspector] GameObject inventoryBtn;
+    [HideInInspector] GameObject inventory;
 
     private void Awake()
     {
@@ -94,6 +94,9 @@ public class CanvasManager : MonoBehaviour
     /// </summary>
     public void PauseGame()
     {
+        // If the inventory is open, the user can't open pause the game
+        if(inventoryOpened) return;
+
         pauseInput = !pauseInput;
         if (pauseInput && !mapInput) { pauseMenu.SetActive(true); Time.timeScale = 0f; }
         else { pauseMenu.SetActive(false); Time.timeScale = 1f; }
@@ -104,6 +107,9 @@ public class CanvasManager : MonoBehaviour
     /// </summary>
     public void OpenInventory()
     {
+        // If the pause menu is open, the user can't open the inventory
+        if (pauseInput) return;
+
         if (inventoryOpened == true) { InventoryManager.Instance.ClearInventoryItems(); return; }
         if (inventoryOpened == false)
         {

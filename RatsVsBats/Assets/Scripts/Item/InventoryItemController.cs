@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +6,9 @@ public class InventoryItemController : MonoBehaviour
     Item item;
     public Button RemoveButton;
 
-    // Funcion que borra un item del inventario
+    /// <summary>
+    /// Funcion que borra un item del inventario
+    /// </summary>
     public void RemoveItem()
     {
         InventoryManager.Instance.Remove(item);
