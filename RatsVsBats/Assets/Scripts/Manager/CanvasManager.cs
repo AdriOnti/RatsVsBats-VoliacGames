@@ -104,7 +104,7 @@ public class CanvasManager : MonoBehaviour
     /// </summary>
     public void OpenInventory()
     {
-        if (inventoryOpened == true) { CloseInventory(); return; }
+        if (inventoryOpened == true) { InventoryManager.Instance.ClearInventoryItems(); return; }
         if (inventoryOpened == false)
         {
             inventoryOpened = true;
