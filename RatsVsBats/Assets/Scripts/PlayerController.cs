@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     private InputManager inputManager;
     private Vector2 movementInput;
-    private Rigidbody _rb;
+    private CharacterController characterController;
     private Vector3 _velocity;
 
     [Header("Bools & Test Bools")]
@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public Transform playerCamera;
 
+    private float gravity = -9.81f;
+    private float fallSpeed;
+
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -43,7 +46,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         inputManager = InputManager.Instance;
-        _rb = GetComponent<Rigidbody>();
+        characterController = GetComponent<CharacterController>();
+        fallSpeed = 0f;
     }
 
     private void OnEnable()
@@ -76,54 +80,40 @@ public class PlayerController : MonoBehaviour
     {
         DetectMovement();
         DetectJump();
-
-        Move();
     }
 
     private void DetectMovement()
     {
         movementInput = inputManager.GetPlayerMovement();
-        CheckIfIsMoving();
-    }
-
-    private void CheckIfIsMoving()
-    {
-        if (!(movementInput.x != 0 || movementInput.y != 0)) StartCoroutine(WaitForBoolToChange());
-        else isWalking = true;
-    }
-
-    private IEnumerator WaitForBoolToChange()
-    {
-        StopCoroutine(WaitForBoolToChange());
-        yield return new WaitForSeconds(0.1f);
-        isWalking = false;
+        if (movementInput.x != 0.0f || movementInput.y != 0.0f)
+        {
+            Move();
+        }
     }
 
     private void Move()
     {
-        if (isGrounded && _velocity.y < 0)
+        if (isGrounded && fallSpeed < 0)
         {
-            _velocity.y = 0f;
+            fallSpeed = 0f;
         }
 
-        if (movementInput.x != 0.0f || movementInput.y != 0.0f)
-        {
-            Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
-            Vector3 cameraDirection = playerCamera.forward;
-            Debug.Log(cameraDirection.x + ", " + cameraDirection.y + ", " + cameraDirection.z);
-            cameraDirection.y = 0; // Make sure the direction is parallel to the ground
-            Quaternion rotation = Quaternion.LookRotation(cameraDirection);
-            direction = rotation * direction;
+        Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
+        Vector3 cameraDirection = playerCamera.forward;
+        cameraDirection.y = 0;
 
-            _rb.MovePosition(transform.position + direction.normalized * speed * Time.deltaTime);
+        Quaternion rotation = Quaternion.LookRotation(cameraDirection);
+        this.transform.rotation = rotation;
 
-            this.transform.rotation = rotation;
-        }
+        characterController.Move(direction.normalized * speed * Time.deltaTime);
+
+        fallSpeed += gravity * Time.deltaTime;
+        characterController.Move(new Vector3(0, fallSpeed, 0) * Time.deltaTime);
     }
 
     private void DetectJump()
     {
-        isGrounded = IsGrounded();
+        isGrounded = characterController.isGrounded;
         if (isGrounded) isJumping = false;
     }
 
@@ -132,13 +122,9 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && !isCrouching)
         {
             isJumping = true;
-            _rb.velocity = Vector3.up * jumpForce;
+            Debug.Log("jump");
+            
         }
-    }
-
-    private bool IsGrounded()
-    {
-        return _rb.velocity.y == 0;
     }
 
     public void Aim()
@@ -182,5 +168,4 @@ public class PlayerController : MonoBehaviour
     {
         isInteracting = !isInteracting;
     }
-
 }
