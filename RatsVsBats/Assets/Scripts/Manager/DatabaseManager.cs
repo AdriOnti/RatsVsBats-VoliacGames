@@ -10,10 +10,10 @@ public class DatabaseManager
 {
     public static MySqlConnection dbConnection;
 
-    static string host = "192.168.1.106";
-    static string user = "root";
-    static string password = "1234";
-    static string database = "aaa";
+    static string host = "bbdd-rats-vs-bats.c5ey4euiqws3.us-east-1.rds.amazonaws.com";
+    static string user = "developer";
+    static string password = "adminVoliac13";
+    static string database = "bbdd-rats-vs-bats";
     static string port = "3306";
 
 
@@ -26,9 +26,10 @@ public class DatabaseManager
     {
         try
         {
-            string connectionString = string.Format("Server = {0};port={4};Database = {1}; User ID = {2}; Password = {3};", host, database, user, password, port);
+            string connectionString = string.Format("Server = {0};port={4}; Database = {1}; User ID = {2}; Password = {3};", host, database, user, password, port);
             dbConnection = new MySqlConnection(connectionString);
             dbConnection.Open();
+            Debug.Log(connectionString);
         }
         catch (Exception e)
         {

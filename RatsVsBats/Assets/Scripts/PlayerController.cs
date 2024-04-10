@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private InputManager inputManager;
     private Vector2 movementInput;
     private CharacterController characterController;
+    private Rigidbody rb;
     private Vector3 _velocity;
 
     [Header("Bools & Test Bools")]
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
 
     private float gravity = -9.81f;
     private float fallSpeed;
+    private float verticalSpeed;
 
     private void Awake()
     {
@@ -47,6 +49,7 @@ public class PlayerController : MonoBehaviour
     {
         inputManager = InputManager.Instance;
         characterController = GetComponent<CharacterController>();
+        //rb = GetComponent<Rigidbody>();
         fallSpeed = 0f;
     }
 
@@ -85,7 +88,7 @@ public class PlayerController : MonoBehaviour
     private void DetectMovement()
     {
         movementInput = inputManager.GetPlayerMovement();
-        if (movementInput.x != 0.0f || movementInput.y != 0.0f)
+        if (movementInput.magnitude > 0.1f)
         {
             Move();
         }
@@ -93,37 +96,42 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        if (isGrounded && fallSpeed < 0)
-        {
-            fallSpeed = 0f;
-        }
-
         Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
         Vector3 cameraDirection = playerCamera.forward;
         cameraDirection.y = 0;
-
         Quaternion rotation = Quaternion.LookRotation(cameraDirection);
-        this.transform.rotation = rotation;
+        transform.rotation = rotation;
 
         characterController.Move(direction.normalized * speed * Time.deltaTime);
 
-        fallSpeed += gravity * Time.deltaTime;
-        characterController.Move(new Vector3(0, fallSpeed, 0) * Time.deltaTime);
+        if (characterController.isGrounded)
+        {
+            verticalSpeed = 0f;
+        }
+        else
+        {
+            verticalSpeed += gravity * Time.deltaTime;
+        }
+
+        characterController.Move(new Vector3(0, verticalSpeed, 0) * Time.deltaTime);
     }
 
     private void DetectJump()
     {
         isGrounded = characterController.isGrounded;
-        if (isGrounded) isJumping = false;
+
+        if (isGrounded)
+        {
+            isJumping = false;
+        }
     }
 
     public void Jump()
     {
-        if (isGrounded && !isCrouching)
+        if (isGrounded && !isJumping)
         {
             isJumping = true;
-            Debug.Log("jump");
-            
+            verticalSpeed = jumpForce;
         }
     }
 
