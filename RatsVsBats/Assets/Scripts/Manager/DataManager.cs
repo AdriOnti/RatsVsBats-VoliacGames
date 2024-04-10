@@ -15,7 +15,11 @@ public class DataManager : MonoBehaviour
     {
         if (instance != null && instance != this) Destroy(gameObject);
         else instance = this;
+
+        if (SaveExists()) LoadGame();
     }
+
+    private bool SaveExists() { return File.Exists(GetPersistentPath() + "/data.json"); }
 
     private string GetPersistentPath()
     {
@@ -34,7 +38,18 @@ public class DataManager : MonoBehaviour
 
     public void LoadGame()
     {
+        string path = GetPersistentPath() + "/data.json";
+        string playerData = File.ReadAllText(path);
+        PlayerData data = JsonUtility.FromJson<PlayerData>(playerData);
 
+        PlayerController.Instance.transform.position = data.position;
+        //InventoryManager.Instance.Items = data.inventory;
+
+        InventoryManager.Instance.Items.Clear();
+        foreach (Item item in data.inventory) InventoryManager.Instance.Add(item);
+
+        if (CanvasManager.Instance.pauseInput) CanvasManager.Instance.PauseGame();
+        print("LOADED GAME");
     }
 
     public void CreatePersistance()

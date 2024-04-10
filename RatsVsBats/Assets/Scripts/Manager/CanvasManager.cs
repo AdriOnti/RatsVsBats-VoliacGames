@@ -14,7 +14,7 @@ public class CanvasManager : MonoBehaviour
 
     // Bools
     [SerializeField] private bool mapInput;
-    [SerializeField] private bool pauseInput;
+    [SerializeField] public bool pauseInput;
     [SerializeField] private bool inventoryOpened;
 
     // Canvas
@@ -71,6 +71,7 @@ public class CanvasManager : MonoBehaviour
         // SET ACTIVE: TRUE
         GameManager.Instance.GetCanvasFather().SetActive(true);
         inventoryBtn.SetActive(true);
+        inventory.transform.parent.gameObject.SetActive(true);
 
         // SET ACTIVE: FALSE
         pauseMenu.SetActive(false);
