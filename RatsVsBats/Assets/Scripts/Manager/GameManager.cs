@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Bools")]
     public bool speedUsed;
+    public bool isMission;
 
     // Get the pause menu
     public GameObject GetPauseMenu() { return FindObjectsByName("PauseMenu"); }

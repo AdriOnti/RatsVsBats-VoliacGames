@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
 {
@@ -100,7 +101,9 @@ public class CanvasManager : MonoBehaviour
 
         pauseInput = !pauseInput;
         if (pauseInput && !mapInput) { pauseMenu.SetActive(true); Time.timeScale = 0f; }
-        else { pauseMenu.SetActive(false); Time.timeScale = 1f; }
+        else { pauseMenu.SetActive(false); Time.timeScale = 1f; Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); }
+
+        IsMission();
     }
 
     /// <summary>
@@ -132,5 +135,25 @@ public class CanvasManager : MonoBehaviour
         inventory.SetActive(false); 
         inventoryOpened = false; 
         Time.timeScale = 1f;
+    }
+
+    /// <summary>
+    /// Detecta si esta en una mision para bloquear o desbloquear el botón de guardar
+    /// </summary>
+    void IsMission()
+    {
+        GameObject go = pauseMenu.transform.Find("SaveBtn").gameObject;
+        if (GameManager.Instance.isMission)
+        {
+            go.GetComponent<Button>().enabled = false;
+            go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Gui_parts/buttonBlocked");
+            go.GetComponent<ChangeCursor>().customCursor = Resources.Load<CursorType>("CursorsSO/Block");
+        }
+        else
+        {
+            go.GetComponent<Button>().enabled = true;
+            go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Gui_parts/button");
+            go.GetComponent<ChangeCursor>().customCursor = Resources.Load<CursorType>("CursorsSO/Hand");
+        }
     }
 }
