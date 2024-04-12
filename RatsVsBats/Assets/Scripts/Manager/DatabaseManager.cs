@@ -26,15 +26,24 @@ public class DatabaseManager
     {
         try
         {
-            string connectionString = string.Format("Server = {0};port={4}; Database = {1}; User ID = {2}; Password = {3};", host, database, user, password, port);
+            string connectionString = string.Format("server={0};port={4};user={2};password={3};database={1};", host, database, user, password, port);
+            Debug.Log(connectionString);
             dbConnection = new MySqlConnection(connectionString);
             dbConnection.Open();
-            Debug.Log(connectionString);
+            Debug.Log("Connected");
         }
         catch (Exception e)
         {
             throw new Exception("error" + e.Message.ToString());
         }
+
+        CloseCon(dbConnection);
+    }
+
+    static IEnumerator CloseCon(MySqlConnection dbConnection2)
+    {
+        yield return new WaitForSeconds(3f);
+        dbConnection2.Close();
     }
 
     public DataSet CreateTable(string name, string[] col, string[] colType)

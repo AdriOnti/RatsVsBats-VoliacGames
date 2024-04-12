@@ -7,7 +7,7 @@ public class DataManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DatabaseManager.OpenSql();
+        //DatabaseManager.OpenSql();
     }
 
     // Update is called once per frame
