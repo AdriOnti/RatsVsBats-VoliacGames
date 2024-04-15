@@ -22,8 +22,15 @@ public class DataManager : MonoBehaviour
 
     private bool SaveExists() { return File.Exists(GetPersistentPath() + "/data.json"); }
 
+    /// <summary>
+    /// Get to the other functions and methods the persistent data path
+    /// </summary>
+    /// <returns>The persistent data path: Appdata/LocalLow/Company</returns>
     private string GetPersistentPath() { return Path.Combine(Application.persistentDataPath, "Data"); }
 
+    /// <summary>
+    /// Save the actual game
+    /// </summary>
     public void SaveGame()
     {
         CreatePersistance();
@@ -32,6 +39,9 @@ public class DataManager : MonoBehaviour
         File.WriteAllText(path, JsonUtility.ToJson(data));
     }
 
+    /// <summary>
+    /// Load the saved game
+    /// </summary>
     public void LoadGame()
     {
         string path = GetPersistentPath() + "/data.json";
@@ -46,6 +56,9 @@ public class DataManager : MonoBehaviour
         if (CanvasManager.Instance.pauseInput) CanvasManager.Instance.PauseGame();
     }
 
+    /// <summary>
+    /// Creates the persistance files
+    /// </summary>
     public void CreatePersistance()
     {
         string source = Path.Combine(Application.streamingAssetsPath, "Data");
@@ -74,6 +87,9 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// If the save exists, the user can delete its save
+    /// </summary>
     public void DeleteSave()
     {
         if(SaveExists()) File.Delete(GetPersistentPath() + "/save.json");

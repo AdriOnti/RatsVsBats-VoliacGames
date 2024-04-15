@@ -159,12 +159,18 @@ public class CanvasManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Disable the hud elements in the fade out
+    /// </summary>
     public void HUDFadesOut()
     {
         inventoryBtn.SetActive(false);
         GameManager.Instance.GetHUD().SetActive(false);
     }
 
+    /// <summary>
+    /// Enable the hud elements in the fade in
+    /// </summary>
     public void HUDFadesIn()
     {
         inventoryBtn.SetActive(true);

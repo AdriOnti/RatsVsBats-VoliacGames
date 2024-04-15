@@ -27,7 +27,10 @@ public class InventoryManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-
+    /// <summary>
+    /// Add the collected item to the inventory list
+    /// </summary>
+    /// <param name="item"></param>
     public void Add(Item item)
     {
         Item newItem = Instantiate(item);
@@ -35,6 +38,10 @@ public class InventoryManager : MonoBehaviour
         PlayerController.Instance.ChangeItem();
     }
 
+    /// <summary>
+    /// Remove the selected item from the inventory
+    /// </summary>
+    /// <param name="item">An item from the invetory</param>
     public void Remove(Item item)
     {
         Items.Remove(item);
@@ -46,6 +53,9 @@ public class InventoryManager : MonoBehaviour
         PlayerController.Instance.ChangeItem();
     }
 
+    /// <summary>
+    /// Instantiate the items list in the inventory object
+    /// </summary>
     public void ListItems()
     {
         foreach (var item in Items)
@@ -63,7 +73,9 @@ public class InventoryManager : MonoBehaviour
         SetInventoryItems();
     }
 
-    // Delete all the items without use them
+    /// <summary>
+    /// Delete all the items without use them
+    /// </summary>
     public void EnableItemsRemove()
     {
         // If is on, the remove button appears
@@ -78,7 +90,9 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // Set the items like childs of the Content
+    /// <summary>
+    /// Set the items like childs of the Content
+    /// </summary>
     public void SetInventoryItems()
     {
         InventoryItems = ItemContent.GetComponentsInChildren<InventoryItemController>();
@@ -89,7 +103,9 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // Clear all the inventory items
+    /// <summary>
+    /// Clear all the inventory items
+    /// </summary>
     public void ClearInventoryItems()
     {
         // Este foreach estaba justo al principio de ListItems pero eso provacaba errores, en un comentario del tutorial salia esto y ¡HA FUNCIONADO!

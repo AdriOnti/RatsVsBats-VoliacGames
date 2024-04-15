@@ -41,8 +41,10 @@ public class GameManager : MonoBehaviour
     // Get the GameObject on the missionItem will be instantiate
     public Transform MissionItemTransform() { return FindObjectsByName("MissionItems").transform; }
 
+    // Get the HUD
     public GameObject GetHUD() { return FindObjectsByName("HUD"); }
 
+    // Get the Fade father
     public GameObject GetFade() { return FindObjectsByName("Fade"); }
 
     /// <summary>
@@ -102,7 +104,10 @@ public class GameManager : MonoBehaviour
         FindObjectsByName("TEST_Effect").SetActive(false);
     }
 
-    // Actualizar el item
+    /// <summary>
+    /// Actualizar el item
+    /// </summary>
+    /// <param name="item">El item pasado</param>
     public void UpdateItem(Item item)
     {
         Image actualItem = FindObjectsByName("ActualItem").GetComponent<Image>();

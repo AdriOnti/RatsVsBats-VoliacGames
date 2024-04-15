@@ -5,15 +5,15 @@ using UnityEngine.SceneManagement;
 public class FadeManager : MonoBehaviour
 {
     public static FadeManager Instance;
+    [SerializeField] private GameObject father;
     [SerializeField] private GameObject fadeIn;
     [SerializeField] private GameObject fadeOut;
 
-    // Start is called before the first frame update
     void Awake()
     {
         if (Instance == null) Instance = this;
 
-        GameObject father = GameManager.Instance.GetFade();
+        father = GameManager.Instance.GetFade();
         GameObject[] fades = new GameObject[father.transform.childCount];
 
         for(int i = 0; i < fades.Length; i++) fades[i] = father.transform.GetChild(i).gameObject;
@@ -31,6 +31,7 @@ public class FadeManager : MonoBehaviour
     }
 
 #if UNITY_EDITOR
+    // Esto es para ir haciendo pruebas desde el editor de unity
     private void Update()
     {
         if (Input.GetKey(KeyCode.F1)) FadeOut();
@@ -38,26 +39,41 @@ public class FadeManager : MonoBehaviour
     }
 #endif
 
+    /// <summary>
+    /// Hace un Fade In
+    /// </summary>
     public void FadeIn()
     {
+        father.SetActive(true);
         fadeIn.SetActive(true);
         fadeOut.SetActive(false);
 
         StartCoroutine(In());
     }
 
+    /// <summary>
+    /// Activa los elementos del HUD
+    /// </summary>
+    /// <returns>Es una corrutina</returns>
     IEnumerator In()
     {
         yield return new WaitForSeconds(0.1f);
         if(SceneManager.GetActiveScene().buildIndex != 0) CanvasManager.Instance.HUDFadesIn();
         GameManager.Instance.isFading = false;
+        yield return new WaitForSeconds(0.5f);
+        father.SetActive(false);
     }
 
+    /// <summary>
+    /// Hace un Fade out
+    /// </summary>
     public void FadeOut()
     {
+        father.SetActive(true);
         GameManager.Instance.isFading = true;
         fadeOut.SetActive(true);
         fadeIn.SetActive(false);
         if(SceneManager.GetActiveScene().buildIndex != 0) CanvasManager.Instance.HUDFadesOut();
+
     }
 }
