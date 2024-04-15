@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Character
 {
     // Singleton
     private static PlayerController instance;
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     // Public Variables
     [Header("Stadistics")]
     public float jumpForce;
-    public float speed;
+    public float originalSpeed;
     public Vector3 _playerCamera;
 
     [Header("Items")]
@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
         if (instance != null && instance != this) Destroy(gameObject);
         else instance = this;
         _playerCamera = Camera.main.transform.forward;
+        originalSpeed = speed;
     }
 
     private void Start()

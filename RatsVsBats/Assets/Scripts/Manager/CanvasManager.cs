@@ -22,6 +22,7 @@ public class CanvasManager : MonoBehaviour
     // Canvas
     GameObject pauseMenu;
     GameObject map;
+    [SerializeField] GameObject disquete;
 
     // Inventory
     [HideInInspector] GameObject inventoryBtn;
@@ -63,6 +64,7 @@ public class CanvasManager : MonoBehaviour
         map = GameManager.Instance.GetMap();
         inventory = GameManager.Instance.GetInventory();
         inventoryBtn = GameManager.Instance.GetInventoryBtn();
+        disquete = GameManager.Instance.GetDisquete();
     }
 
     /// <summary>
@@ -80,6 +82,10 @@ public class CanvasManager : MonoBehaviour
         pauseMenu.SetActive(false);
         map.SetActive(false);
         inventory.SetActive(false);
+        disquete.SetActive(false);
+        GameManager.Instance.FindObjectsByName("NotConfirm").SetActive(false);
+        GameManager.Instance.FindObjectsByName("ConfirmDelete").SetActive(false);
+        GameManager.Instance.FindObjectsByName("ConfirmDelete2Cour").SetActive(false);
     }
 
 
@@ -102,7 +108,7 @@ public class CanvasManager : MonoBehaviour
         if(inventoryOpened) return;
 
         pauseInput = !pauseInput;
-        if (pauseInput && !mapInput && !GameManager.Instance.isFading) { pauseMenu.SetActive(true); Time.timeScale = 0f; }
+        if (pauseInput && !mapInput && !GameManager.Instance.isFading) { pauseMenu.SetActive(true); Time.timeScale = 0.0f; }
         else { pauseMenu.SetActive(false); Time.timeScale = 1f; Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); }
 
         IsMission();
@@ -175,5 +181,27 @@ public class CanvasManager : MonoBehaviour
     {
         inventoryBtn.SetActive(true);
         GameManager.Instance.GetHUD().SetActive(true);
+    }
+
+    public void Saving()
+    {
+        StartCoroutine(SavingGame());
+    }
+
+    private IEnumerator SavingGame()
+    {
+        disquete.SetActive(true);
+        yield return new WaitForSecondsRealtime(2.0f);
+        disquete.SetActive(false);
+    }
+
+    public void ConfirmDelete()
+    {
+        GameManager.Instance.FindObjectsByName("ConfirmDelete").SetActive(true);
+    }
+
+    public void NotConfirmDelete()
+    {
+        GameManager.Instance.FindObjectsByName("NotConfirm").SetActive(true);
     }
 }

@@ -37,6 +37,7 @@ public class DataManager : MonoBehaviour
         PlayerData data = new PlayerData(PlayerController.Instance);
         string path = GetPersistentPath() + "/data.json";
         File.WriteAllText(path, JsonUtility.ToJson(data));
+
     }
 
     /// <summary>
@@ -49,6 +50,8 @@ public class DataManager : MonoBehaviour
         PlayerData data = JsonUtility.FromJson<PlayerData>(playerData);
 
         PlayerController.Instance.transform.position = data.position;
+        PlayerController.Instance.originalSpeed = data.speed;
+        PlayerController.Instance.speed = data.speed;
 
         InventoryManager.Instance.Items.Clear();
         foreach (Item item in data.inventory) InventoryManager.Instance.Add(item);
@@ -92,6 +95,9 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void DeleteSave()
     {
-        if(SaveExists()) File.Delete(GetPersistentPath() + "/save.json");
+        if (SaveExists()) CanvasManager.Instance.ConfirmDelete();
+        else CanvasManager.Instance.NotConfirmDelete();
     }
+
+    public void ConfirmDelete() { File.Delete(GetPersistentPath() + "/data.json"); }
 }

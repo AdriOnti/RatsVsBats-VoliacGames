@@ -47,6 +47,9 @@ public class GameManager : MonoBehaviour
     // Get the Fade father
     public GameObject GetFade() { return FindObjectsByName("Fade"); }
 
+    // Get the saving icon (disquete)
+    public GameObject GetDisquete() { return FindObjectsByName("Saving"); }
+
     /// <summary>
     /// Busca entre todos los objetos, tanto los activos como inactivos, el que se busca
     /// </summary>

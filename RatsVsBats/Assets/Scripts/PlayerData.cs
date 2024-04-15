@@ -20,7 +20,7 @@ public class PlayerData
             player.transform.rotation.z
         };
 
-        speed = player.speed;
+        speed = player.originalSpeed;
         inventory = InventoryManager.Instance.Items;
     }
 }
