@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [Header("Bools")]
     public bool speedUsed;
     public bool isMission;
+    public bool isFading;
 
     // Get the pause menu
     public GameObject GetPauseMenu() { return FindObjectsByName("PauseMenu"); }
@@ -41,6 +42,8 @@ public class GameManager : MonoBehaviour
     public Transform MissionItemTransform() { return FindObjectsByName("MissionItems").transform; }
 
     public GameObject GetHUD() { return FindObjectsByName("HUD"); }
+
+    public GameObject GetFade() { return FindObjectsByName("Fade"); }
 
     /// <summary>
     /// Busca entre todos los objetos, tanto los activos como inactivos, el que se busca

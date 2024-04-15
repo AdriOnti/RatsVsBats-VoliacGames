@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -73,6 +74,7 @@ public class CanvasManager : MonoBehaviour
         GameManager.Instance.GetCanvasFather().SetActive(true);
         inventoryBtn.SetActive(true);
         inventory.transform.parent.gameObject.SetActive(true);
+        GameManager.Instance.GetFade().SetActive(true);
 
         // SET ACTIVE: FALSE
         pauseMenu.SetActive(false);
@@ -87,7 +89,7 @@ public class CanvasManager : MonoBehaviour
     public void OpenCloseMap()
     {
         mapInput = !mapInput;
-        if(mapInput && !pauseInput) map.SetActive(true); 
+        if(mapInput && !pauseInput && !GameManager.Instance.isFading) map.SetActive(true); 
         else map.SetActive(false);
     }
 
@@ -100,7 +102,7 @@ public class CanvasManager : MonoBehaviour
         if(inventoryOpened) return;
 
         pauseInput = !pauseInput;
-        if (pauseInput && !mapInput) { pauseMenu.SetActive(true); Time.timeScale = 0f; }
+        if (pauseInput && !mapInput && !GameManager.Instance.isFading) { pauseMenu.SetActive(true); Time.timeScale = 0f; }
         else { pauseMenu.SetActive(false); Time.timeScale = 1f; Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); }
 
         IsMission();
@@ -112,7 +114,7 @@ public class CanvasManager : MonoBehaviour
     public void OpenInventory()
     {
         // If the pause menu is open, the user can't open the inventory
-        if (pauseInput) return;
+        if (pauseInput || GameManager.Instance.isFading) return;
 
         if (inventoryOpened == true) { InventoryManager.Instance.ClearInventoryItems(); return; }
         if (inventoryOpened == false)
@@ -155,5 +157,17 @@ public class CanvasManager : MonoBehaviour
             go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Gui_parts/button");
             go.GetComponent<ChangeCursor>().customCursor = Resources.Load<CursorType>("CursorsSO/Hand");
         }
+    }
+
+    public void HUDFadesOut()
+    {
+        inventoryBtn.SetActive(false);
+        GameManager.Instance.GetHUD().SetActive(false);
+    }
+
+    public void HUDFadesIn()
+    {
+        inventoryBtn.SetActive(true);
+        GameManager.Instance.GetHUD().SetActive(true);
     }
 }
