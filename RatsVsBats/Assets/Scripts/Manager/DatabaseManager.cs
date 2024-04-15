@@ -10,10 +10,10 @@ public class DatabaseManager
 {
     public static MySqlConnection dbConnection;
 
-    static string host = "bbdd-rats-vs-bats.c5ey4euiqws3.us-east-1.rds.amazonaws.com";
-    static string user = "developer";
+    static string host = "database-rats-vs-bats.c5ey4euiqws3.us-east-1.rds.amazonaws.com";
+    static string user = "admin";
     static string password = "adminVoliac13";
-    static string database = "bbdd-rats-vs-bats";
+    static string database = "schema_test";
     static string port = "3306";
 
 
