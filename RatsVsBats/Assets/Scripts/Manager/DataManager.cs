@@ -100,6 +100,9 @@ public class DataManager : MonoBehaviour
         else CanvasManager.Instance.NotConfirmDelete();
     }
 
+    /// <summary>
+    /// Deletes the saved game
+    /// </summary>
     public void ConfirmDelete()
     { 
         File.Delete(GetPersistentPath() + "/data.json");
