@@ -220,6 +220,8 @@ GameObject:
   - component: {fileID: 6578123434259253416}
   - component: {fileID: 7684882315277323844}
   - component: {fileID: 997039111222434796}
+  - component: {fileID: 8826749458970370493}
+  - component: {fileID: 8311891925160223902}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -356,6 +358,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RemoveButton: {fileID: 2893139973921801016}
+--- !u!114 &8826749458970370493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3663987597642063710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad3c70ed22c895249a1ab5d0331a30c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8311891925160223902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3663987597642063710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe4188e02003fb04c8e822c2d584a803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customCursor: {fileID: 11400000, guid: 7f136f9c503e3d84e8660ee9f1120360, type: 2}
+  defaultCursor: {fileID: 11400000, guid: 8daf6865063476348953eb4f5b840880, type: 2}
 --- !u!1 &6055903941035966957
 GameObject:
   m_ObjectHideFlags: 0

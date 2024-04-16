@@ -23,13 +23,11 @@ public class PlayerController : Character
     [HideInInspector] private bool isStealthing;
     [SerializeField] private bool isJumping;
     [HideInInspector] private bool isClimbing;
-    [HideInInspector] private bool isAttacking;
     [SerializeField] private float isChangingItem;
     [HideInInspector] private bool isInteracting;
 
     // Public Variables
     [Header("Stadistics")]
-    public float jumpForce;
     public float originalSpeed;
     public Vector3 _playerCamera;
 

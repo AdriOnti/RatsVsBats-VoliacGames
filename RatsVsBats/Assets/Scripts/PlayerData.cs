@@ -9,6 +9,7 @@ public class PlayerData
     public float[] rotation;
     public float speed;
     public List<Item> inventory;
+    public int missionsCompleted;
 
     public PlayerData(PlayerController player) 
     {
@@ -22,5 +23,6 @@ public class PlayerData
 
         speed = player.originalSpeed;
         inventory = InventoryManager.Instance.Items;
+        missionsCompleted = GameManager.Instance.missionsCompleted;
     }
 }

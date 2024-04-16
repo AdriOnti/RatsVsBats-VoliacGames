@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
         else instance = this;
     }
 
+    [Header("Mission")]
+    public int missionsCompleted;
+
     [Header("Bools")]
     public bool speedUsed;
     public bool isMission;
@@ -49,6 +52,9 @@ public class GameManager : MonoBehaviour
 
     // Get the saving icon (disquete)
     public GameObject GetDisquete() { return FindObjectsByName("Saving"); }
+
+    // Get the info text in pause menu
+    public GameObject GetInfoMenu() { return FindObjectsByName("InformationMenu"); }
 
     /// <summary>
     /// Busca entre todos los objetos, tanto los activos como inactivos, el que se busca

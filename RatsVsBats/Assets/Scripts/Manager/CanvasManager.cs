@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +24,7 @@ public class CanvasManager : MonoBehaviour
     GameObject pauseMenu;
     GameObject map;
     [SerializeField] GameObject disquete;
+    [SerializeField] GameObject info;
 
     // Inventory
     [HideInInspector] GameObject inventoryBtn;
@@ -65,6 +67,7 @@ public class CanvasManager : MonoBehaviour
         inventory = GameManager.Instance.GetInventory();
         inventoryBtn = GameManager.Instance.GetInventoryBtn();
         disquete = GameManager.Instance.GetDisquete();
+        info = GameManager.Instance.GetInfoMenu();
     }
 
     /// <summary>
@@ -83,6 +86,7 @@ public class CanvasManager : MonoBehaviour
         map.SetActive(false);
         inventory.SetActive(false);
         disquete.SetActive(false);
+        info.SetActive(false);
         GameManager.Instance.FindObjectsByName("NotConfirm").SetActive(false);
         GameManager.Instance.FindObjectsByName("ConfirmDelete").SetActive(false);
         GameManager.Instance.FindObjectsByName("ConfirmDelete2Cour").SetActive(false);
@@ -111,6 +115,7 @@ public class CanvasManager : MonoBehaviour
         if (pauseInput && !mapInput && !GameManager.Instance.isFading) { pauseMenu.SetActive(true); Time.timeScale = 0.0f; }
         else { pauseMenu.SetActive(false); Time.timeScale = 1f; Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); }
 
+        NotLoad();
         IsMission();
     }
 
@@ -143,6 +148,7 @@ public class CanvasManager : MonoBehaviour
         inventory.SetActive(false); 
         inventoryOpened = false; 
         Time.timeScale = 1f;
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 
     /// <summary>
@@ -151,18 +157,40 @@ public class CanvasManager : MonoBehaviour
     void IsMission()
     {
         GameObject go = pauseMenu.transform.Find("SaveBtn").gameObject;
-        if (GameManager.Instance.isMission)
-        {
-            go.GetComponent<Button>().enabled = false;
-            go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Gui_parts/buttonBlocked");
-            go.GetComponent<ChangeCursor>().customCursor = Resources.Load<CursorType>("CursorsSO/Block");
-        }
-        else
-        {
-            go.GetComponent<Button>().enabled = true;
-            go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Gui_parts/button");
-            go.GetComponent<ChangeCursor>().customCursor = Resources.Load<CursorType>("CursorsSO/Hand");
-        }
+        if (GameManager.Instance.isMission) BlockBtn(go);
+        else NotBlockBtn(go);
+    }
+
+    /// <summary>
+    /// Detecta si hay un archivo guardado. Si no hay ninguno bloquea el botón de cargar
+    /// </summary>
+    public void NotLoad()
+    {
+        GameObject go = pauseMenu.transform.Find("LoadBtn").gameObject;
+        if (!DataManager.Instance.SaveExists()) BlockBtn(go);
+        else NotBlockBtn(go);
+    }
+
+    /// <summary>
+    /// Permite que el botón este bloqueado y que el cursor cambie a bloqueado
+    /// </summary>
+    /// <param name="go">El boton a bloquear</param>
+    private void BlockBtn(GameObject go)
+    {
+        go.GetComponent<Button>().enabled = false;
+        go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Gui_parts/buttonBlocked");
+        go.GetComponent<ChangeCursor>().customCursor = Resources.Load<CursorType>("CursorsSO/Block");
+    }
+
+    /// <summary>
+    /// Permite que el botón se desbloquee y cursor que le pertenece cambie a la mano
+    /// </summary>
+    /// <param name="go">El botón ha desbloquear</param>
+    private void NotBlockBtn(GameObject go)
+    {
+        go.GetComponent<Button>().enabled = true;
+        go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Gui_parts/button");
+        go.GetComponent<ChangeCursor>().customCursor = Resources.Load<CursorType>("CursorsSO/Hand");
     }
 
     /// <summary>
@@ -183,11 +211,15 @@ public class CanvasManager : MonoBehaviour
         GameManager.Instance.GetHUD().SetActive(true);
     }
 
-    public void Saving()
-    {
-        StartCoroutine(SavingGame());
-    }
+    /// <summary>
+    /// Función que se llama al momento de guardar partida
+    /// </summary>
+    public void Saving() { StartCoroutine(SavingGame()); }
 
+    /// <summary>
+    /// Corrutina que ejecuta la animación del disquete de guardado
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator SavingGame()
     {
         disquete.SetActive(true);
@@ -195,13 +227,24 @@ public class CanvasManager : MonoBehaviour
         disquete.SetActive(false);
     }
 
-    public void ConfirmDelete()
-    {
-        GameManager.Instance.FindObjectsByName("ConfirmDelete").SetActive(true);
-    }
+    /// <summary>
+    /// Activa la opción de confirmar el borrado de la partida guardada
+    /// </summary>
+    public void ConfirmDelete() { GameManager.Instance.FindObjectsByName("ConfirmDelete").SetActive(true);  }
 
-    public void NotConfirmDelete()
+    /// <summary>
+    /// Activa el objeto que indica que no hay ninguna partida guardada
+    /// </summary>
+    public void NotConfirmDelete() { GameManager.Instance.FindObjectsByName("NotConfirm").SetActive(true); }
+
+    /// <summary>
+    /// Muestra un texto si el objeto esta bloqueado
+    /// </summary>
+    /// <param name="goName">El nombre del GameObject</param>
+    public void InformativeText(string goName)
     {
-        GameManager.Instance.FindObjectsByName("NotConfirm").SetActive(true);
+        info.SetActive(true);
+        if (goName == "SaveBtn") info.GetComponentInChildren<TextMeshProUGUI>().text = "You are in a mission, you cannot save game";
+        if (goName == "LoadBtn") info.GetComponentInChildren<TextMeshProUGUI>().text = "Doesn't exist any saved game to load";
     }
 }

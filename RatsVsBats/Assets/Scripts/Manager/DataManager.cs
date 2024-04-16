@@ -20,7 +20,7 @@ public class DataManager : MonoBehaviour
         //if (SaveExists()) LoadGame();
     }
 
-    private bool SaveExists() { return File.Exists(GetPersistentPath() + "/data.json"); }
+    public bool SaveExists() { return File.Exists(GetPersistentPath() + "/data.json"); }
 
     /// <summary>
     /// Get to the other functions and methods the persistent data path
@@ -33,11 +33,12 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void SaveGame()
     {
+        CanvasManager.Instance.Saving();
         CreatePersistance();
         PlayerData data = new PlayerData(PlayerController.Instance);
         string path = GetPersistentPath() + "/data.json";
         File.WriteAllText(path, JsonUtility.ToJson(data));
-
+        CanvasManager.Instance.NotLoad();
     }
 
     /// <summary>
@@ -99,5 +100,9 @@ public class DataManager : MonoBehaviour
         else CanvasManager.Instance.NotConfirmDelete();
     }
 
-    public void ConfirmDelete() { File.Delete(GetPersistentPath() + "/data.json"); }
+    public void ConfirmDelete()
+    { 
+        File.Delete(GetPersistentPath() + "/data.json");
+        CanvasManager.Instance.NotLoad();
+    }
 }
