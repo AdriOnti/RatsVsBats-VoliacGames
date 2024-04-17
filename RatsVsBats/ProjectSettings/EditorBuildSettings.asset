@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/OutdoorsScene.unity
-    guid: 8124e5870f4fd4c779e7a5f994e84ad1
+    path: Assets/Scenes/MainMenu.unity
+    guid: fbaa2457b7e0ec14b98c03a1455e5d99
   - enabled: 1
     path: Assets/Scenes/Olavf.unity
     guid: 484ba7122032567488244ca29b83d137

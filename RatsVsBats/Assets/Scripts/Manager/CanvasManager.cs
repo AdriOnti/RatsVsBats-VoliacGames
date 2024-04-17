@@ -171,8 +171,6 @@ public class CanvasManager : MonoBehaviour
         else CursorManager.Instance.NotBlockBtn(go);
     }
 
-    
-
     /// <summary>
     /// Disable the hud elements in the fade out
     /// </summary>
