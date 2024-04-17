@@ -26,7 +26,7 @@ public class DatabaseManager
     {
         try
         {
-            string connectionString = string.Format("server={0};port={4};user={2};password={3};database={1};", host, database, user, password, port);
+            string connectionString = "Server=" + host + ";Database=" + database + ";User=" + user + ";Password=" + password + ";Port=" + port + ";";
             Debug.Log(connectionString);
             dbConnection = new MySqlConnection(connectionString);
             dbConnection.Open();

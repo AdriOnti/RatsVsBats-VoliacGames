@@ -103,22 +103,12 @@ public class PlayerController : MonoBehaviour
         transform.rotation = rotation;
 
         characterController.Move(direction.normalized * speed * Time.deltaTime);
-
-        if (characterController.isGrounded)
-        {
-            verticalSpeed = 0f;
-        }
-        else
-        {
-            verticalSpeed += gravity * Time.deltaTime;
-        }
-
-        characterController.Move(new Vector3(0, verticalSpeed, 0) * Time.deltaTime);
     }
 
     private void DetectJump()
     {
         isGrounded = characterController.isGrounded;
+        Debug.Log(isGrounded);
 
         if (isGrounded)
         {
@@ -131,8 +121,32 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && !isJumping)
         {
             isJumping = true;
-            verticalSpeed = jumpForce;
+            Debug.Log(isGrounded);
+            StartCoroutine(PerformJump());
         }
+    }
+
+    IEnumerator PerformJump()
+    {
+        float currentVerticalSpeed = 0f;
+
+        Debug.Log(isGrounded);
+
+        while (currentVerticalSpeed < jumpForce)
+        {
+            currentVerticalSpeed += Time.deltaTime * jumpForce;
+            characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
+            yield return null;
+        }
+
+        while (!isGrounded)
+        {
+            currentVerticalSpeed += gravity * Time.deltaTime;
+            characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
+            yield return null;
+        }
+
+        isJumping = false;
     }
 
     public void Aim()
