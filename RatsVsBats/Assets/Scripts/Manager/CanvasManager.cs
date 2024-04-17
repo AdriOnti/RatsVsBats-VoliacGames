@@ -157,8 +157,8 @@ public class CanvasManager : MonoBehaviour
     void IsMission()
     {
         GameObject go = pauseMenu.transform.Find("SaveBtn").gameObject;
-        if (GameManager.Instance.isMission) BlockBtn(go);
-        else NotBlockBtn(go);
+        if (GameManager.Instance.isMission) CursorManager.Instance.BlockBtn(go);
+        else CursorManager.Instance.NotBlockBtn(go);
     }
 
     /// <summary>
@@ -167,31 +167,11 @@ public class CanvasManager : MonoBehaviour
     public void NotLoad()
     {
         GameObject go = pauseMenu.transform.Find("LoadBtn").gameObject;
-        if (!DataManager.Instance.SaveExists()) BlockBtn(go);
-        else NotBlockBtn(go);
+        if (!DataManager.Instance.SaveExists()) CursorManager.Instance.BlockBtn(go);
+        else CursorManager.Instance.NotBlockBtn(go);
     }
 
-    /// <summary>
-    /// Permite que el botón este bloqueado y que el cursor cambie a bloqueado
-    /// </summary>
-    /// <param name="go">El boton a bloquear</param>
-    private void BlockBtn(GameObject go)
-    {
-        go.GetComponent<Button>().enabled = false;
-        go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Gui_parts/buttonBlocked");
-        go.GetComponent<ChangeCursor>().customCursor = Resources.Load<CursorType>("CursorsSO/Block");
-    }
-
-    /// <summary>
-    /// Permite que el botón se desbloquee y cursor que le pertenece cambie a la mano
-    /// </summary>
-    /// <param name="go">El botón ha desbloquear</param>
-    private void NotBlockBtn(GameObject go)
-    {
-        go.GetComponent<Button>().enabled = true;
-        go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Gui_parts/button");
-        go.GetComponent<ChangeCursor>().customCursor = Resources.Load<CursorType>("CursorsSO/Hand");
-    }
+    
 
     /// <summary>
     /// Disable the hud elements in the fade out

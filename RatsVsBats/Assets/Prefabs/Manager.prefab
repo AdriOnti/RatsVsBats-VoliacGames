@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 267324689437886391}
   - component: {fileID: 8067221873081969000}
   - component: {fileID: 1947572645042063720}
+  - component: {fileID: 3393596788391730040}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -64,6 +65,8 @@ MonoBehaviour:
   mapInput: 0
   pauseInput: 0
   inventoryOpened: 0
+  disquete: {fileID: 0}
+  info: {fileID: 0}
 --- !u!114 &5383087602413951497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72655e5f7ebac0f419eb7937b08adf32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missionsCompleted: 0
   speedUsed: 0
   isMission: 0
   isFading: 0
@@ -126,3 +130,15 @@ MonoBehaviour:
   father: {fileID: 0}
   fadeIn: {fileID: 0}
   fadeOut: {fileID: 0}
+--- !u!114 &3393596788391730040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452398649174764614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f14c694715566f4bb19cbfcb6767b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
