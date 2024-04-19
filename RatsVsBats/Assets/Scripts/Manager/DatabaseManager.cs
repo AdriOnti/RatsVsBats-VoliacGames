@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Networking;
 using System;
 using System.Data;
 using System.Collections;
@@ -6,41 +7,54 @@ using MySql.Data.MySqlClient;
 using MySql.Data;
 using System.IO;
 
-public class DatabaseManager
+public class DatabaseManager : MonoBehaviour
 {
-    public static MySqlConnection dbConnection;
+    public MySqlConnection dbConnection;
 
-    static string host = "database-rats-vs-bats.c5ey4euiqws3.us-east-1.rds.amazonaws.com";
-    static string user = "admin";
-    static string password = "adminVoliac13";
-    static string database = "schema_test";
-    static string port = "3306";
+    string host = "database-rats-vs-bats.c5ey4euiqws3.us-east-1.rds.amazonaws.com";
+    string user = "admin";
+    string password = "adminVoliac13";
+    string database = "schema_test";
+    string port = "3306";
+
+    public DatabaseManager instancce;
 
 
-    public DatabaseManager()
+    void Start()
     {
+        instancce = this;
         OpenSql();
     }
 
-    public static void OpenSql()
+    public void OpenSql()
     {
+        string connectionString = "Server=" + host + ";Port=" + port + ";Database=" + database + ";Uid=" + user + ";Pwd=" + password;
+        Debug.Log(connectionString);
+
+        //StartCoroutine(ConnectToDatabase(connectionString));
+        ConnectToDatabase(connectionString);
+        //CloseCon(dbConnection);
+    }
+
+    private void ConnectToDatabase(string conString)
+    {
+        //yield return new WaitUntil(()=>dbConnection.State==ConnectionState.Open);
+        //Debug.Log("Connected");
         try
         {
-            string connectionString = "Server=" + host + ";Database=" + database + ";User=" + user + ";Password=" + password + ";Port=" + port + ";";
-            Debug.Log(connectionString);
-            dbConnection = new MySqlConnection(connectionString);
+            dbConnection = new MySqlConnection(conString);
             dbConnection.Open();
-            Debug.Log("Connected");
+            Debug.Log(dbConnection.State.ToString());
+            //connected = true;
         }
         catch (Exception e)
         {
-            throw new Exception("error" + e.Message.ToString());
+            Debug.Log(dbConnection.State.ToString());
+            Debug.LogError("Error: " + e.Message);
         }
-
-        CloseCon(dbConnection);
     }
 
-    static IEnumerator CloseCon(MySqlConnection dbConnection2)
+    IEnumerator CloseCon(MySqlConnection dbConnection2)
     {
         yield return new WaitForSeconds(3f);
         dbConnection2.Close();
@@ -161,7 +175,7 @@ public class DatabaseManager
         }
     }
 
-    public static DataSet ExecuteQuery(string sqlString)
+    public DataSet ExecuteQuery(string sqlString)
     {
         if (dbConnection.State == ConnectionState.Open)
         {

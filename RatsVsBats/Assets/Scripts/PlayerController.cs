@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float speed;
     public Transform playerCamera;
+    public float groundDistance = 5f;
+    public LayerMask groundMask;
 
     private float gravity = -9.81f;
     private float fallSpeed;
@@ -108,7 +111,7 @@ public class PlayerController : MonoBehaviour
     private void DetectJump()
     {
         isGrounded = characterController.isGrounded;
-        Debug.Log(isGrounded);
+        //Debug.Log(isGrounded);
 
         if (isGrounded)
         {
@@ -118,10 +121,9 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if (isGrounded && !isJumping)
+        if (!isJumping)
         {
             isJumping = true;
-            Debug.Log(isGrounded);
             StartCoroutine(PerformJump());
         }
     }
@@ -134,14 +136,14 @@ public class PlayerController : MonoBehaviour
 
         while (currentVerticalSpeed < jumpForce)
         {
-            currentVerticalSpeed += Time.deltaTime * jumpForce;
+            currentVerticalSpeed += Time.deltaTime * jumpForce * 10;
             characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
             yield return null;
         }
 
         while (!isGrounded)
         {
-            currentVerticalSpeed += gravity * Time.deltaTime;
+            currentVerticalSpeed += gravity * Time.deltaTime * 2;
             characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
             yield return null;
         }
