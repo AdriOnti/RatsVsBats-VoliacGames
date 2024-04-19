@@ -187,4 +187,12 @@ public class PlayerController : Character
     {
         isInteracting = !isInteracting;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.TryGetComponent<ItemPickup>(out ItemPickup ip))
+        {
+            ip.Collected();
+        }
+    }
 }

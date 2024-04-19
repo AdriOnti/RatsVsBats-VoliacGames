@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -10,14 +11,21 @@ public class DataManager : MonoBehaviour
         get { return instance; }
     }
 
+    public List<GameObject> itemsInventory;
+
     // AWAKE
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
         else instance = this;
+    }
 
-        // Descomentar esta linea para testing o para el MainMeu
-        //if (SaveExists()) LoadGame();
+    private void Start()
+    {
+        if (SaveExists())
+        {
+            LoadGame();
+        }
     }
 
     public bool SaveExists() { return File.Exists(GetPersistentPath() + "/data.json"); }
@@ -55,7 +63,15 @@ public class DataManager : MonoBehaviour
         PlayerController.Instance.speed = data.speed;
 
         InventoryManager.Instance.Items.Clear();
-        foreach (Item item in data.inventory) InventoryManager.Instance.Add(item);
+        itemsInventory.Clear();
+
+        foreach(GameObject go in data.inventory)
+        {
+            if(go.TryGetComponent<ItemPickup>(out ItemPickup ip))
+            {
+                ip.Collected();
+            }
+        }
 
         if (CanvasManager.Instance.pauseInput) CanvasManager.Instance.PauseGame();
     }

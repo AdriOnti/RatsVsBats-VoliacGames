@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ItemPickup : MonoBehaviour
+public class ItemPickup : MonoBehaviour, ICollectable
 {
     public Item item;
     public bool isFromMission;
@@ -27,11 +27,9 @@ public class ItemPickup : MonoBehaviour
         Destroy(gameObject);
     }
 
-    /// <summary>
-    /// OnTriggerEnter que llama al Pickup
-    /// </summary>
-    private void OnTriggerEnter(Collider collision)
+    public void Collected()
     {
-        if (collision.GetComponent<PlayerController>() != null) Pickup();
+        DataManager.Instance.itemsInventory.Add(Instantiate(gameObject, GameManager.Instance.transform));
+        Pickup();
     }
 }

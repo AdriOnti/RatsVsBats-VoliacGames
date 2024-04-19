@@ -32,7 +32,6 @@ public class MainMenu : MonoBehaviour
 
     public void NewGame()
     {
-        //SceneManager.LoadScene("RatsVsBats");
         SceneManager.LoadScene(1);
     }
 
