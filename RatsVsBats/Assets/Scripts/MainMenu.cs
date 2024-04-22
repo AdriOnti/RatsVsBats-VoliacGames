@@ -41,12 +41,14 @@ public class MainMenu : MonoBehaviour
 
     public void NewGame()
     {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         PlayerPrefs.SetInt("loading", 0);
         SceneManager.LoadScene(1);
     }
 
     public void LoadGame()
     {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         PlayerPrefs.SetInt("loading", 1);
         SceneManager.LoadScene(1);
     }

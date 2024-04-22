@@ -22,7 +22,7 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
-        if (SaveExists() && SceneManager.GetActiveScene().buildIndex != 0 /*&& PlayerPrefs.GetInt("loading") > 0*/)
+        if (SaveExists() && SceneManager.GetActiveScene().buildIndex != 0 && PlayerPrefs.GetInt("loading") > 0)
         {
             LoadGame();
         }
