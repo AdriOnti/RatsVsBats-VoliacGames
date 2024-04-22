@@ -49,7 +49,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void SaveGame()
     {
-        CanvasManager.Instance.Saving();
+        if(CanvasManager.Instance.pauseInput) CanvasManager.Instance.Saving();
         CreatePersistance();
         PlayerData data = new PlayerData(PlayerController.Instance);
         string path = GetPersistentPath() + "/data.json";

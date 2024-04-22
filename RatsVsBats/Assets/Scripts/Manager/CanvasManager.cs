@@ -30,6 +30,9 @@ public class CanvasManager : MonoBehaviour
     [HideInInspector] GameObject inventoryBtn;
     [HideInInspector] GameObject inventory;
 
+    [Header("AutoSave")]
+    [SerializeField] GameObject autoSave;
+
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -68,6 +71,7 @@ public class CanvasManager : MonoBehaviour
         inventoryBtn = GameManager.Instance.GetInventoryBtn();
         disquete = GameManager.Instance.GetDisquete();
         info = GameManager.Instance.GetInfoMenu();
+        autoSave = GameManager.Instance.GetAutoSave();
     }
 
     /// <summary>
@@ -87,6 +91,7 @@ public class CanvasManager : MonoBehaviour
         inventory.SetActive(false);
         disquete.SetActive(false);
         info.SetActive(false);
+        autoSave.SetActive(false);
         GameManager.Instance.FindObjectsByName("NotConfirm").SetActive(false);
         GameManager.Instance.FindObjectsByName("ConfirmDelete").SetActive(false);
         GameManager.Instance.FindObjectsByName("ConfirmDelete2Cour").SetActive(false);
@@ -224,5 +229,17 @@ public class CanvasManager : MonoBehaviour
         info.SetActive(true);
         if (goName == "SaveBtn") info.GetComponentInChildren<TextMeshProUGUI>().text = "You are in a mission, you cannot save game";
         if (goName == "LoadBtn") info.GetComponentInChildren<TextMeshProUGUI>().text = "Doesn't exist any saved game to load";
+    }
+
+    public void AutoSave()
+    {
+        StartCoroutine(StartAutoSave());
+    }
+
+    private IEnumerator StartAutoSave()
+    {
+        autoSave.SetActive(true);
+        yield return new WaitForSecondsRealtime(2.0f);
+        autoSave.SetActive(false);
     }
 }
