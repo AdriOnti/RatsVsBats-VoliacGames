@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     // Get the info text in pause menu
     public GameObject GetInfoMenu() { return FindObjectsByName("InformationMenu"); }
 
+    // Get the autosave canvas object
     public GameObject GetAutoSave() { return FindObjectsByName("AutoSave"); }
 
     /// <summary>
