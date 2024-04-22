@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -39,8 +40,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundMask;
 
     private float gravity = -9.81f;
-    private float fallSpeed;
-    private float verticalSpeed;
+    public float fallSpeed = 5f;
+    public float maxDistance = 2f; // Maximum distance to check for ground
 
     private void Awake()
     {
@@ -53,7 +54,6 @@ public class PlayerController : MonoBehaviour
         inputManager = InputManager.Instance;
         characterController = GetComponent<CharacterController>();
         //rb = GetComponent<Rigidbody>();
-        fallSpeed = 0f;
     }
 
     private void OnEnable()
@@ -86,6 +86,21 @@ public class PlayerController : MonoBehaviour
     {
         DetectMovement();
         DetectJump();
+        Rotate();
+        StartCoroutine(FallToTouchGround());
+    }
+
+    IEnumerator FallToTouchGround()
+    {
+        float currentVerticalSpeed = 0f;
+
+        while (!isGrounded && !isJumping)
+        {
+            Debug.Log(isGrounded);
+            currentVerticalSpeed += gravity * Time.deltaTime * 0.5f;
+            characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
+            yield return null;
+        }
     }
 
     private void DetectMovement()
@@ -100,12 +115,15 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
+        characterController.Move(speed * Time.deltaTime * direction);
+    }
+
+    private void Rotate()
+    {
         Vector3 cameraDirection = playerCamera.forward;
         cameraDirection.y = 0;
         Quaternion rotation = Quaternion.LookRotation(cameraDirection);
         transform.rotation = rotation;
-
-        characterController.Move(direction.normalized * speed * Time.deltaTime);
     }
 
     private void DetectJump()
@@ -132,8 +150,6 @@ public class PlayerController : MonoBehaviour
     {
         float currentVerticalSpeed = 0f;
 
-        Debug.Log(isGrounded);
-
         while (currentVerticalSpeed < jumpForce)
         {
             currentVerticalSpeed += Time.deltaTime * jumpForce * 10;
@@ -143,6 +159,7 @@ public class PlayerController : MonoBehaviour
 
         while (!isGrounded)
         {
+            Debug.Log("falling");
             currentVerticalSpeed += gravity * Time.deltaTime * 2;
             characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
             yield return null;
@@ -191,5 +208,14 @@ public class PlayerController : MonoBehaviour
     public void Interact()
     {
         isInteracting = !isInteracting;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Test"))
+        {
+            CameraManager.instance.ChangeCamera(Cameras.m2_bossCamera);
+            DatabaseManager.instance.OpenSql();
+        }
     }
 }
