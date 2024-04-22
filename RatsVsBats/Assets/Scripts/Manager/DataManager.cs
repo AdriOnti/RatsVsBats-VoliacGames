@@ -27,6 +27,10 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public bool ActiveSceneIndex()
     {
         return SceneManager.GetActiveScene().buildIndex != 0;
@@ -61,6 +65,12 @@ public class DataManager : MonoBehaviour
         string path = GetPersistentPath() + "/data.json";
         string playerData = File.ReadAllText(path);
         PlayerData data = JsonUtility.FromJson<PlayerData>(playerData);
+
+        PlayerController.Instance.hp = data.maxHP;
+        PlayerController.Instance.currentHP = data.currentHP;
+        PlayerController.Instance.jumpForce = data.jumpForce;
+        PlayerController.Instance.healingForce = data.healingForce;
+
 
         PlayerController.Instance.transform.position = data.position;
         PlayerController.Instance.originalSpeed = data.speed;

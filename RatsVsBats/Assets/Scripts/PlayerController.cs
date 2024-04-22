@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : Character
 {
@@ -47,6 +48,7 @@ public class PlayerController : Character
     {
         inputManager = InputManager.Instance;
         _rb = GetComponent<Rigidbody>();
+        if(currentHP <= 0 || currentHP > hp) currentHP = hp;
     }
 
     private void OnEnable()
@@ -79,6 +81,26 @@ public class PlayerController : Character
         DetectJump();
 
         Move();
+        CheckHP();
+
+        if (Input.GetKeyUp(KeyCode.J)) currentHP -= 1;
+    }
+
+    private void CheckHP()
+    {
+        if (currentHP <= 0)
+        {
+            StartCoroutine(Die());
+        }
+    }
+
+    private IEnumerator Die()
+    {
+        FadeManager.Instance.FadeOut();
+        yield return new WaitForSecondsRealtime(1.5f);
+        DataManager.Instance.LoadGame();
+        yield return new WaitForSecondsRealtime(2f);
+        FadeManager.Instance.FadeIn();
     }
 
     private void DetectMovement()

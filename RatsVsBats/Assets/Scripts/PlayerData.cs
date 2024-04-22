@@ -5,6 +5,11 @@ using UnityEngine;
 [Serializable]
 public class PlayerData
 {
+    public float maxHP;
+    public float currentHP;
+    public float jumpForce;
+    public float healingForce;
+
     public Vector3 position;
     public float[] rotation;
     public float speed;
@@ -13,6 +18,11 @@ public class PlayerData
 
     public PlayerData(PlayerController player) 
     {
+        maxHP = player.hp; 
+        currentHP = player.currentHP; 
+        jumpForce = player.jumpForce; 
+        healingForce = player.healingForce;
+
         position = player.transform.position;
         rotation = new float[]
         {
