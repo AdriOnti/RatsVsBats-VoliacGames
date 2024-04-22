@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,12 +18,18 @@ public class DataManager : MonoBehaviour
         else instance = this;
     }
 
+    // START
     private void Start()
     {
-        if (SaveExists() && SceneManager.GetActiveScene().buildIndex != 0 && PlayerPrefs.GetInt("loading") > 0)
+        if (SaveExists() && ActiveSceneIndex() && PlayerPrefs.GetInt("loading") > 0)
         {
             LoadGame();
         }
+    }
+
+    public bool ActiveSceneIndex()
+    {
+        return SceneManager.GetActiveScene().buildIndex != 0;
     }
 
     public bool SaveExists() { return File.Exists(GetPersistentPath() + "/data.json"); }
@@ -63,12 +67,6 @@ public class DataManager : MonoBehaviour
         PlayerController.Instance.speed = data.speed;
 
         InventoryManager.Instance.Items.Clear();
-
-        //foreach(Transform go in data.inventory)
-        //{
-        //    go.GetComponent<ItemPickup>().Collected();
-        //}
-
         InventoryManager.Instance.Items = data.items;
 
         if (CanvasManager.Instance.pauseInput) CanvasManager.Instance.PauseGame();
@@ -120,6 +118,6 @@ public class DataManager : MonoBehaviour
     public void ConfirmDelete()
     { 
         File.Delete(GetPersistentPath() + "/data.json");
-        if(SceneManager.GetActiveScene().buildIndex != 0) CanvasManager.Instance.NotLoad();
+        if(ActiveSceneIndex()) CanvasManager.Instance.NotLoad();
     }
 }

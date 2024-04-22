@@ -13,6 +13,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject loadGameBtn;
     [SerializeField] private GameObject deleteGameBtn;
 
+    [Header("Delete")]
+    [SerializeField] private GameObject confirmDelete;
+    [SerializeField] private GameObject confirmDelete2;
+
     // AWAKE
     private void Awake()
     {
@@ -20,11 +24,17 @@ public class MainMenu : MonoBehaviour
         else instance = this;
     }
 
+    // START
     private void Start()
     {
+        confirmDelete.SetActive(false);
+        confirmDelete2.SetActive(false);
         CheckLoad();
     }
 
+    /// <summary>
+    /// If a saved game do not exits, block the load button and delete button
+    /// </summary>
     private void CheckLoad()
     {
         if (!DataManager.Instance.SaveExists())
@@ -39,6 +49,9 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Start a new game
+    /// </summary>
     public void NewGame()
     {
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
@@ -46,6 +59,9 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    /// <summary>
+    /// Load a previous game
+    /// </summary>
     public void LoadGame()
     {
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
@@ -53,12 +69,23 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    /// <summary>
+    /// Delete the saved game
+    /// </summary>
     public void DeleteGame()
+    {
+        confirmDelete.SetActive(true);
+    }
+
+    public void ConfirmDelete()
     {
         DataManager.Instance.ConfirmDelete();
         CheckLoad();
     }
 
+    /// <summary>
+    /// Quit the game
+    /// </summary>
     public void QuitGame()
     {
 #if UNITY_EDITOR

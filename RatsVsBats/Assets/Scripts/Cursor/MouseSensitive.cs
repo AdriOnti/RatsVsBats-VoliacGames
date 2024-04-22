@@ -12,16 +12,16 @@ public class MouseSensitive : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData eventData)
     {
         transform.localScale = new Vector3(1.12f, 1.12f, 1.12f);
-        if (gameObject.GetComponent<Button>().enabled == false) CanvasManager.Instance.InformativeText(gameObject.name);
+        if (GetComponent<Button>().enabled == false && DataManager.Instance.ActiveSceneIndex()) CanvasManager.Instance.InformativeText(gameObject.name);
     }
 
     /// <summary>
     /// Devuelve la escala del objeto a la normalidad
     /// </summary>
-    /// <param name="eventData"></param>
+    /// <param name="eventData">Evento del mouse</param>
     public void OnPointerExit(PointerEventData eventData)
     {
         transform.localScale = new Vector3(1f, 1f, 1f);
-        if (gameObject.GetComponent<Button>().enabled == false) GameManager.Instance.GetInfoMenu().SetActive(false);
+        if (GetComponent<Button>().enabled == false && DataManager.Instance.ActiveSceneIndex()) GameManager.Instance.GetInfoMenu().SetActive(false);
     }
 }
