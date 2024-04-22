@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     // Get the info text in pause menu
     public GameObject GetInfoMenu() { return FindObjectsByName("InformationMenu"); }
 
+    public Transform ItemsTransform() { return FindObjectsByName("ItemsTransform").transform; }
+
     /// <summary>
     /// Busca entre todos los objetos, tanto los activos como inactivos, el que se busca
     /// </summary>

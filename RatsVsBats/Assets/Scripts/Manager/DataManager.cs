@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DataManager : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
-        if (SaveExists())
+        if (SaveExists() && SceneManager.GetActiveScene().buildIndex != 0 /*&& PlayerPrefs.GetInt("loading") > 0*/)
         {
             LoadGame();
         }
@@ -65,12 +66,9 @@ public class DataManager : MonoBehaviour
         InventoryManager.Instance.Items.Clear();
         itemsInventory.Clear();
 
-        foreach(GameObject go in data.inventory)
+        foreach(Transform go in data.inventory)
         {
-            if(go.TryGetComponent<ItemPickup>(out ItemPickup ip))
-            {
-                ip.Collected();
-            }
+            go.GetComponent<ItemPickup>().Collected();
         }
 
         if (CanvasManager.Instance.pauseInput) CanvasManager.Instance.PauseGame();
@@ -122,6 +120,6 @@ public class DataManager : MonoBehaviour
     public void ConfirmDelete()
     { 
         File.Delete(GetPersistentPath() + "/data.json");
-        CanvasManager.Instance.NotLoad();
+        if(SceneManager.GetActiveScene().buildIndex != 0) CanvasManager.Instance.NotLoad();
     }
 }

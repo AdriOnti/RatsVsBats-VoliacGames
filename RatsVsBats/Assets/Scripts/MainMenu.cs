@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
     }
 
     [SerializeField] private GameObject loadGameBtn;
+    [SerializeField] private GameObject deleteGameBtn;
 
     // AWAKE
     private void Awake()
@@ -26,18 +27,34 @@ public class MainMenu : MonoBehaviour
 
     private void CheckLoad()
     {
-        if (!DataManager.Instance.SaveExists()) CursorManager.Instance.BlockBtn(loadGameBtn);
-        else CursorManager.Instance.NotBlockBtn(loadGameBtn);
+        if (!DataManager.Instance.SaveExists())
+        {
+            CursorManager.Instance.BlockBtn(loadGameBtn);
+            CursorManager.Instance.BlockBtn(deleteGameBtn);
+        }
+        else
+        {
+            CursorManager.Instance.NotBlockBtn(loadGameBtn);
+            CursorManager.Instance.NotBlockBtn(deleteGameBtn);
+        }
     }
 
     public void NewGame()
     {
+        PlayerPrefs.SetInt("loading", 0);
         SceneManager.LoadScene(1);
     }
 
     public void LoadGame()
     {
+        PlayerPrefs.SetInt("loading", 1);
+        SceneManager.LoadScene(1);
+    }
 
+    public void DeleteGame()
+    {
+        DataManager.Instance.ConfirmDelete();
+        CheckLoad();
     }
 
     public void QuitGame()

@@ -21,6 +21,7 @@ public class ItemPickup : MonoBehaviour, ICollectable
     {
         // If the bool is true, it makes a clone of the item and assign it to the InventoryManager
         if(isFromMission) { InventoryManager.Instance.missionItem = Instantiate(gameObject, GameManager.Instance.MissionItemTransform()); }
+        else { Instantiate(gameObject, GameManager.Instance.ItemsTransform()); }
 
         // Add the item to the inventory and destroy the gameobject
         InventoryManager.Instance.Add(item); 
@@ -29,7 +30,6 @@ public class ItemPickup : MonoBehaviour, ICollectable
 
     public void Collected()
     {
-        DataManager.Instance.itemsInventory.Add(Instantiate(gameObject, GameManager.Instance.transform));
         Pickup();
     }
 }

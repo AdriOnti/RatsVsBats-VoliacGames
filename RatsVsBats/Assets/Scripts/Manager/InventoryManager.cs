@@ -7,7 +7,7 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager Instance;
 
     [Header("Inventory")]
-    [SerializeField] public List<Item> Items = new List<Item>();
+    public List<Item> Items = new List<Item>();
     public Transform ItemContent;
     public GameObject InventoryItem;
     public Toggle EnableRemove;
@@ -33,7 +33,7 @@ public class InventoryManager : MonoBehaviour
     /// <param name="item"></param>
     public void Add(Item item)
     {
-        Item newItem = Instantiate(item);
+        Item newItem = item;
         Items.Add(newItem);
         PlayerController.Instance.ChangeItem();
     }

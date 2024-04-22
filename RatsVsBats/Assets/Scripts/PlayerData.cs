@@ -8,11 +8,12 @@ public class PlayerData
     public Vector3 position;
     public float[] rotation;
     public float speed;
-    public List<GameObject> inventory;
+    public List<Transform> inventory;
     public int missionsCompleted;
 
     public PlayerData(PlayerController player) 
     {
+        inventory = new List<Transform>();
         position = player.transform.position;
         rotation = new float[]
         {
@@ -22,7 +23,13 @@ public class PlayerData
         };
 
         speed = player.originalSpeed;
-        inventory = DataManager.Instance.itemsInventory;
         missionsCompleted = GameManager.Instance.missionsCompleted;
+
+        Transform transform = GameManager.Instance.ItemsTransform();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            inventory.Add(transform.GetChild(i));
+        }
     }
 }
