@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,8 +12,6 @@ public class DataManager : MonoBehaviour
     {
         get { return instance; }
     }
-
-    public List<GameObject> itemsInventory;
 
     // AWAKE
     private void Awake()
@@ -64,12 +63,13 @@ public class DataManager : MonoBehaviour
         PlayerController.Instance.speed = data.speed;
 
         InventoryManager.Instance.Items.Clear();
-        itemsInventory.Clear();
 
-        foreach(Transform go in data.inventory)
-        {
-            go.GetComponent<ItemPickup>().Collected();
-        }
+        //foreach(Transform go in data.inventory)
+        //{
+        //    go.GetComponent<ItemPickup>().Collected();
+        //}
+
+        InventoryManager.Instance.Items = data.items;
 
         if (CanvasManager.Instance.pauseInput) CanvasManager.Instance.PauseGame();
     }
