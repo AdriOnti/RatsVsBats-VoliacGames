@@ -11,11 +11,12 @@ public class MainMenu : MonoBehaviour
     }
 
     [SerializeField] private GameObject loadGameBtn;
-    [SerializeField] private GameObject deleteGameBtn;
 
     [Header("Delete")]
     [SerializeField] private GameObject confirmDelete;
     [SerializeField] private GameObject confirmDelete2;
+    [SerializeField] private GameObject loadScroll;
+    [SerializeField] private GameObject loadDelete;
 
     // AWAKE
     private void Awake()
@@ -29,6 +30,8 @@ public class MainMenu : MonoBehaviour
     {
         confirmDelete.SetActive(false);
         confirmDelete2.SetActive(false);
+        loadScroll.SetActive(false);
+        loadDelete.SetActive(false);
         CheckLoad();
     }
 
@@ -40,12 +43,10 @@ public class MainMenu : MonoBehaviour
         if (!DataManager.Instance.SaveExists())
         {
             CursorManager.Instance.BlockBtn(loadGameBtn);
-            CursorManager.Instance.BlockBtn(deleteGameBtn);
         }
         else
         {
             CursorManager.Instance.NotBlockBtn(loadGameBtn);
-            CursorManager.Instance.NotBlockBtn(deleteGameBtn);
         }
     }
 
@@ -69,6 +70,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void LoadButton()
+    {
+        loadScroll.SetActive(true);
+    }
+
     /// <summary>
     /// Delete the saved game
     /// </summary>
@@ -81,6 +87,7 @@ public class MainMenu : MonoBehaviour
     {
         DataManager.Instance.ConfirmDelete();
         CheckLoad();
+        loadScroll.SetActive(false);
     }
 
     /// <summary>
