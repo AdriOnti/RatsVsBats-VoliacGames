@@ -79,7 +79,7 @@ public class DatabaseManager : MonoBehaviour
         string query = "CREATE TABLE " + name + " (" + col[0] + " " + colType[0];
         for (int i = 1; i < col.Length; ++i)
         {
-            query += ", " + col + " " + colType;
+            query += ", " + col[i] + " " + colType[i];
         }
         query += ")";
         return ExecuteQuery(query);
@@ -94,7 +94,7 @@ public class DatabaseManager : MonoBehaviour
         string query = "CREATE TABLE " + name + "(" + col[0] + " " + colType[0] + " NOT NULL AUTO INCREMENT";
         for (int i = 1; i < col.Length; ++i)
         {
-            query += ", " + col + " " + colType;
+            query += ", " + col[i] + " " + colType[i];
         }
         query += ", PRIMARY KEY(" + col[0] + ")" + ")";
         Debug.Log(query);
@@ -106,7 +106,7 @@ public class DatabaseManager : MonoBehaviour
         string query = "INSERT INTO " + tableName + " VALUES(" + "'" + values[0] + "'";
         for (int i = 1; i < values.Length; ++i)
         {
-            query += ", " + "'" + values + "'";
+            query += ", " + "'" + values[i] + "'";
         }
         query += ")";
         Debug.Log(query);
@@ -122,12 +122,12 @@ public class DatabaseManager : MonoBehaviour
         string query = "INSERT INTO " + tableName + "(" + col[0];
         for (int i = 1; i < col.Length; ++i)
         {
-            query += ", " + col;
+            query += ", " + col[i];
         }
         query += ") VALUES(" + "'" + values[0] + "'";
         for (int i = 1; i < values.Length; ++i)
         {
-            query += ", " + "'" + values + "'";
+            query += ", " + "'" + values[i] + "'";
         }
         query += ")";
         Debug.Log(query);
@@ -143,12 +143,12 @@ public class DatabaseManager : MonoBehaviour
         string query = "SELECT " + items[0];
         for (int i = 1; i < items.Length; ++i)
         {
-            query += ", " + items;
+            query += ", " + items[i];
         }
         query += " FROM " + tableName + " WHERE " + col[0] + operation[0] + "'" + values[0] + "’ ";
         for (int i = 1; i < col.Length; ++i)
         {
-            query += " AND " + col + operation + "'" + values[0] + "’ ";
+            query += " AND " + col[i] + operation[i] + "'" + values[i] + "’ ";
         }
         return ExecuteQuery(query);
     }
@@ -158,7 +158,7 @@ public class DatabaseManager : MonoBehaviour
         string query = "UPDATE " + tableName + " SET " + cols[0] + " = " + colsvalues[0];
         for (int i = 1; i < colsvalues.Length; ++i)
         {
-            query += ", " + cols + " =" + colsvalues;
+            query += ", " + cols[i] + " =" + colsvalues[i];
         }
         query += " WHERE " + selectkey + " = " + selectvalue + " ";
         return ExecuteQuery(query);
@@ -169,7 +169,7 @@ public class DatabaseManager : MonoBehaviour
         string query = "DELETE FROM " + tableName + " WHERE " + cols[0] + " = " + colsvalues[0];
         for (int i = 1; i < colsvalues.Length; ++i)
         {
-            query += " or " + cols + " = " + colsvalues;
+            query += " or " + cols[i] + " = " + colsvalues[i];
         }
         Debug.Log(query);
         return ExecuteQuery(query);

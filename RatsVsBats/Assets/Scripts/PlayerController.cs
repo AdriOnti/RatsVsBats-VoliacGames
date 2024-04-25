@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Data;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -215,7 +216,11 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Test"))
         {
             CameraManager.instance.ChangeCamera(Cameras.m2_bossCamera);
-            DatabaseManager.instance.OpenSql();
+            string[] columnas = { "id", "nombre", "edad" };
+            string[] tipos = { "INT", "VARCHAR(50)", "INT" };
+
+            //DataSet resultado = DatabaseManager.instance.CreateTable("testTable", columnas, tipos);
+            DataSet resultado2 = DatabaseManager.instance.InsertInto("testTable", columnas, tipos);
         }
     }
 }
