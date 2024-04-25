@@ -14,7 +14,7 @@ public class DatabaseManager : MonoBehaviour
     string host = "rats-vs-bats-db.ctusuewsqph4.us-east-1.rds.amazonaws.com";
     string user = "developer";
     string password = "adminVoliac13";
-    string database = "sys";
+    string database = "RatsVsBats";
     string port = "3306";
 
     public static DatabaseManager instance;
@@ -23,14 +23,14 @@ public class DatabaseManager : MonoBehaviour
     void Start()
     {
         instance = this;
-        //OpenSql();
+        OpenSql();
     }
 
     public void OpenSql()
     {
-        string connectionString = "Server=" + host + ";Port=" + port + ";Database=" + database + ";Uid=" + user + ";Pwd=" + password;
-        Debug.Log(connectionString);
-
+        string connectionString = "Server=" + host + ";Port=" + port + ";Database=" + database + ";Uid=" + user + ";Pwd=" + password + ";SslMode=none";
+        Debug.Log("Intentando conectar a la base de datos...");
+        Debug.Log("Cadena de conexión: " + connectionString);
         ConnectToDatabase(connectionString);
     }
 
@@ -40,13 +40,27 @@ public class DatabaseManager : MonoBehaviour
         {
             dbConnection = new MySqlConnection(conString);
             dbConnection.Open();
-            Debug.Log(dbConnection.State.ToString());
+            Debug.Log("Conexión establecida correctamente.");
+            Debug.Log("Estado de la conexión: " + dbConnection.State.ToString());
+
+            // Ejecutar una consulta de prueba
+            //string query = "SELECT VERSION()";
+            //MySqlCommand cmd = new MySqlCommand(query, dbConnection);
+            //object result = cmd.ExecuteScalar();
+            //Debug.Log("Versión de MySQL: " + result.ToString());
         }
         catch (Exception e)
         {
-            Debug.Log(e.ToString());
-            Debug.Log(dbConnection.State.ToString());
-            Debug.LogError("Error: " + e.Message);
+            Debug.LogError("Error al conectar a la base de datos: " + e.Message);
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (dbConnection != null && dbConnection.State != System.Data.ConnectionState.Closed)
+        {
+            dbConnection.Close();
+            Debug.Log("Conexión cerrada.");
         }
     }
 
