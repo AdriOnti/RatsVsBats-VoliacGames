@@ -39,6 +39,10 @@ public class DatabaseManager : MonoBehaviour
         try
         {
             dbConnection = new MySqlConnection(conString);
+            if (dbConnection.State.ToString() == "Open")
+            {
+                dbConnection.Close();
+            }
             dbConnection.Open();
             Debug.Log("Conexión establecida correctamente.");
             Debug.Log("Estado de la conexión: " + dbConnection.State.ToString());

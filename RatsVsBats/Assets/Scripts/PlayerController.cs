@@ -35,8 +35,6 @@ public class PlayerController : Character
     [Header("Stadistics")]
     public float originalSpeed;
     public Vector3 _playerCamera;
-    public float jumpForce;
-    public float speed;
     public Transform playerCamera;
     public float groundDistance = 5f;
     public LayerMask groundMask;

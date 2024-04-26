@@ -28,7 +28,7 @@ public class CameraManager : MonoBehaviour
     {
         instance = this;
 
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
 
         currentCamera = Camera.main;
