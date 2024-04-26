@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
+using System.Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
 
 public class PlayerController : Character
 {
@@ -13,7 +16,8 @@ public class PlayerController : Character
 
     private InputManager inputManager;
     private Vector2 movementInput;
-    private Rigidbody _rb;
+    private CharacterController characterController;
+    private Rigidbody rb;
     private Vector3 _velocity;
 
     [Header("Bools & Test Bools")]
@@ -31,6 +35,15 @@ public class PlayerController : Character
     [Header("Stadistics")]
     public float originalSpeed;
     public Vector3 _playerCamera;
+    public float jumpForce;
+    public float speed;
+    public Transform playerCamera;
+    public float groundDistance = 5f;
+    public LayerMask groundMask;
+
+    private float gravity = -9.81f;
+    public float fallSpeed = 5f;
+    public float maxDistance = 2f; // Maximum distance to check for ground
 
     [Header("Items")]
     public Item actualItem;
@@ -47,8 +60,10 @@ public class PlayerController : Character
     private void Start()
     {
         inputManager = InputManager.Instance;
-        _rb = GetComponent<Rigidbody>();
+        // _rb = GetComponent<Rigidbody>();
         if(currentHP <= 0 || currentHP > hp) currentHP = hp;
+        characterController = GetComponent<CharacterController>();
+        //rb = GetComponent<Rigidbody>();
     }
 
     private void OnEnable()
@@ -79,8 +94,10 @@ public class PlayerController : Character
     {
         DetectMovement();
         DetectJump();
+        Rotate();
+        StartCoroutine(FallToTouchGround());
 
-        Move();
+        // Move();
         CheckHP();
 
         if (Input.GetKeyUp(KeyCode.J)) StartCoroutine(Hurt());
@@ -110,58 +127,83 @@ public class PlayerController : Character
         yield return new WaitForSecondsRealtime(2f);
         FadeManager.Instance.FadeIn();
     }
+    
+    IEnumerator FallToTouchGround()
+    {
+        float currentVerticalSpeed = 0f;
+
+        while (!isGrounded && !isJumping)
+        {
+            Debug.Log(isGrounded);
+            currentVerticalSpeed += gravity * Time.deltaTime * 0.5f;
+            characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
+            yield return null;
+        }
+    }
 
     private void DetectMovement()
     {
         movementInput = inputManager.GetPlayerMovement();
-        CheckIfIsMoving();
-    }
-
-    private void CheckIfIsMoving()
-    {
-        if (!(movementInput.x != 0 || movementInput.y != 0)) StartCoroutine(WaitForBoolToChange());
-        else isWalking = true;
-    }
-
-    private IEnumerator WaitForBoolToChange()
-    {
-        StopCoroutine(WaitForBoolToChange());
-        yield return new WaitForSeconds(0.1f);
-        isWalking = false;
+        if (movementInput.magnitude > 0.1f)
+        {
+            Move();
+        }
     }
 
     private void Move()
     {
-        if (isGrounded && _velocity.y < 0)
-        {
-            _velocity.y = 0f;
-        }
+        Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
+        characterController.Move(speed * Time.deltaTime * direction);
+    }
 
-        if (movementInput.x != 0.0f || movementInput.y != 0.0f)
-        {
-            Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
-            _rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
-        }
+    private void Rotate()
+    {
+        Vector3 cameraDirection = playerCamera.forward;
+        cameraDirection.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(cameraDirection);
+        transform.rotation = rotation;
     }
 
     private void DetectJump()
     {
-        isGrounded = IsGrounded();
-        if (isGrounded) isJumping = false;
+        isGrounded = characterController.isGrounded;
+        //Debug.Log(isGrounded);
+
+        if (isGrounded)
+        {
+            isJumping = false;
+        }
     }
 
     public void Jump()
     {
-        if (isGrounded && !isCrouching)
+        if (!isJumping)
         {
             isJumping = true;
-            _rb.velocity = Vector3.up * jumpForce;
+            StartCoroutine(PerformJump());
         }
     }
 
-    private bool IsGrounded()
+    IEnumerator PerformJump()
     {
-        return _rb.velocity.y == 0;
+        float currentVerticalSpeed = 0f;
+
+        while (currentVerticalSpeed < jumpForce)
+        {
+            currentVerticalSpeed += Time.deltaTime * jumpForce * 10;
+            characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
+            yield return null;
+        }
+
+        while (!isGrounded)
+        {
+            Debug.Log("falling");
+            currentVerticalSpeed += gravity * Time.deltaTime * 2;
+            characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
+            yield return null;
+        }
+
+        isJumping = false;
     }
 
     public void Aim()
@@ -223,6 +265,15 @@ public class PlayerController : Character
         if(other.TryGetComponent<ItemPickup>(out ItemPickup ip))
         {
             ip.Collected();
+        }
+        if (other.gameObject.CompareTag("Test"))
+        {
+            CameraManager.instance.ChangeCamera(Cameras.m2_bossCamera);
+            string[] columnas = { "id", "nombre", "edad" };
+            string[] tipos = { "INT", "VARCHAR(50)", "INT" };
+
+            //DataSet resultado = DatabaseManager.instance.CreateTable("testTable", columnas, tipos);
+            DataSet resultado2 = DatabaseManager.instance.InsertInto("testTable", columnas, tipos);
         }
     }
 }
