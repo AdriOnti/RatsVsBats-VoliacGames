@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Character
 {
     // Singleton
     private static PlayerController instance;
@@ -23,28 +24,31 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] private bool isStealthing;
     [SerializeField] private bool isJumping;
     [HideInInspector] private bool isClimbing;
-    [HideInInspector] private bool isAttacking;
-    [HideInInspector] private bool isDroppingItem;
     [SerializeField] private float isChangingItem;
     [HideInInspector] private bool isInteracting;
 
     // Public Variables
     [Header("Stadistics")]
-    public float jumpForce;
-    public float speed;
+    public float originalSpeed;
     public Vector3 _playerCamera;
+
+    [Header("Items")]
+    public Item actualItem;
+    public int inventoryIndex;
 
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
         else instance = this;
         _playerCamera = Camera.main.transform.forward;
+        originalSpeed = speed;
     }
 
     private void Start()
     {
         inputManager = InputManager.Instance;
         _rb = GetComponent<Rigidbody>();
+        if(currentHP <= 0 || currentHP > hp) currentHP = hp;
     }
 
     private void OnEnable()
@@ -56,7 +60,6 @@ public class PlayerController : MonoBehaviour
         InputManager.PlayerClimb += Climb;
         InputManager.PlayerAttack += Attack;
         InputManager.PlayerChangeItem += ChangeItem;
-        InputManager.PlayerDrop += DropItem;
         InputManager.PlayerInteract += Interact;
     }
 
@@ -69,7 +72,6 @@ public class PlayerController : MonoBehaviour
         InputManager.PlayerClimb -= Climb;
         InputManager.PlayerAttack -= Attack;
         InputManager.PlayerChangeItem -= ChangeItem;
-        InputManager.PlayerDrop -= DropItem;
         InputManager.PlayerInteract -= Interact;
     }
 
@@ -79,6 +81,34 @@ public class PlayerController : MonoBehaviour
         DetectJump();
 
         Move();
+        CheckHP();
+
+        if (Input.GetKeyUp(KeyCode.J)) StartCoroutine(Hurt());
+    }
+
+    IEnumerator Hurt()
+    {
+        GameManager.Instance.FindObjectsByName("Hurt").SetActive(true);
+        currentHP -= 1;
+        yield return new WaitForSeconds(1.0f);
+        GameManager.Instance.FindObjectsByName("Hurt").SetActive(false);
+    }
+
+    private void CheckHP()
+    {
+        if (currentHP <= 0)
+        {
+            StartCoroutine(Die());
+        }
+    }
+
+    private IEnumerator Die()
+    {
+        FadeManager.Instance.FadeOut();
+        yield return new WaitForSecondsRealtime(1.5f);
+        DataManager.Instance.LoadGame();
+        yield return new WaitForSecondsRealtime(2f);
+        FadeManager.Instance.FadeIn();
     }
 
     private void DetectMovement()
@@ -161,14 +191,26 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeItem()
     {
-        isChangingItem = inputManager.GetMouseScroll();
-        if (isChangingItem > 0) Debug.Log("Scroll Up");
-        if (isChangingItem < 0) Debug.Log("Scroll Down");
-    }
+        int itemCount = InventoryManager.Instance.Items.Count;
 
-    public void DropItem()
-    {
-        isDroppingItem = !isDroppingItem;
+        // If itemCount is 0, the actualItem on the hud would be null
+        if (itemCount == 0)
+        {
+            actualItem = null;
+            GameManager.Instance.UpdateItem(actualItem);
+            return;
+        }
+
+        // Obtain the mouse scroll
+        isChangingItem = inputManager.GetMouseScroll();
+
+        // If the mouse scroll is greater than 0, add 1 to the inventory index
+        if (isChangingItem > 0) inventoryIndex = (inventoryIndex + 1) % itemCount;
+        // If the mouse scroll is lesser than 0, rest 1 to the inventory index
+        else if (isChangingItem < 0) inventoryIndex = (inventoryIndex - 1 + itemCount) % itemCount;
+
+        actualItem = InventoryManager.Instance.Items[inventoryIndex];
+        GameManager.Instance.UpdateItem(actualItem);
     }
 
     public void Interact()
@@ -176,4 +218,11 @@ public class PlayerController : MonoBehaviour
         isInteracting = !isInteracting;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.TryGetComponent<ItemPickup>(out ItemPickup ip))
+        {
+            ip.Collected();
+        }
+    }
 }

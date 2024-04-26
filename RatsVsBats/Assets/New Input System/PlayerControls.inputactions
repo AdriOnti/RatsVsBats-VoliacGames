@@ -78,6 +78,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "72b47089-6e68-426f-bd2d-2b09b96dad0f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Attack",
                     "type": "Button",
                     "id": "638fd173-5205-4d76-a914-cb7a134b96f5",
@@ -90,15 +99,6 @@
                     "name": "Aim",
                     "type": "Button",
                     "id": "03093a4a-b0df-4999-9f14-150d7bb038d7",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "DropItem",
-                    "type": "Button",
-                    "id": "d3032b55-d792-4b6e-9991-d0a81c187355",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -280,17 +280,6 @@
                 },
                 {
                     "name": "",
-                    "id": "5bc75251-e610-4733-a056-c5d772da0837",
-                    "path": "<Mouse>/middleButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DropItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "46dcb3bc-6267-4b58-a890-21c0aed63136",
                     "path": "<Mouse>/scroll/y",
                     "interactions": "",
@@ -308,6 +297,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "367a0ab1-01f5-4ba8-a610-5d0427e4ad3e",
+                    "path": "<Keyboard>/#(I)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

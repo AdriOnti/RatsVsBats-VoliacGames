@@ -39,10 +39,6 @@ public class InputManager : MonoBehaviour
     public delegate void OnPlayerChangeItem();
     public static event OnPlayerChangeItem PlayerChangeItem;
 
-    // Drop Item
-    public delegate void OnPlayerDrop();
-    public static event OnPlayerDrop PlayerDrop;
-
     // Interact
     public delegate void OnPlayerInteract();
     public static event OnPlayerInteract PlayerInteract;
@@ -54,6 +50,10 @@ public class InputManager : MonoBehaviour
     // Pause Game
     public delegate void OnPlayerPause();
     public static event OnPlayerPause PlayerPause;
+
+    // Inventory
+    public delegate void OnPlayerInventory();
+    public static event OnPlayerInventory PlayerInventory;
 
     private void Awake()
     {
@@ -72,10 +72,10 @@ public class InputManager : MonoBehaviour
         playerControls.Game.Stealth.performed += _ => PlayerStealth.Invoke();
         playerControls.Game.Attack.performed += _ => PlayerAttack.Invoke();
         playerControls.Game.ChangeItem.performed += _ => PlayerChangeItem.Invoke();
-        playerControls.Game.DropItem.performed += _ => PlayerDrop.Invoke();
         playerControls.Game.Interact.performed += _ => PlayerInteract.Invoke();
         playerControls.Game.Map.performed += _ => PlayerMap.Invoke();
         playerControls.Game.Pause.performed += _ => PlayerPause.Invoke();
+        playerControls.Game.Inventory.performed += _ => PlayerInventory.Invoke();
         playerControls.Enable();
     }
 
@@ -88,10 +88,10 @@ public class InputManager : MonoBehaviour
         playerControls.Game.Stealth.performed -= _ => PlayerStealth.Invoke();
         playerControls.Game.Attack.performed -= _ => PlayerAttack.Invoke();
         playerControls.Game.ChangeItem.performed -= _ => PlayerChangeItem.Invoke();
-        playerControls.Game.DropItem.performed -= _ => PlayerDrop.Invoke();
         playerControls.Game.Interact.performed -= _ => PlayerInteract.Invoke();
         playerControls.Game.Map.performed -= _ => PlayerMap.Invoke();
         playerControls.Game.Pause.performed -= _ => PlayerPause.Invoke();
+        playerControls.Game.Inventory.performed -= _ => PlayerInventory.Invoke();
         playerControls.Disable();
     }
 
