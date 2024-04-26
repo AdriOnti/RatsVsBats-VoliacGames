@@ -83,7 +83,15 @@ public class PlayerController : Character
         Move();
         CheckHP();
 
-        if (Input.GetKeyUp(KeyCode.J)) currentHP -= 1;
+        if (Input.GetKeyUp(KeyCode.J)) StartCoroutine(Hurt());
+    }
+
+    IEnumerator Hurt()
+    {
+        GameManager.Instance.FindObjectsByName("Hurt").SetActive(true);
+        currentHP -= 1;
+        yield return new WaitForSeconds(1.0f);
+        GameManager.Instance.FindObjectsByName("Hurt").SetActive(false);
     }
 
     private void CheckHP()
