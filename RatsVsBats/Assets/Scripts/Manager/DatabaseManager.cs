@@ -23,7 +23,7 @@ public class DatabaseManager : MonoBehaviour
     void Start()
     {
         instance = this;
-        OpenSql();
+        //OpenSql();
     }
 
     public void OpenSql()
