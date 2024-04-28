@@ -18,7 +18,8 @@ public class ChaseBehaviour : MonoBehaviour
     }
     public void Chase(Transform target, Transform self)
     {
-        agent.destination = target.position;
+        //agent.destination = target.position;
+        _rb.velocity = (target.position - self.position).normalized * Speed;
     }
     public void Run(Transform target, Transform self)
     {
