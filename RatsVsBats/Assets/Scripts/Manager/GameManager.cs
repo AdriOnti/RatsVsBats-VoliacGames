@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
     public bool speedUsed;
     public bool isMission;
     public bool isFading;
+    public TextMeshProUGUI UItext;
 
     // Get the pause menu
     public GameObject GetPauseMenu() { return FindObjectsByName("PauseMenu"); }
@@ -126,5 +128,10 @@ public class GameManager : MonoBehaviour
 
         if (item != null) actualItem.sprite = item.icon;
         else  actualItem.sprite = null;
+    }
+
+    public void UpdateText(string text)
+    {
+        UItext.text = text;
     }
 }
