@@ -8,7 +8,7 @@ public class Login : MonoBehaviour
     public TMP_InputField email;
     public TMP_InputField password;
 
-    [Header("Error")]
+    [Header("Error Message")]
     public TextMeshProUGUI errorMessage;
 
     [Header("Web")]

@@ -15,9 +15,16 @@ public class MainMenu : MonoBehaviour
     [Header("Delete")]
     [SerializeField] private GameObject confirmDelete;
     [SerializeField] private GameObject confirmDelete2;
+
+    [Header("Load")]
     [SerializeField] private GameObject loadScroll;
     [SerializeField] private GameObject loadDelete;
+
+    [Header("Login")]
     [SerializeField] private GameObject login;
+
+    [Header("Account")]
+    public GameObject accountSettings;
 
     // AWAKE
     private void Awake()
@@ -29,6 +36,7 @@ public class MainMenu : MonoBehaviour
     // START
     private void Start()
     {
+        accountSettings.SetActive(false);
         confirmDelete.SetActive(false);
         confirmDelete2.SetActive(false);
         loadScroll.SetActive(false);
@@ -43,14 +51,8 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     private void CheckLoad()
     {
-        if (!DataManager.Instance.SaveExists())
-        {
-            CursorManager.Instance.BlockBtn(loadGameBtn);
-        }
-        else
-        {
-            CursorManager.Instance.NotBlockBtn(loadGameBtn);
-        }
+        if (!DataManager.Instance.SaveExists()) CursorManager.Instance.BlockBtn(loadGameBtn);
+        else CursorManager.Instance.NotBlockBtn(loadGameBtn);
     }
 
     /// <summary>
@@ -73,18 +75,12 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    public void LoadButton()
-    {
-        loadScroll.SetActive(true);
-    }
+    public void LoadButton() { loadScroll.SetActive(true); }
 
     /// <summary>
     /// Delete the saved game
     /// </summary>
-    public void DeleteGame()
-    {
-        confirmDelete.SetActive(true);
-    }
+    public void DeleteGame() { confirmDelete.SetActive(true); }
 
     public void ConfirmDelete()
     {
@@ -103,4 +99,6 @@ public class MainMenu : MonoBehaviour
 #endif
         Application.Quit();
     }
+
+    public void EnableAccountSettings() { accountSettings.SetActive(true); }
 }
