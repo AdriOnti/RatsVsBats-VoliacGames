@@ -17,6 +17,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject confirmDelete2;
     [SerializeField] private GameObject loadScroll;
     [SerializeField] private GameObject loadDelete;
+    [SerializeField] private GameObject login;
 
     // AWAKE
     private void Awake()
@@ -32,6 +33,8 @@ public class MainMenu : MonoBehaviour
         confirmDelete2.SetActive(false);
         loadScroll.SetActive(false);
         loadDelete.SetActive(false);
+        login.SetActive(true);
+        gameObject.SetActive(false);
         CheckLoad();
     }
 

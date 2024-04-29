@@ -1,7 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
 {
@@ -15,23 +14,23 @@ public class CanvasManager : MonoBehaviour
     // InputManager
     private InputManager inputManager;
 
-    // Bools
+    [Header("Bools")]
     [SerializeField] private bool mapInput;
     [SerializeField] public bool pauseInput;
     [SerializeField] private bool inventoryOpened;
 
-    // Canvas
-    GameObject pauseMenu;
-    GameObject map;
-    [SerializeField] GameObject disquete;
-    [SerializeField] GameObject info;
+    [Header("Canvas")]
+    [HideInInspector] GameObject pauseMenu;
+    [HideInInspector] GameObject map;
+    [HideInInspector] GameObject disquete;
+    [HideInInspector] GameObject info;
 
-    // Inventory
+    [Header("Inventory")]
     [HideInInspector] GameObject inventoryBtn;
     [HideInInspector] GameObject inventory;
 
     [Header("AutoSave")]
-    [SerializeField] GameObject autoSave;
+    [HideInInspector] GameObject autoSave;
 
     private void Awake()
     {
@@ -141,7 +140,6 @@ public class CanvasManager : MonoBehaviour
             InventoryManager.Instance.ListItems();
             Time.timeScale = 0f;
         }
-
     }
 
     /// <summary>

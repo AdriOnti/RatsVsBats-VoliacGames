@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 public class FadeManager : MonoBehaviour
 {
     public static FadeManager Instance;
-    [SerializeField] private GameObject father;
-    [SerializeField] private GameObject fadeIn;
-    [SerializeField] private GameObject fadeOut;
+    [HideInInspector] private GameObject father;
+    [HideInInspector] private GameObject fadeIn;
+    [HideInInspector] private GameObject fadeOut;
 
     void Awake()
     {
