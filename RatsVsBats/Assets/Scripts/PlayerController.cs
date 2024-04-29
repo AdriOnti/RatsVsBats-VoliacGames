@@ -256,6 +256,7 @@ public class PlayerController : Character
     public void Interact()
     {
         isInteracting = !isInteracting;
+        Interactive.instance.GiveItem();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -267,11 +268,11 @@ public class PlayerController : Character
         if (other.gameObject.CompareTag("Test"))
         {
             CameraManager.instance.ChangeCamera(Cameras.m2_bossCamera);
-            string[] columnas = { "id", "nombre", "edad" };
-            string[] tipos = { "INT", "VARCHAR(50)", "INT" };
+            string tableName = "Profiles";
+            string[] columns = { "userEmail", "userPassword" };
+            object[] values = { "example@example.com", "password123" };
 
-            //DataSet resultado = DatabaseManager.instance.CreateTable("testTable", columnas, tipos);
-            DataSet resultado2 = DatabaseManager.instance.InsertInto("testTable", columnas, tipos);
+            DatabaseManager.instance.InsertInto(tableName, columns, values);
         }
     }
 }
