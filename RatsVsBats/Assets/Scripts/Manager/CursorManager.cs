@@ -10,6 +10,8 @@ public class CursorManager : MonoBehaviour
         get { return instance; }
     }
 
+    public CursorType defaultCursor;
+
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -36,5 +38,13 @@ public class CursorManager : MonoBehaviour
         go.GetComponent<Button>().enabled = true;
         go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Gui_parts/button");
         go.GetComponent<ChangeCursor>().customCursor = Resources.Load<CursorType>("CursorsSO/Hand");
+    }
+
+    /// <summary>
+    /// Reset the cursor
+    /// </summary>
+    public void ResetCursor()
+    {
+        Cursor.SetCursor(defaultCursor.cursorTexture, defaultCursor.hotspot, CursorMode.Auto);
     }
 }

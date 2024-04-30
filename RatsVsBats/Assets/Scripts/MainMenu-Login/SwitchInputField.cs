@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using System;
 
-public class TabNavigation : MonoBehaviour
+public class SwitchInputField : MonoBehaviour
 {
     public TMP_InputField[] inputFields;
 

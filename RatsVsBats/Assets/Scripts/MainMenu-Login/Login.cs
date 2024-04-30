@@ -17,12 +17,26 @@ public class Login : MonoBehaviour
     [Header("LoginCorrect")]
     public GameObject menu;
 
+    [Header("Debug Mode")]
+    public bool isDebugging;
+    public string emailDebug;
+    public string passwordDebug;
+
     private void Start()
     {
         menu.SetActive(false);
         errorMessage.gameObject.SetActive(false);
         email.onEndEdit.AddListener(ValidateMail);
         password.onEndEdit.AddListener(ValidatePwd);
+
+#if UNITY_EDITOR
+        if (isDebugging)
+        {
+            email.text = emailDebug;
+            password.text = passwordDebug;
+            LoginBtn();
+        }
+#endif
     }
 
     private void ValidateMail(string mail)
@@ -59,7 +73,7 @@ public class Login : MonoBehaviour
     /// <returns>If is valid or not</returns>
     private bool IsValidAddress(string address)
     {
-        string regex = @"(google|yahoo|hotmail|outlook|itb).(com|net|org|gov|cat|es)$";
+        string regex = @"(google|yahoo|hotmail|outlook|itb|voliac-games).(com|net|org|gov|cat|es)$";
         return Regex.IsMatch(address, regex, RegexOptions.IgnoreCase);
     }
 

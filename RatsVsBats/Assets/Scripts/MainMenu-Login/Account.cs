@@ -26,16 +26,11 @@ public class Account : MonoBehaviour
 
     public void EditProfile() { editWarning.SetActive(true); }
 
-    public void CloseEdit()
+    public void CloseObject(bool isWarning)
     {
-        gameObject.SetActive(false);
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-    }
-
-    public void CloseWarning()
-    {
-        editWarning.SetActive(false);
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        if(isWarning) editWarning.SetActive(false);
+        else gameObject.SetActive(false);
+        CursorManager.Instance.ResetCursor();
     }
 
     public void GoToWebsite() { Application.OpenURL(url); }

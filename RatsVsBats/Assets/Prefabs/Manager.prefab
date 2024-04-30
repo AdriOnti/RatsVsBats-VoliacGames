@@ -67,9 +67,6 @@ MonoBehaviour:
   mapInput: 0
   pauseInput: 0
   inventoryOpened: 0
-  disquete: {fileID: 0}
-  info: {fileID: 0}
-  autoSave: {fileID: 0}
 --- !u!114 &5383087602413951497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,6 +83,7 @@ MonoBehaviour:
   speedUsed: 0
   isMission: 0
   isFading: 0
+  UItext: {fileID: 0}
 --- !u!114 &267324689437886391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,9 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166dd10c0e9d3ef41a69bb881d31cf04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  father: {fileID: 0}
-  fadeIn: {fileID: 0}
-  fadeOut: {fileID: 0}
 --- !u!114 &3393596788391730040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f14c694715566f4bb19cbfcb6767b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultCursor: {fileID: 11400000, guid: 8daf6865063476348953eb4f5b840880, type: 2}
 --- !u!114 &1968423427257115258
 MonoBehaviour:
   m_ObjectHideFlags: 0

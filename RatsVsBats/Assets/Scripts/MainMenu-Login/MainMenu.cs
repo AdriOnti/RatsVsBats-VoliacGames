@@ -56,22 +56,14 @@ public class MainMenu : MonoBehaviour
     }
 
     /// <summary>
-    /// Start a new game
+    /// Load the game with a especific parameters
     /// </summary>
-    public void NewGame()
+    /// <param name="isNewGame">This bool decides if is a new Game or a previous game</param>
+    public void Game(bool isNewGame)
     {
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-        PlayerPrefs.SetInt("loading", 0);
-        SceneManager.LoadScene(1);
-    }
-
-    /// <summary>
-    /// Load a previous game
-    /// </summary>
-    public void LoadGame()
-    {
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-        PlayerPrefs.SetInt("loading", 1);
+        CursorManager.Instance.ResetCursor();
+        if (isNewGame) PlayerPrefs.SetInt("loading", 0);
+        else PlayerPrefs.SetInt("loading", 1);
         SceneManager.LoadScene(1);
     }
 
@@ -101,4 +93,10 @@ public class MainMenu : MonoBehaviour
     }
 
     public void EnableAccountSettings() { accountSettings.SetActive(true); }
+
+    public void CloseLoadScroll()
+    {
+        loadScroll.SetActive(false);
+        CursorManager.Instance.ResetCursor();
+    }
 }
