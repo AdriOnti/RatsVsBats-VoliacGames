@@ -29,7 +29,7 @@ public class PlayerController : Character
     [SerializeField] private bool isJumping;
     [HideInInspector] private bool isClimbing;
     [SerializeField] private float isChangingItem;
-    [HideInInspector] private bool isInteracting;
+    [HideInInspector] public bool isInteracting;
 
     // Public Variables
     [Header("Stadistics")]
@@ -256,7 +256,6 @@ public class PlayerController : Character
     public void Interact()
     {
         isInteracting = !isInteracting;
-        Interactive.instance.GiveItem();
     }
 
     private void OnTriggerEnter(Collider other)

@@ -5,19 +5,33 @@ using UnityEngine;
 public class Interactive : MonoBehaviour
 {
     public bool hasDialog;
-    public GameObject priceObject;
-    public string description = "Recycle blud";
+    private GameObject priceObject;
+    public string description;
 
     public static Interactive instance;
 
     private void Start()
     {
         instance = this;
+        priceObject = transform.GetChild(0).gameObject;
     }
 
-    public void GiveItem()
+    private void OnTriggerStay(Collider other)
     {
-        priceObject.transform.position = new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z);
-        priceObject.SetActive(true);
+        if (other.TryGetComponent<PlayerController>(out PlayerController player))
+        {
+            if (PlayerController.Instance.isInteracting)
+            {
+                GiveItem();
+            }
+        }
+    }
+
+    private void GiveItem()
+    {
+        if (priceObject != null)
+        {
+            priceObject.SetActive(true);
+        }
     }
 }
