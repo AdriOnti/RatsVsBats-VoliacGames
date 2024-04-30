@@ -28,16 +28,19 @@ public class Login : MonoBehaviour
         errorMessage.gameObject.SetActive(false);
         email.onEndEdit.AddListener(ValidateMail);
         password.onEndEdit.AddListener(ValidatePwd);
+    }
 
 #if UNITY_EDITOR
+    private void Update()
+    {
         if (isDebugging)
         {
             email.text = emailDebug;
             password.text = passwordDebug;
             LoginBtn();
         }
-#endif
     }
+#endif
 
     private void ValidateMail(string mail)
     {
