@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="../assets/js/ranking.js"></script>
+    <script defer src="../assets/js/main.js"></script>
+    <title>Ranking</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Play:wght@700&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&family=Play:wght@700&display=swap");
+    </style>
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/ranking.css" />
+  </head>
+  <body>
+    <header>
+      <nav class="mainHeader">
+        <div class="linksNav">
+          <a class="nolink" href="../"><img class="logoHeader" src="../assets/src/LogoSL.png" alt="" /></a>
+          <a href="../">Home</a>
+          <a href="../play/">Jugar</a>
+          <a href="../ranking/">Ranking</a>
+        </div>
+        <div class="navRight">
+          <a id="verPerfilLink" href="../profile/">Ver Perfil</a>
+          <a id="logOutButton" class="lastlink" href="" onclick="logout()">Cerrar Sesión</a>
+          <a id="loginButton" class="lastlink" href="../join-us/">Login / SignUp</a>
+          <!-- <button></button> -->
+        </div>
+      </nav>
+    </header>
+    <main>
+      <h1>RANKING</h1>
+      <div><table id="table-ranking">
+        <thead>
+          <tr>
+            <th>Posición</th>
+            <th>Nombre</th>
+            <th>País</th>
+            <th>Puntuación</th>
+            <th>Intentos</th>
+          </tr>
+        </thead>
+        <tbody id="records-perfiles">
+          <!-- <tr>
+            <td class="position">1</td>
+            <td class="name">Admin</td>
+            <td class="country">
+              <img
+                src="https://www.worldometers.info/img/flags/sp-flag.gif"
+                alt="España"
+              />
+            </td>
+            <td class="score">∞</td>
+            <td class="attempts">1</td>
+          </tr> -->
+        </tbody>
+      </table></div>
+    </main>
+    <footer class="mainFooter">
+      <div>
+        <a target="_blank" href="https://www.instagram.com/itecbcn/?hl=es"><img src="../assets/src/social/instagram.png" alt=""></a>
+        <a target="_blank" href="https://es-es.facebook.com/itecbcn/"><img src="../assets/src/social/facebook.png" alt=""></a>
+        <a target="_blank" href="https://www.youtube.com/@secretariainstituttecnolog7490"><img src="../assets/src/social/youtube.png" alt=""></a>
+        <a target="_blank" href="https://twitter.com/itecbcn?lang=es"><img src="../assets/src/social/twitter.png" alt=""></a>
+        <a target="_blank" href="https://es.linkedin.com/company/itecbcn?original_referer=https%3A%2F%2Fwww.google.com%2F"><img src="../assets/src/social/linkedin.png" alt=""></a>
+      </div>
+      <address>
+        <ul>
+          <li>Dirección: Aiguablava, 121, Barcelona</li>
+          <li><a target="_blank" href="https://www.google.com/url?q=https%3A%2F%2Fwww.itb.cat&sa=D&sntz=1&usg=AOvVaw2s6O9skz-nT9ZdCGkADY2J">ITB WEBSITE</a></li>
+        </ul>
+      </address>
+    </footer>
+  </body>
+</html>
