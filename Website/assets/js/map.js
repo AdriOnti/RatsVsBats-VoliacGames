@@ -29,7 +29,7 @@ const getlocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showLocation, showError);
   } else {
-    alert("No location encontrada");
+    alert("No location found");
   }
 };
 
@@ -49,7 +49,8 @@ const showLocation = async (position) => {
   );
   let data = await response.json();
 
-  console.log(data.address.city);
-  localStorage.setItem('currentLoc', data.address.city);
+  console.log(data.address.country);
+  localStorage.setItem('currentLoc', data.address.country);
+  localStorage.setItem('locChanged', "true");
   window.close();
 };

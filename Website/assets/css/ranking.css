@@ -1,7 +1,7 @@
 #table-ranking {
   border-collapse: collapse;
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   box-shadow: rgba(255, 255, 255, 0.068) 0 10px 0;
 }
@@ -16,11 +16,11 @@
   text-align: center;
   border: 1px rgba(255, 255, 255, 0.089) solid;
   border-radius: 5px;
-  background-color: #684a7634;
+  background-color: #4a764a34;
 }
 
 #table-ranking thead {
-  background-color: #7e57c2;
+  background-color: #3e8031;
   color: white;
   position: sticky;
   top: 0;
@@ -31,17 +31,17 @@
   height: 20px;
   object-fit: cover;
   border-radius: 50%;
-  box-shadow: 0 0 5px #7e57c2;
+  box-shadow: 0 0 5px #70c257;
 }
 
 #table-ranking .score {
-  color: #9a75da;
+  color: #7dda75;
   font-weight: bold;
   font-size: 1.2em;
 }
 
 #table-ranking .position {
-  background-color: #3d2fb6;
+  background-color: #45b62f;
   color: white;
   font-weight: bold;
   font-size: 1.2em;

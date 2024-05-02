@@ -15,7 +15,7 @@ h4,
 h5 {
   margin: 0 50px 50px 50px;
   font-size: 50px;
-  color: #7f245d;
+  color: #436d1d;
   filter: brightness(150%);
   text-shadow: rgba(255, 255, 255, 0.329) 0 0 40px;
   font-family: "Play", sans-serif;
@@ -23,7 +23,7 @@ h5 {
 
 body {
   display: grid;
-  background-color: #190523;
+  background-color: #030c00;
   min-height: 100vh;
   margin: 0;
   grid-template-rows: auto 1fr auto;
@@ -54,7 +54,7 @@ h3 {
   height: fit-content;
   align-items: center;
   justify-content: space-between;
-  background-image: linear-gradient(to bottom, #2a1037, #3a0741);
+  background-image: linear-gradient(to bottom, #184709, #011601);
   margin-bottom: 30px;
   flex-wrap: wrap;
 }
@@ -77,12 +77,12 @@ h3 {
 }
 
 .lastlink:hover {
-  background-color: #190523;
+  background-color: #2483118f;
   filter: brightness(120%);
 }
 
 .mainHeader a:not(.nolink, .lastlink):hover {
-  background-color: #190523;
+  background-color: #2483118f;
   filter: brightness(120%);
   padding-right: 80px;
 }
@@ -93,7 +93,7 @@ h3 {
 
 .logoHeader {
   transition: 300ms;
-  width: 150px;
+  width: 70px;
   margin-right: 20px;
   padding-top: 5px;
 }
@@ -187,9 +187,10 @@ h1 {
   margin-top: 30px;
   display: flex;
   justify-content: space-between;
-  background-image: linear-gradient(to bottom, #3a0741, #2a1037);
+  background-image: linear-gradient(to top, #184709, #011601);
   align-items: center;
   padding: 0 10% 0 10%;
+  min-height: 70px;
 }
 
 .mainFooter a {
@@ -213,18 +214,18 @@ h1 {
 
 /* SCROLLBAR PERSONALIZADA */
 ::-webkit-scrollbar {
-  background-color: #0d0214;
+  background-color: #113503;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #2a1037;
+  background-color: #020c00;
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.548);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #411555;
+  background-color: #031801;
 }
 
 @media only screen and (max-width: 900px) {

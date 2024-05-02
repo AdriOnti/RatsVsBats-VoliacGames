@@ -15,19 +15,19 @@ signupBtn.addEventListener("click", (e) => {
   clickedReg = true;
 
   let user = {
-    usuario: document.getElementById("user-name").value,
-    password: document.getElementById("user-password").value,
+    email: document.getElementById("email").value,
+    password: document.getElementById("password").value,
   };
 
   let profile = {
     id_usuario: tempId + 1,
-    nombrePerfil: document.getElementById("profile-name").value,
-    ubicacion: document.getElementById("profile-location").value,
+    nombrePerfil: document.getElementById("nickname").value,
+    ubicacion: document.getElementById("location").value,
     nivel: 1,
   };
   
   if (CheckUserRegistered(user.usuario)) {
-    console.log("Usuario ya registrado");
+    console.log("Already Registered With This Email");
     return;
   }
 
@@ -58,14 +58,19 @@ function popupRegisterSuccesfull() {
 
 // PopUp mapa para registrar Ubicacion
 function verMapa() {
-  window.open("mapa.html", "_blank", "width=800,height=600");
+  window.open("../map/", "_blank", "width=800,height=600");
 }
 
 // Recuperar localizacion usuario
-document.body.addEventListener("mouseover", function () {
-  document.getElementById("profile-location").value =
-    localStorage.getItem("currentLoc");
+window.addEventListener('mouseover', function(event) {
+  console.log("mouseover");
+  WriteLoc();
 });
+function WriteLoc(){
+  if(localStorage.getItem("locChanged") === "true"){
+    document.getElementById("location").value = localStorage.getItem("currentLoc");
+  }
+}
 
 // Registro Usuario
 async function signInUser(post) {

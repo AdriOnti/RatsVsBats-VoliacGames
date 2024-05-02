@@ -2,7 +2,7 @@
   margin: auto;
   width: 350px;
   height: 500px;
-  background: #190523;
+  background: #1c2517;
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 5px 20px 50px #ffffff33;
@@ -59,22 +59,21 @@ label {
 }
 
 .col-sign .signupBtn {
-  width: 60%;
+  width: 65%;
   height: 40px;
   margin: 10px auto;
   justify-content: center;
   display: block;
   color: #fff;
-  background: #573b8a;
+  background: #000000;
   font-size: 1em;
   font-weight: bolder;
   margin-top: 20px;
   outline: none;
-  border: none;
+  border: 0.5px solid rgba(255, 255, 255, 0.315);
   border-radius: 5px;
   transition: 0.2s ease-in;
   cursor: pointer;
-
   align-items: center;
   text-align: center;
   border-radius: 5px;
@@ -83,19 +82,21 @@ label {
 }
 
 .col-sign .signupBtn:hover {
-  background: #6d44b8;
+  background-color: #111111;
+  transform: scale(105%);
+  filter: brightness(130%);
 }
 
 .login {
   height: 460px;
-  background: #eee;
+  background: #3a4931;
   border-radius: 60% / 10%;
   transform: translateY(-160px);
   transition: 0.8s ease-in-out;
 }
 
 .login label {
-  color: #573b8a;
+  color: #ffffff;
   transform: scale(0.6);
 }
 

@@ -16,7 +16,7 @@ const infoProfileLocal = [
 
 // Persistencia del usuario en la web
 let usuarioConectado = false;
-if (localStorage.key("idPerfil")) {
+if (localStorage.getItem("idPerfil")) {
   usuarioConectado = true;
 }
 

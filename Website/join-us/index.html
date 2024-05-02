@@ -15,21 +15,23 @@
   <script defer src="../assets/js/main.js"></script>
   <script defer src="../assets/js/sign-up.js"></script>
   <script defer src="../assets/js/log-in.js"></script>
-  <title>LogIn / SignIn</title>
+  <title>Join Us | RatsVsBats</title>
 </head>
 
 <body>
   <header>
     <nav class="mainHeader">
       <div class="linksNav">
-        <a class="nolink" href="../"><img class="logoHeader" src="../assets/src/LogoSL.png" alt="" /></a>
+        <a class="nolink" href="../"><img class="logoHeader" src="../assets/src/logo-voliac.png" alt="" /></a>
         <a href="../">Home</a>
-        <a href="../play/">Jugar</a>
+        <a href="../play/">Download</a>
         <a href="../ranking/">Ranking</a>
       </div>
       <div class="navRight">
-        <a class="lastlink" href="#">Login / SignUp</a>
-        <!-- <div class="darkmode"><input type="checkbox" name="dark"></input></div> -->
+        <a id="verPerfilLink" href="../profile/">My Profile</a>
+        <a id="logOutButton" class="lastlink" href="" onclick="logout()">Log out</a>
+        <a id="loginButton" class="lastlink" href="../join-us/">LogIn / SignUp</a>
+        <!-- <button></button> -->
       </div>
     </nav>
   </header>
@@ -38,13 +40,13 @@
 
     <div class="signup">
       <form id="signup">
-        <label for="chk" aria-hidden="true">Registro</label>
-        <input id="user-name" type="text" name="username" placeholder="Usuario">
-        <input id="profile-name" type="text" name="nickname" placeholder="Nombre Perfil">
-        <input onclick="verMapa()" id="profile-location" type="text" name="location" placeholder="Ubicación">
-        <input id="user-password" type="password" name="pswd" placeholder="Contraseña">
+        <label for="chk" aria-hidden="true">Register</label>
+        <input id="email" type="email" name="email" placeholder="Your Email..">
+        <input id="nickname" type="text" name="nickname" placeholder="Your Nickname..">
+        <input onclick="verMapa()" id="location" type="text" name="location" placeholder="Select your Location..">
+        <input id="password" type="password" name="password" placeholder="Your Password..">
         <a id="signupBtn" class="signupBtn">
-          <p>Registrarse</p>
+          <p>Register</p>
         </a>
         <!-- <button id="signupBtn">Sign up</button> -->
       </form>
@@ -53,10 +55,10 @@
     <div id="login" class="login">
       <form>
         <label class="loginlabel" for="chk" aria-hidden="true">Login</label>
-        <input id="user-name-login" type="text" name="txt" placeholder="Usuario">
-        <input id="user-password-login" type="password" name="pswd" placeholder="Contraseña">
+        <input id="login-email" type="email" name="login-email" placeholder="Your Email..">
+        <input id="login-password" type="password" name="login-password" placeholder="Your Password..">
         <a id="loginBtn" class="signupBtn" onclick="logindata()">
-          <p>Inicia Sesión</p>
+          <p>Login</p>
         </a>
         <!-- <button>Login</button> -->
       </form>
@@ -67,15 +69,15 @@
   <!-- <div id="mapa-register">
   </div> -->
   <div id="popup-block">
-    <h2>Ya puedes ver tu perfil</h2>
+    <h2>Welcome! You can check your profile</h2>
     <a href="../profile/">
-      IR AL PERFIL
+      MY PROFILE
     </a>
   </div>
   <div id="popup-block2">
-    <h2>Registrado correctamente</h2>
+    <h2>Succesfully Registered</h2>
     <a href="">
-      Hacer Login
+      Login now
     </a>
   </div>
   <footer class="mainFooter">
