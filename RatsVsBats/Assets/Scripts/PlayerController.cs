@@ -121,9 +121,9 @@ public class PlayerController : Character
     {
         FadeManager.Instance.FadeOut();
         yield return new WaitForSecondsRealtime(1.5f);
-        DataManager.Instance.LoadGame();
-        yield return new WaitForSecondsRealtime(2f);
-        FadeManager.Instance.FadeIn();
+        PlayerPrefs.SetInt("loading", 1);
+        if(SceneManager.GetActiveScene().buildIndex == 1) SceneManager.LoadScene(1);
+        else SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     
     IEnumerator FallToTouchGround()
