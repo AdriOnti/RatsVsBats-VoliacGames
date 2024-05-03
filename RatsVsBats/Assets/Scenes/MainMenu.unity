@@ -3020,9 +3020,9 @@ RectTransform:
   - {fileID: 1067477274}
   m_Father: {fileID: 5212999490271863470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 149.15, y: -410}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &610465081
@@ -4887,7 +4887,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &984152423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4998,7 +4998,7 @@ MonoBehaviour:
   historyBranches: {fileID: 736729926}
   missionsCompleted: {fileID: 1202099551}
   editWarning: {fileID: 154782788}
-  url: https://www.youtube.com/
+  URL: https://www.youtube.com/
 --- !u!1 &992697385
 GameObject:
   m_ObjectHideFlags: 0
@@ -7600,9 +7600,9 @@ RectTransform:
   - {fileID: 1611009049}
   m_Father: {fileID: 5212999490271863470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 149.15, y: -90}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1400800868
@@ -7743,7 +7743,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1425761614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8278,9 +8278,9 @@ RectTransform:
   - {fileID: 496258466}
   m_Father: {fileID: 5212999490271863470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 149.15, y: -250}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1557286460
@@ -11739,7 +11739,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.00009592409}
-  m_SizeDelta: {x: 298.3, y: 485}
+  m_SizeDelta: {x: 298.3, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &5517702923914754136
 RectTransform:

@@ -23,7 +23,7 @@ public class Login : MonoBehaviour
     public string passwordDebug;
 
     public static Login instance;
-    public bool isLogged;
+    [HideInInspector] public bool isLogged;
 
     private void Awake()
     {
@@ -140,6 +140,7 @@ public class Login : MonoBehaviour
 
         if (correctPassword)
         {
+            isLogged = true;
             gameObject.SetActive(false);
             menu.gameObject.SetActive(true);
         }
