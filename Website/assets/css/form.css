@@ -1,11 +1,16 @@
+main{
+  display: flex;
+  justify-content: center;
+}
+
 .col-sign {
-  margin: auto;
+  margin: auto 30px auto 30px;
   width: 350px;
   height: 500px;
   background: #1c2517;
   overflow: hidden;
   border-radius: 10px;
-  box-shadow: 5px 20px 50px #ffffff33;
+  box-shadow: 0 0 20px #ffffff33;
   /* background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover; */
 }
 
@@ -134,4 +139,29 @@ label {
   padding: 20px;
   border-radius: 10px;
   width: 80%;
+}
+
+.gsync{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.gsync img{
+  width: 90%;
+  border-radius: 30px;
+  transition: 300ms;
+  filter: brightness(80%);
+}
+
+.gsync:hover img{
+  transform: scale(105%);
+  filter: brightness(110%);
+}
+
+.v-container{
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
 }

@@ -35,36 +35,42 @@
       </div>
     </nav>
   </header>
-  <main class="col-sign">
-    <input type="checkbox" id="chk" aria-hidden="true">
-
-    <div class="signup">
-      <form id="signup">
-        <label for="chk" aria-hidden="true">Register</label>
-        <input id="email" type="email" name="email" placeholder="Your Email..">
-        <input id="nickname" type="text" name="nickname" placeholder="Your Nickname..">
-        <input onclick="verMapa()" id="location" type="text" name="location" placeholder="Select your Location..">
-        <input id="password" type="password" name="password" placeholder="Your Password..">
-        <a id="signupBtn" class="signupBtn">
-          <p>Register</p>
-        </a>
-        <!-- <button id="signupBtn">Sign up</button> -->
-      </form>
+  <main>
+    <div class="col-sign">
+      <input type="checkbox" id="chk" aria-hidden="true">
+  
+      <div class="signup">
+        <form id="signup">
+          <label for="chk" aria-hidden="true">Register</label>
+          <input id="email" type="email" name="email" placeholder="Your Email..">
+          <input id="nickname" type="text" name="nickname" placeholder="Your Nickname..">
+          <input onclick="verMapa()" id="location" type="text" name="location" placeholder="Select your Location..">
+          <input id="password" type="password" name="password" placeholder="Your Password..">
+          <a id="signupBtn" class="signupBtn">
+            <p>Register</p>
+          </a>
+          <!-- <button id="signupBtn">Sign up</button> -->
+        </form>
+      </div>
+      
+      <div id="login" class="login">
+        <form>
+          <label class="loginlabel" for="chk" aria-hidden="true">Login</label>
+          <input id="login-email" type="email" name="login-email" placeholder="Your Email..">
+          <input id="login-password" type="password" name="login-password" placeholder="Your Password..">
+          <a id="loginBtn" class="signupBtn" onclick="logindata()">
+            <p>Login</p>
+          </a>
+          <!-- <button>Login</button> -->
+        </form>
+      </div>
+      <!-- <div id="map" class="map"></div>
+        <button class="mapBtn" onclick="getlocation()">Localización</button> -->
     </div>
-    
-    <div id="login" class="login">
-      <form>
-        <label class="loginlabel" for="chk" aria-hidden="true">Login</label>
-        <input id="login-email" type="email" name="login-email" placeholder="Your Email..">
-        <input id="login-password" type="password" name="login-password" placeholder="Your Password..">
-        <a id="loginBtn" class="signupBtn" onclick="logindata()">
-          <p>Login</p>
-        </a>
-        <!-- <button>Login</button> -->
-      </form>
+    <div class="col-sign v-container">
+      <a class="gsync" href="../sync-google/"><img src="../assets/src/google-sync.png" alt=""></a>
+      <p>Or contact us at <address><a href="mailto:adrian.ontiveros.7e4@itb.cat">adrian.ontiveros.7e4@itb.cat</a></address></p>
     </div>
-    <!-- <div id="map" class="map"></div>
-      <button class="mapBtn" onclick="getlocation()">Localización</button> -->
   </main>
   <!-- <div id="mapa-register">
   </div> -->
