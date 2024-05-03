@@ -30,8 +30,15 @@ public class Account : MonoBehaviour
         if(Login.instance.isLogged) GetData(tableName, columns, values);
     }
 
+    /// <summary>
+    /// Open the warning
+    /// </summary>
     public void EditProfile() { editWarning.SetActive(true); }
 
+    /// <summary>
+    /// Close the actual game object
+    /// </summary>
+    /// <param name="isWarning">If is true, only closes the warning</param>
     public void CloseObject(bool isWarning)
     {
         if(isWarning) editWarning.SetActive(false);
@@ -39,8 +46,17 @@ public class Account : MonoBehaviour
         CursorManager.Instance.ResetCursor();
     }
 
+    /// <summary>
+    /// Go to the Website for change the data
+    /// </summary>
     public void GoToWebsite() { Application.OpenURL(URL); }
 
+    /// <summary>
+    /// Get all the information from the SQL query
+    /// </summary>
+    /// <param name="tableName">Name of the table of the database</param>
+    /// <param name="columns">Columns of the table</param>
+    /// <param name="values">The values to check in the where</param>
     public void GetData(string tableName, string[] columns, object[] values)
     {
         // WHERE email = email.text

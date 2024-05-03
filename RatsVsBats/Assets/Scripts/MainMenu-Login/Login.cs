@@ -110,6 +110,11 @@ public class Login : MonoBehaviour
     /// </summary>
     public void RegisterBtn() { Application.OpenURL(registerPage); }
 
+
+    /// <summary>
+    /// Check if the input fields are empty or not
+    /// </summary>
+    /// <param name="text">This is not used</param>
     private void ValidadeLogin(string text)
     {
         if (email.text == "")
@@ -147,6 +152,13 @@ public class Login : MonoBehaviour
         else errorMessage.text = "Email or password incorrect";
     }
 
+    /// <summary>
+    /// Check if the password introduced equals the password in the db
+    /// </summary>
+    /// <param name="tableName">Table of the database</param>
+    /// <param name="columns">Columns of the table</param>
+    /// <param name="values">The values to check</param>
+    /// <returns>If the two passoword are correct</returns>
     public bool PasswordCorrect(string tableName, string[] columns, object[] values)
     {
         string query = $"SELECT {columns[0]}, {columns[1]} FROM {tableName} WHERE {columns[0]} = {values[0].ToString()}";
