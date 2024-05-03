@@ -5493,7 +5493,7 @@ MonoBehaviour:
   menu: {fileID: 1425761613}
   login: {fileID: 994735316}
   isDebugging: 0
-  emailDebug: develeper@voliac-games.com
+  emailDebug: developer@voliac-games.com
   passwordDebug: '!Df%M.M0'
   isLogged: 0
 --- !u!114 &1019004802

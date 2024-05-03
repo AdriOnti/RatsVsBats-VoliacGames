@@ -47,7 +47,7 @@ public class Login : MonoBehaviour
         {
             email.text = emailDebug;
             password.text = passwordDebug;
-            LoginBtn(false);
+            LoginBtn(true);
         }
     }
 #endif
