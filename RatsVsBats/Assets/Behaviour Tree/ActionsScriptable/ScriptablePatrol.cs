@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ScriptablePatrol", menuName = "ScriptableObjects2/ScriptableAction/ScriptablePatrol", order = 4)]
 public class ScriptablePatrol : ScriptableAction
 {
-    public override void OnFinishedState()
+    public override void OnFinishedState(StateController2 sc)
     {
         GameManager.Instance.UpdateText("donde se metió?");
     }
@@ -15,7 +15,7 @@ public class ScriptablePatrol : ScriptableAction
         GameManager.Instance.UpdateText("vamo a patrulla");
     }
 
-    public override void OnUpdate()
+    public override void OnUpdate(StateController2 sc)
     {
         GameManager.Instance.UpdateText("apatrullando la ciuda");
     }

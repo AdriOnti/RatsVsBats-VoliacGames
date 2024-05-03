@@ -4,12 +4,13 @@ using UnityEngine;
 
 public abstract class ScriptableAction : ScriptableObject
 {
-    protected StateController2 sc;
-    public abstract void OnFinishedState();
+    // Carlos nos ha dicho que pongamos esos parametros en las funciones
+
+    public abstract void OnFinishedState(StateController2 sc);
 
     public virtual void OnSetState(StateController2 sc) {
-        this.sc = sc;
+        //this.sc = sc;
     }
 
-    public abstract void OnUpdate();
+    public abstract void OnUpdate(StateController2 sc);
 }

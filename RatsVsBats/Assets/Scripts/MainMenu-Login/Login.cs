@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+using System.Data;
 using TMPro;
 using UnityEngine;
 
@@ -22,12 +22,21 @@ public class Login : MonoBehaviour
     public string emailDebug;
     public string passwordDebug;
 
+    public static Login instance;
+    public bool isLogged;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
         menu.SetActive(false);
         errorMessage.gameObject.SetActive(false);
-        email.onEndEdit.AddListener(ValidateMail);
-        password.onEndEdit.AddListener(ValidatePwd);
+        //email.onEndEdit.AddListener(ValidateMail);
+        //password.onEndEdit.AddListener(ValidatePwd);
+        password.onEndEdit.AddListener(ValidadeLogin);
     }
 
 #if UNITY_EDITOR
@@ -37,92 +46,117 @@ public class Login : MonoBehaviour
         {
             email.text = emailDebug;
             password.text = passwordDebug;
-            LoginBtn();
+            LoginBtn(false);
         }
     }
 #endif
 
-    private void ValidateMail(string mail)
-    {
-        if (!IsValidAddress(mail))
-        {
-            errorMessage.gameObject.SetActive(true);
-            errorMessage.text = "Your address is not correct";
-        }
-        else
-        {
-            errorMessage.gameObject.SetActive(false);
-        }
-    }
+    //private void ValidateMail(string mail)
+    //{
+    //    if (!IsValidAddress(mail))
+    //    {
+    //        errorMessage.gameObject.SetActive(true);
+    //        errorMessage.text = "Your address is not correct";
+    //    }
+    //    else
+    //    {
+    //        errorMessage.gameObject.SetActive(false);
+    //    }
+    //}
 
-    private void ValidatePwd(string password)
-    {
-        if(!IsValidPwd(password))
-        {
-            errorMessage.gameObject.SetActive(true);
-            errorMessage.text = "Your password is incorrect";
-        }
-        else
-        { 
-            errorMessage.gameObject.SetActive(false);
-            LoginBtn();
-        }
-    }
+    //private void ValidatePwd(string password)
+    //{
+    //    if(!IsValidPwd(password))
+    //    {
+    //        errorMessage.gameObject.SetActive(true);
+    //        errorMessage.text = "Your password is incorrect";
+    //    }
+    //    else
+    //    { 
+    //        errorMessage.gameObject.SetActive(false);
+    //        LoginBtn(true);
+    //    }
+    //}
 
-    /// <summary>
-    /// Using regex finds if is a valid email address
-    /// </summary>
-    /// <param name="address">The email to validate</param>
-    /// <returns>If is valid or not</returns>
-    private bool IsValidAddress(string address)
-    {
-        string regex = @"(google|yahoo|hotmail|outlook|itb|voliac-games).(com|net|org|gov|cat|es)$";
-        return Regex.IsMatch(address, regex, RegexOptions.IgnoreCase);
-    }
+    ///// <summary>
+    ///// Using regex finds if is a valid email address
+    ///// </summary>
+    ///// <param name="address">The email to validate</param>
+    ///// <returns>If is valid or not</returns>
+    //private bool IsValidAddress(string address)
+    //{
+    //    string regex = @"(google|yahoo|hotmail|outlook|itb|voliac-games).(com|net|org|gov|cat|es)$";
+    //    return Regex.IsMatch(address, regex, RegexOptions.IgnoreCase);
+    //}
 
-    /// <summary>
-    /// Using regex finds if is a password meets the conditions
-    /// </summary>
-    /// <param name="pwd">The password to validate</param>
-    /// <returns>Is is valid or not</returns>
-    private bool IsValidPwd(string pwd)
-    {
-        //  (?=.*[a-z])         Debe contener al menos una letra minúscula.
-        //  (?=.*[A-Z])         Debe contener al menos una letra mayúscula.
-        //  (?=.*\d)            Debe contener al menos un dígito
-        //  (?=.*[^\da-zA-Z])   Debe contener al menos un carácter que no sea letra ni dígito
-        //  .{8,}               Debe tener una longitud mínima de 8 caracteres
-        string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$";
-        return Regex.IsMatch(pwd, pattern); ;
-    }
+    ///// <summary>
+    ///// Using regex finds if is a password meets the conditions
+    ///// </summary>
+    ///// <param name="pwd">The password to validate</param>
+    ///// <returns>Is is valid or not</returns>
+    //private bool IsValidPwd(string pwd)
+    //{
+    //    //  (?=.*[a-z])         Debe contener al menos una letra minúscula.
+    //    //  (?=.*[A-Z])         Debe contener al menos una letra mayúscula.
+    //    //  (?=.*\d)            Debe contener al menos un dígito
+    //    //  (?=.*[^\da-zA-Z])   Debe contener al menos un carácter que no sea letra ni dígito
+    //    //  .{8,}               Debe tener una longitud mínima de 8 caracteres
+    //    string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$";
+    //    return Regex.IsMatch(pwd, pattern); ;
+    //}
 
     /// <summary>
     /// Open a new tab in the web browser to the register page
     /// </summary>
     public void RegisterBtn() { Application.OpenURL(registerPage); }
 
-    public void LoginBtn()
+    private void ValidadeLogin(string text)
     {
-        bool isEmailValid = IsValidAddress(email.text);
-        bool isPasswordValid = IsValidPwd(password.text);
-
-        if (!isEmailValid || !isPasswordValid)
+        if (email.text == "")
         {
-            errorMessage.text = "Email or password incorrect";
+            errorMessage.text = "Your address is not correct";
             return;
         }
 
+        if(password.text == "")
+        {
+            errorMessage.text = "Your password is incorrect";
+            return;
+        }
+
+        LoginBtn(true);
+    }
+
+    public void LoginBtn(bool validate)
+    {
+        if (!validate) ValidadeLogin("");
+        
         // Llamada al DatabaseManager
         string tableName = "Profiles";
         string[] columns = { "userEmail", "userPassword" };
         object[] values = { email.text, password.text };
-        //DatabaseManager.instance.InsertInto(tableName, columns, values);
 
-        Debug.Log($"{tableName}");
-        foreach (string column in columns) Debug.Log(column);
-        foreach (object value in values) Debug.Log($"{value}");
+        bool correctPassword = PasswordCorrect(tableName, columns, values);
 
-        gameObject.SetActive(false);
-        menu.gameObject.SetActive(true);
+        if (correctPassword)
+        {
+            gameObject.SetActive(false);
+            menu.gameObject.SetActive(true);
+        }
+        else errorMessage.text = "Email or password incorrect";
+    }
+
+    public bool PasswordCorrect(string tableName, string[] columns, object[] values)
+    {
+        string query = $"SELECT {columns[0]}, {columns[1]} FROM {tableName} WHERE {columns[0]} = {values[0].ToString()}";
+        DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
+
+        if (resultDataSet != null && resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0)
+        {
+            string storedPassword = resultDataSet.Tables[0].Rows[0][columns[1]].ToString();
+            if (storedPassword == values[1].ToString()) return true;
+        }
+
+        return false;
     }
 }

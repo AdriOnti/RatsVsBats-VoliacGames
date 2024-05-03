@@ -1,3 +1,4 @@
+using System.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,7 +22,12 @@ public class Account : MonoBehaviour
     private void OnEnable()
     {
         editWarning.SetActive(false);
-        // SELECT * FROM Profiles;
+
+        string tableName = "Users";
+        string[] columns = { "nickname", "email", "points", "branches", "missionsCompleted"};
+        object[] values = { Login.instance.email.text };
+
+        if(Login.instance.isLogged) GetData(tableName, columns, values);
     }
 
     public void EditProfile() { editWarning.SetActive(true); }
@@ -34,4 +40,21 @@ public class Account : MonoBehaviour
     }
 
     public void GoToWebsite() { Application.OpenURL(url); }
+
+    public void GetData(string tableName, string[] columns, object[] values)
+    {
+        string query = $"SELECT {columns[0]}, {columns[1]} FROM {tableName} WHERE {columns[1]} = {values[0].ToString()}";
+
+        DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
+
+        if (resultDataSet != null && resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0)
+        {
+            DataRow row = resultDataSet.Tables[0].Rows[0];
+            nickname.text = row[columns[0]].ToString();
+            email.text = row[columns[1]].ToString();
+            points.text = row[columns[2]].ToString();
+            historyBranches.text = $"{row[columns[3]].ToString()}/3";
+            missionsCompleted.text = row[columns[4]].ToString();
+        }
+    }
 }

@@ -5,7 +5,7 @@ public class ScriptableFollow : ScriptableAction
 {
     private ChaseBehaviour _chaseBehaviour;
     private EnemyController3 _enemyController;
-    public override void OnFinishedState()
+    public override void OnFinishedState(StateController2 sc)
     {
         _chaseBehaviour.StopChasing();
     }
@@ -18,7 +18,7 @@ public class ScriptableFollow : ScriptableAction
         _enemyController = (EnemyController3)sc;
     }
 
-    public override void OnUpdate()
+    public override void OnUpdate(StateController2 sc)
     {
         _chaseBehaviour.Chase(_enemyController.target.transform, sc.transform);
     }
