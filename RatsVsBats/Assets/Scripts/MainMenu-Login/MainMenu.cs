@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
     }
 
     [SerializeField] private GameObject loadGameBtn;
+    [SerializeField] private GameObject mainMenu;
 
     [Header("Delete")]
     [SerializeField] private GameObject confirmDelete;
@@ -42,7 +43,7 @@ public class MainMenu : MonoBehaviour
         loadScroll.SetActive(false);
         loadDelete.SetActive(false);
         login.SetActive(true);
-        gameObject.SetActive(false);
+        mainMenu.SetActive(false);
         CheckLoad();
     }
 

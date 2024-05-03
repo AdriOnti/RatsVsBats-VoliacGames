@@ -16,6 +16,7 @@ public class Login : MonoBehaviour
 
     [Header("LoginCorrect")]
     public GameObject menu;
+    public GameObject login;
 
     [Header("Debug Mode")]
     public bool isDebugging;
@@ -146,7 +147,7 @@ public class Login : MonoBehaviour
         if (correctPassword)
         {
             isLogged = true;
-            gameObject.SetActive(false);
+            login.SetActive(false);
             menu.gameObject.SetActive(true);
         }
         else errorMessage.text = "Email or password incorrect";
@@ -162,7 +163,7 @@ public class Login : MonoBehaviour
     public bool PasswordCorrect(string tableName, string[] columns, object[] values)
     {
         // SELECT userEmail, userPassword FROM Users WHERE userEmail = 'developer@voliac-games.com';
-        string query = $"SELECT {columns[0]}, {columns[1]} FROM {tableName} WHERE {columns[0]} = {values[0].ToString()}";
+        string query = $"SELECT {columns[0]}, {columns[1]} FROM {tableName} WHERE {columns[0]} = \'{values[0].ToString()}\'";
         DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
 
         if (resultDataSet != null && resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0)

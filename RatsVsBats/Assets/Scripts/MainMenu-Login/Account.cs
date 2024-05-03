@@ -60,7 +60,7 @@ public class Account : MonoBehaviour
     public void GetData(string tableName, string[] columns, object[] values)
     {
         // WHERE email = email.text
-        string query = $"SELECT {columns[0]}, {columns[1]} FROM {tableName} WHERE {columns[1]} = {values[0].ToString()}";
+        string query = $"SELECT {columns[0]}, {columns[1]} FROM {tableName} WHERE {columns[1]} = \'{values[0].ToString()}\'";
 
         DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
 

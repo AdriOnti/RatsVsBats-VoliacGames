@@ -5093,7 +5093,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &994735317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5404,9 +5404,9 @@ GameObject:
   - component: {fileID: 1019004797}
   - component: {fileID: 1019004799}
   - component: {fileID: 1019004798}
-  - component: {fileID: 1019004800}
   - component: {fileID: 1019004801}
   - component: {fileID: 1019004802}
+  - component: {fileID: 1019004800}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -5467,6 +5467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadGameBtn: {fileID: 2084438724}
+  mainMenu: {fileID: 1425761613}
   confirmDelete: {fileID: 1153628653}
   confirmDelete2: {fileID: 157072275}
   loadScroll: {fileID: 180526426}
@@ -5490,6 +5491,7 @@ MonoBehaviour:
   errorMessage: {fileID: 870524432}
   registerPage: https://www.google.com
   menu: {fileID: 1425761613}
+  login: {fileID: 994735316}
   isDebugging: 0
   emailDebug: develeper@voliac-games.com
   passwordDebug: '!Df%M.M0'
