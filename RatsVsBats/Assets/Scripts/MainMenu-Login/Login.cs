@@ -137,7 +137,7 @@ public class Login : MonoBehaviour
         if (!validate) ValidadeLogin("");
         
         // Llamada al DatabaseManager
-        string tableName = "Profiles";
+        string tableName = "Users";
         string[] columns = { "userEmail", "userPassword" };
         object[] values = { email.text, password.text };
 
@@ -161,6 +161,7 @@ public class Login : MonoBehaviour
     /// <returns>If the two passoword are correct</returns>
     public bool PasswordCorrect(string tableName, string[] columns, object[] values)
     {
+        // SELECT userEmail, userPassword FROM Users WHERE userEmail = 'developer@voliac-games.com';
         string query = $"SELECT {columns[0]}, {columns[1]} FROM {tableName} WHERE {columns[0]} = {values[0].ToString()}";
         DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
 

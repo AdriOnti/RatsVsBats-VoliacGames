@@ -25,9 +25,9 @@ public class Account : MonoBehaviour
 
         string tableName = "Users";
         string[] columns = { "nickname", "email", "points", "branches", "missionsCompleted"};
-        object[] values = { Login.instance.email.text };
+        object[] values = { "developer@voliac-games.com" };
 
-        if(Login.instance.isLogged) GetData(tableName, columns, values);
+        /*if(Login.instance.isLogged) */GetData(tableName, columns, values);
     }
 
     /// <summary>
