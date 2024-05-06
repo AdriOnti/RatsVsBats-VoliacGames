@@ -1,9 +1,12 @@
+using System.Collections;
 using System.Data;
 using TMPro;
 using UnityEngine;
 
 public class Login : MonoBehaviour
 {
+    public static Login instance;
+
     [Header("InputFields")]
     public TMP_InputField email;
     public TMP_InputField password;
@@ -23,21 +26,18 @@ public class Login : MonoBehaviour
     public string emailDebug;
     public string passwordDebug;
 
-    public static Login instance;
+    [Header("Success Log-in")]
+    [SerializeField] private GameObject fadeIn;
     [HideInInspector] public bool isLogged;
-    /*[HideInInspector] */public int idUser;
+    [HideInInspector] public int idUser;
 
-    private void Awake()
-    {
-        instance = this;
-    }
+    private void Awake() { instance = this; }
 
     private void Start()
     {
         menu.SetActive(false);
         errorMessage.gameObject.SetActive(false);
-        //email.onEndEdit.AddListener(ValidateMail);
-        //password.onEndEdit.AddListener(ValidatePwd);
+        fadeIn.SetActive(false);
         password.onEndEdit.AddListener(ValidadeLogin);
     }
 
@@ -49,63 +49,10 @@ public class Login : MonoBehaviour
             email.text = emailDebug;
             password.text = passwordDebug;
             LoginBtn(true);
+            isDebugging = false;
         }
     }
 #endif
-
-    //private void ValidateMail(string mail)
-    //{
-    //    if (!IsValidAddress(mail))
-    //    {
-    //        errorMessage.gameObject.SetActive(true);
-    //        errorMessage.text = "Your address is not correct";
-    //    }
-    //    else
-    //    {
-    //        errorMessage.gameObject.SetActive(false);
-    //    }
-    //}
-
-    //private void ValidatePwd(string password)
-    //{
-    //    if(!IsValidPwd(password))
-    //    {
-    //        errorMessage.gameObject.SetActive(true);
-    //        errorMessage.text = "Your password is incorrect";
-    //    }
-    //    else
-    //    { 
-    //        errorMessage.gameObject.SetActive(false);
-    //        LoginBtn(true);
-    //    }
-    //}
-
-    ///// <summary>
-    ///// Using regex finds if is a valid email address
-    ///// </summary>
-    ///// <param name="address">The email to validate</param>
-    ///// <returns>If is valid or not</returns>
-    //private bool IsValidAddress(string address)
-    //{
-    //    string regex = @"(google|yahoo|hotmail|outlook|itb|voliac-games).(com|net|org|gov|cat|es)$";
-    //    return Regex.IsMatch(address, regex, RegexOptions.IgnoreCase);
-    //}
-
-    ///// <summary>
-    ///// Using regex finds if is a password meets the conditions
-    ///// </summary>
-    ///// <param name="pwd">The password to validate</param>
-    ///// <returns>Is is valid or not</returns>
-    //private bool IsValidPwd(string pwd)
-    //{
-    //    //  (?=.*[a-z])         Debe contener al menos una letra minúscula.
-    //    //  (?=.*[A-Z])         Debe contener al menos una letra mayúscula.
-    //    //  (?=.*\d)            Debe contener al menos un dígito
-    //    //  (?=.*[^\da-zA-Z])   Debe contener al menos un carácter que no sea letra ni dígito
-    //    //  .{8,}               Debe tener una longitud mínima de 8 caracteres
-    //    string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$";
-    //    return Regex.IsMatch(pwd, pattern); ;
-    //}
 
     /// <summary>
     /// Open a new tab in the web browser to the register page
@@ -121,24 +68,30 @@ public class Login : MonoBehaviour
     {
         if (email.text == "")
         {
-            errorMessage.text = "Your address is not correct";
+            errorMessage.gameObject.SetActive(true);
+            errorMessage.text = "Your address can't be empty";
             return;
         }
 
         if(password.text == "")
         {
-            errorMessage.text = "Your password is incorrect";
+            errorMessage.gameObject.SetActive(true);
+            errorMessage.text = "Your password can't be empty";
             return;
         }
 
         LoginBtn(true);
     }
 
+    /// <summary>
+    /// The function to call when the button of Login is pressed
+    /// </summary>
+    /// <param name="validate">If pass the ValidadeLogin function or not</param>
     public void LoginBtn(bool validate)
     {
         if (!validate) ValidadeLogin("");
         
-        // Llamada al DatabaseManager
+        // Values to the call the DBManager
         string tableName = "Users";
         string[] columns = { "userEmail", "userPassword" };
         object[] values = { email.text, password.text };
@@ -147,17 +100,25 @@ public class Login : MonoBehaviour
 
         if (correctPassword)
         {
+            // Toggle the canvas and activates de isLogged boolean
             isLogged = true;
             login.SetActive(false);
             menu.gameObject.SetActive(true);
+            Debug.Log("<color=green>Login successful!</color>");
+
+            // Get the ID of the user
             string[] newColumns = { "idUsers", "userEmail"};
             GetID(tableName, newColumns, values);
+
+
+            // Do the Fade In and reset cursor
             CursorManager.Instance.ResetCursor();
+            StartCoroutine(Fade());
         }
         else
         {
             errorMessage.gameObject.SetActive(true);
-            errorMessage.text = "Email or password incorrect";
+            errorMessage.text = "Email or password\n or both are wrong";
         }
     }
 
@@ -172,27 +133,52 @@ public class Login : MonoBehaviour
     {
         // SELECT userEmail, userPassword FROM Users WHERE userEmail = 'developer@voliac-games.com';
         string query = $"SELECT {columns[0]}, {columns[1]} FROM {tableName} WHERE {columns[0]} = \'{values[0].ToString()}\'";
-        DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
 
-        if (resultDataSet != null && resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0)
+        try
         {
-            string storedPassword = resultDataSet.Tables[0].Rows[0][columns[1]].ToString();
-            if (storedPassword == values[1].ToString()) return true;
-        }
+            // Execute the query
+            DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
 
+            // Find the password in the result of the select query and saved it
+            if (resultDataSet != null && resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0)
+            {
+                string storedPassword = resultDataSet.Tables[0].Rows[0][columns[1]].ToString();
+                if (storedPassword == values[1].ToString()) return true;
+            }
+        }
+        catch { return false; }
         return false;
     }
     
+    /// <summary>
+    /// Get the ID of the logged user
+    /// </summary>
+    /// <param name="tableName">Name of the table</param>
+    /// <param name="columns">The columns to make the select</param>
+    /// <param name="values">The values to check in the where</param>
     private void GetID(string tableName, string[] columns, object[] values)
     {
+        // SELECT idUsers FROM Users WHERE email = 'email';
         string query = $"SELECT {columns[0]} FROM {tableName} WHERE {columns[1]} = \'{values[0]}\'";
         DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
 
+        // Save the id like a integer
         if(resultDataSet != null && resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0)
         {
-            idUser = int.Parse(resultDataSet.Tables[0].Rows[0][columns[0]].ToString());
+            DataRow row = resultDataSet.Tables[0].Rows[0];
+            idUser = int.Parse(row[columns[0]].ToString());
         }
 
         Account.Instance.JustLogged();
+    }
+
+    /// <summary>
+    /// Enable the fade in after login
+    /// </summary>
+    IEnumerator Fade()
+    {
+        fadeIn.SetActive(true);
+        yield return new WaitForSecondsRealtime(1.51f);
+        fadeIn.SetActive(false);
     }
 }
