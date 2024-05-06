@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Account : MonoBehaviour
 {
+    public static Account Instance;
     [Header("Icon")]
     [SerializeField] private RawImage profileIcon;
 
@@ -17,17 +18,26 @@ public class Account : MonoBehaviour
 
     [Header("Edit")]
     [SerializeField] private GameObject editWarning;
+    [SerializeField] private GameObject account;
     [SerializeField] private string URL;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void OnEnable()
     {
         editWarning.SetActive(false);
+    }
 
-        string tableName = "Users";
-        string[] columns = { "nickname", "email", "points", "branches", "missionsCompleted"};
-        object[] values = { "developer@voliac-games.com" };
+    public void JustLogged()
+    {
+        string tableName = "Profiles";
+        string[] columns = { "idProfiles", "nickName", "completedMissions", "completedBranches", "points" };
+        object[] values = { Login.instance.idUser, Login.instance.email.text };
 
-        /*if(Login.instance.isLogged) */GetData(tableName, columns, values);
+        if (Login.instance.isLogged) GetData(tableName, columns, values);
     }
 
     /// <summary>
@@ -42,7 +52,7 @@ public class Account : MonoBehaviour
     public void CloseObject(bool isWarning)
     {
         if(isWarning) editWarning.SetActive(false);
-        else gameObject.SetActive(false);
+        else account.SetActive(false);
         CursorManager.Instance.ResetCursor();
     }
 
@@ -59,8 +69,8 @@ public class Account : MonoBehaviour
     /// <param name="values">The values to check in the where</param>
     public void GetData(string tableName, string[] columns, object[] values)
     {
-        // WHERE email = email.text
-        string query = $"SELECT {columns[0]}, {columns[1]} FROM {tableName} WHERE {columns[1]} = \'{values[0].ToString()}\'";
+        // WHERE idProfiles = idUsers
+        string query = $"SELECT {columns[1]}, {columns[2]}, {columns[3]}, {columns[4]} FROM {tableName} WHERE {columns[0]} = {values[0]}";
 
         DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
 
@@ -68,11 +78,11 @@ public class Account : MonoBehaviour
         {
             DataRow row = resultDataSet.Tables[0].Rows[0];
 
-            nickname.text = row[columns[0]].ToString();
-            email.text = row[columns[1]].ToString();
-            points.text = row[columns[2]].ToString();
-            historyBranches.text = $"{row[columns[3]].ToString()}/3";
-            missionsCompleted.text = row[columns[4]].ToString();
+            nickname.text = row[columns[1]].ToString();
+            email.text = values[1].ToString();
+            missionsCompleted.text = row[columns[2]].ToString();
+            historyBranches.text = $"{row[columns[3]]}/3";
+            points.text = row[columns[4]].ToString();
         }
     }
 }

@@ -25,6 +25,7 @@ public class Login : MonoBehaviour
 
     public static Login instance;
     [HideInInspector] public bool isLogged;
+    /*[HideInInspector] */public int idUser;
 
     private void Awake()
     {
@@ -149,8 +150,15 @@ public class Login : MonoBehaviour
             isLogged = true;
             login.SetActive(false);
             menu.gameObject.SetActive(true);
+            string[] newColumns = { "idUsers", "userEmail"};
+            GetID(tableName, newColumns, values);
+            CursorManager.Instance.ResetCursor();
         }
-        else errorMessage.text = "Email or password incorrect";
+        else
+        {
+            errorMessage.gameObject.SetActive(true);
+            errorMessage.text = "Email or password incorrect";
+        }
     }
 
     /// <summary>
@@ -173,5 +181,18 @@ public class Login : MonoBehaviour
         }
 
         return false;
+    }
+    
+    private void GetID(string tableName, string[] columns, object[] values)
+    {
+        string query = $"SELECT {columns[0]} FROM {tableName} WHERE {columns[1]} = \'{values[0]}\'";
+        DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
+
+        if(resultDataSet != null && resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0)
+        {
+            idUser = int.Parse(resultDataSet.Tables[0].Rows[0][columns[0]].ToString());
+        }
+
+        Account.Instance.JustLogged();
     }
 }
