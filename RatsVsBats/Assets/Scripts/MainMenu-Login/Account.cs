@@ -32,7 +32,7 @@ public class Account : MonoBehaviour
     public void JustLogged()
     {
         string tableName = "Profiles";
-        string[] columns = { "idProfiles", "nickName", "completedMissions", "completedBranches", "points" };
+        string[] columns = { "idProfiles", "nickname", "completedMissions", "completedBranches", "points" };
         object[] values = { Login.instance.idUser, Login.instance.email.text };
 
         if (Login.instance.isLogged) GetData(tableName, columns, values);

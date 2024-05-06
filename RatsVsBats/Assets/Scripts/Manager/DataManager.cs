@@ -130,4 +130,9 @@ public class DataManager : MonoBehaviour
         File.Delete(GetPersistentPath() + "/data.json");
         if(ActiveSceneIndex()) CanvasManager.Instance.NotLoad();
     }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("loading", 0);
+    }
 }
