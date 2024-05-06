@@ -1,53 +1,44 @@
 // Inicializar variables
+let apiPerfil;
 let succesful = false;
 let usuarioId;
+let usuariosLogin = [];
 
 // Definir elementos del DOM
-const login = document.getElementById("login");
-
-const loginName = document.getElementById("user-name-login");
-const loginPass = document.getElementById("user-password-login");
+const loginName = document.getElementById("login-email");
+const loginPass = document.getElementById("login-password");
 const loginBtn = document.getElementById("loginBtn");
+const feedback = document.getElementById("feedback");
 
+// Peticion GET a la API de Usuarios, y persistencia en localStorage
+function logindata() {
+  fetch(apiUsuarios)
+    .then((response) => {
+      console.log(response);
+      if (response.ok) {
+        return response.json();
+      }
+    })
+    .then((data) => {
+      console.log(data);
+      for (const usuario of data) {
+        usuariosLogin.push(usuario);
+      }
 
-// const mysql = require('mysql');
+      RecogerIdUsuario(usuariosLogin);
 
-// const connection = mysql.createConnection({
-//   host: 'your-rds-endpoint',
-//   user: 'your-username',
-//   password: 'your-password',
-//   database: 'your-database'
-// });
+      apiPerfil = apiPerfiles + usuarioId;
 
-// connection.connect((err) => {
-//   if (err) {
-//     console.error('Error connecting to database: ' + err.stack);
-//     return;
-//   }
-//   console.log('Connected to database');
-// });
+      storageProfile();
+      if(!(usuarioId == null)) {console.log("El id de usuario es: " + usuarioId);}
+      
 
-// // Select function
-// connection.query('SELECT * FROM your_table', (err, rows) => {
-//   if (err) {
-//     console.error('Error executing query: ' + err.stack);
-//     return;
-//   }
-//   console.log('Data retrieved from database:');
-//   console.log(rows);
-// });
-
-// // Insert function
-// const newRecord = { column1: 'value1', column2: 'value2' };
-// connection.query('INSERT INTO your_table SET ?', newRecord, (err, result) => {
-//   if (err) {
-//     console.error('Error inserting record: ' + err.stack);
-//     return;
-//   }
-//   console.log('New record inserted with ID: ' + result.insertId);
-// });
-
-// connection.end();
+      popupBlock();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
 
 // Comprobar usuario existente y correcto
 function RecogerIdUsuario(usuariosLogin) {
@@ -73,12 +64,22 @@ function RecogerIdUsuario(usuariosLogin) {
 
 // Guardar perfil en localStorage
 function storageProfile() {
-  localStorage.setItem("idPerfil", data.id_usuario);
-  localStorage.setItem("nombrePerfil", data.nombrePerfil);
-  localStorage.setItem("ubicacion", data.ubicacion);
-  localStorage.setItem("puntuacion", data.puntuacion);
-  localStorage.setItem("intentos", data.intentos);
-  localStorage.setItem("nivel", data.nivel);
+  fetch(apiPerfil)
+    .then((response) => {
+      //handle response
+      console.log(response);
+      if (response.ok) {
+        return response.json();
+      }
+    })
+    .then((data) => {
+      localStorage.setItem("idProfile", data.idProfiles);
+      localStorage.setItem("nickname", data.nickName);
+      localStorage.setItem("locationDef", data.location);
+      localStorage.setItem("completedMissions", data.completedMissions);
+      localStorage.setItem("completedBranches", data.completedBranches);
+      localStorage.setItem("points", data.points);
+    });
 }
 
 function popupBlock() {

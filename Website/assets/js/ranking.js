@@ -1,3 +1,6 @@
+// Declaracion de API Perfiles
+const url = apiPerfiles;
+
 // Definición de elementos del DOM
 const tableSelector = document.getElementById("table-ranking");
 const records = document.getElementById("records-perfiles");
@@ -5,14 +8,36 @@ const records = document.getElementById("records-perfiles");
 let perfiles = [];
 let posicion = 1;
 
+// Metodo GET de la API Perfiles
+fetch(url)
+  .then((response) => {
+    console.log(response);
+    if (response.ok) {
+      return response.json();
+    }
+  })
+  .then((data) => {
+    console.log(data);
+
+    for (const perfil of data) {
+      perfiles.push(perfil);
+    }
+
+    OrdenarPerfiles(perfiles, records);
+    CrearPerfiles(perfiles, records);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
 // Ordenacion de perfiles por puntuacion
 function OrdenarPerfiles(perfiles, records) {
   perfiles.sort(function (a, b) {
-    if (a.puntuacion > b.puntuacion) {return -1;}
-    else if (a.puntuacion < b.puntuacion) {
+    if (a.completedMissions > b.completedMissions) {return -1;}
+    else if (a.completedMissions < b.completedMissions) {
       return 1;
     } else {
-      return a.intentos - b.intentos;
+      return a.points - b.points;
     }
   });
   return perfiles;

@@ -1,3 +1,6 @@
+// Deficionion APIs
+const apiPerfiles = "https://xxx.azurewebsites.net/api/Profiles";
+const apiUsuarios = "https://xxx.azurewebsites.net/api/Users";
 
 // Definicion elementos DOM
 const signup = document.getElementById("signup");
@@ -7,6 +10,29 @@ let usuarios = [];
 
 let tempId;
 
+// Metodo GET API Usuario
+fetch(apiUsuarios)
+  .then((response) => {
+    console.log(response);
+    if (response.ok) {
+      return response.json();
+    }
+  })
+  .then((data) => {
+    console.log(data);
+    for (const usuario of data) {
+      usuarios.push(usuario);
+    }
+
+    console.log(usuarios);
+
+    tempId = usuarios[usuarios.length - 1].id;
+    console.log(tempId);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
 let clickedReg = false;
 
 // Al clickar registrar Usuario
@@ -15,7 +41,7 @@ signupBtn.addEventListener("click", (e) => {
   clickedReg = true;
 
   let user = {
-    email: document.getElementById("email").value,
+    usuario: document.getElementById("email").value,
     password: document.getElementById("password").value,
   };
 
@@ -23,11 +49,10 @@ signupBtn.addEventListener("click", (e) => {
     id_usuario: tempId + 1,
     nombrePerfil: document.getElementById("nickname").value,
     ubicacion: document.getElementById("location").value,
-    nivel: 1,
   };
   
   if (CheckUserRegistered(user.usuario)) {
-    console.log("Already Registered With This Email");
+    console.log("Usuario ya registrado");
     return;
   }
 
@@ -36,7 +61,24 @@ signupBtn.addEventListener("click", (e) => {
   }
 
 
-  // Inserts
+  // Consumir API
+
+  let post = {
+    method: "POST",
+    body: JSON.stringify(user),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  let put = {
+    method: "PUT",
+    body: JSON.stringify(profile),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
   console.log(user);
   console.log(profile);
 
@@ -58,28 +100,47 @@ function popupRegisterSuccesfull() {
 
 // PopUp mapa para registrar Ubicacion
 function verMapa() {
-  window.open("../map/", "_blank", "width=800,height=600");
+  window.open("mapa.html", "_blank", "width=800,height=600");
 }
 
 // Recuperar localizacion usuario
-window.addEventListener('mouseover', function(event) {
-  console.log("mouseover");
-  WriteLoc();
+document.body.addEventListener("mouseover", function () {
+  document.getElementById("profile-location").value =
+    localStorage.getItem("currentLoc");
 });
-function WriteLoc(){
-  if(localStorage.getItem("locChanged") === "true"){
-    document.getElementById("location").value = localStorage.getItem("currentLoc");
-  }
-}
 
 // Registro Usuario
 async function signInUser(post) {
-  
+  try {
+    const res = await fetch(apiUsuarios, post);
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.log("uwu");
+      return;
+    }
+    console.log(data);
+    
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // Creacion de Perfil
 async function signInProfile(put) {
-  
+  try {
+    const res = await fetch(apiPerfiles, put);
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.log("uwu");
+      return;
+    }
+    console.log(data);
+    
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 
