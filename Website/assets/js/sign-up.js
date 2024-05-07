@@ -1,6 +1,6 @@
 // Deficionion APIs
-const apiPerfiles = "https://xxx.azurewebsites.net/api/Profiles";
-const apiUsuarios = "https://xxx.azurewebsites.net/api/Users";
+const apiPerfiles = "https://rvbvoliacgamesapi.azurewebsites.net/api/Profiles";
+const apiUsuarios = "https://rvbvoliacgamesapi.azurewebsites.net/api/Users";
 
 // Definicion elementos DOM
 const signup = document.getElementById("signup");
