@@ -1,13 +1,17 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace MinimalAPI.Models
 {
     // Clase usuario
     public class User
     {
-        public int id { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
+        [Key]
+        public int idUsers { get; set; }
+        public string? userEmail { get; set; }
+        [IgnoreDataMember]
+        public string? userPassword { get; set; }
 
     }
 }

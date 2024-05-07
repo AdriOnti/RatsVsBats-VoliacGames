@@ -25,11 +25,12 @@ namespace MinimalAPI.Repositories
         {
             var db = dbConnection();
 
-            var sql = @"
-                        SELECT idProfiles, nickname, location, completedMissions, completedBranches, points
-                            FROM Profiles
-                            
-                        ";
+            //var sql = @"
+            //            SELECT idProfiles, nickname, location, completedMissions, completedBranches, points
+            //                FROM Profiles
+
+            //            ";
+            var sql = @"SELECT * FROM Profiles";
 
             return await db.QueryAsync<Profile>(sql, new { });
         }
@@ -63,9 +64,8 @@ namespace MinimalAPI.Repositories
                         WHERE id_usuario = @id_usuario;
                         ";
 
-            var result = await db.ExecuteAsync(sql, new { perfil.id, perfil.nickname, perfil.location, perfil.points, perfil.completedMissions, perfil.completedBranches });
+            var result = await db.ExecuteAsync(sql, new { perfil.idProfiles, perfil.nickname, perfil.location, perfil.points, perfil.completedMissions, perfil.completedBranches });
             return result > 0;
         }
-
     }
 }

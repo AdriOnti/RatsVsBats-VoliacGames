@@ -10,6 +10,8 @@ namespace MinimalAPI.Controllers
     [ApiController]
     public class ProfilesController : ControllerBase
     {
+
+
         // Instanciación de la clase UsuariosRepository.
         private readonly ProfilesRepository perfilesRepository;
         public ProfilesController(ProfilesRepository perfilesRepository)

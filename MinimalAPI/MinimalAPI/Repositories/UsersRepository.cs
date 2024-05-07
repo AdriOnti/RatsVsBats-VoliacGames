@@ -26,11 +26,11 @@ namespace MinimalAPI.Repositories
         {
             var db = dbConnection();
 
-            var sql = @"
-                        SELECT idUsers, userEmail, userPassword
-                            FROM Users
-                            
-                        ";
+            var sql = @"SELECT * FROM Users";
+            //var sql = @"
+            //            SELECT idProfiles, nickname, location, completedMissions, completedBranches, points
+            //                FROM Profiles
+            //            ";
 
             return await db.QueryAsync<User>(sql, new { });
         }
@@ -41,7 +41,7 @@ namespace MinimalAPI.Repositories
             var db = dbConnection();
 
             var sql = @"
-                        SELECT idUsers, userEmail, userPassword
+                        SELECT *
                             FROM Users
                             WHERE idUsers = @Id
                         ";
@@ -56,10 +56,10 @@ namespace MinimalAPI.Repositories
 
             var sql = @"
                         INSERT INTO Users (userEmail, userPassword)
-                        VALUES (@usuario, @password)
+                        VALUES (@user, @password)
                         ";
 
-            var result = await db.ExecuteAsync(sql, new { usuario.email, usuario.password });
+            var result = await db.ExecuteAsync(sql, new { user = usuario.userEmail, password = usuario.userPassword });
             return result > 0;
         }
 
@@ -75,7 +75,7 @@ namespace MinimalAPI.Repositories
                         WHERE id = @id;
                         ";
 
-            var result = await db.ExecuteAsync(sql, new { usuario.email, usuario.password, usuario.id });
+            var result = await db.ExecuteAsync(sql, new { usuario.userEmail, usuario.userPassword, usuario.idUsers });
             return result > 0;
         }
 
@@ -89,10 +89,8 @@ namespace MinimalAPI.Repositories
                         WHERE id = @Id;
                         ";
 
-            var result = await db.ExecuteAsync(sql, new { Id = usuario.id });
+            var result = await db.ExecuteAsync(sql, new { Id = usuario.idUsers });
             return result > 0;
         }
-
     }
-
 }

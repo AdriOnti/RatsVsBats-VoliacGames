@@ -72,7 +72,7 @@ namespace MinimalAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsuario(int id)
         {
-            var deleted = await usuariosRepository.DeleteUser(new User { id = id });
+            var deleted = await usuariosRepository.DeleteUser(new User { idUsers = id });
             return Created("Eliminado!", deleted);
         }
     }
