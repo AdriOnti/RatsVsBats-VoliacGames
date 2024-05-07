@@ -11,6 +11,8 @@ public class DataManager : MonoBehaviour
         get { return instance; }
     }
 
+    public int profileId;
+
     // AWAKE
     private void Awake()
     {
@@ -21,10 +23,11 @@ public class DataManager : MonoBehaviour
     // START
     private void Start()
     {
-        if (SaveExists() && ActiveSceneIndex() && PlayerPrefs.GetInt("loading") > 0)
-        {
-            LoadGame();
-        }
+        // Get the profile Id for make UPDATE
+        if (PlayerPrefs.GetInt("profileID") > 0) profileId = PlayerPrefs.GetInt("profileID");
+
+        // LoadGame
+        if (SaveExists() && ActiveSceneIndex() && PlayerPrefs.GetInt("loading") > 0) LoadGame();
     }
 
     /// <summary>
@@ -131,8 +134,12 @@ public class DataManager : MonoBehaviour
         if(ActiveSceneIndex()) CanvasManager.Instance.NotLoad();
     }
 
+    /// <summary>
+    /// Delete the keys on the PlayerPrefs
+    /// </summary>
     private void OnApplicationQuit()
     {
-        PlayerPrefs.SetInt("loading", 0);
+        PlayerPrefs.DeleteKey("loading");
+        PlayerPrefs.DeleteKey("profileID");
     }
 }

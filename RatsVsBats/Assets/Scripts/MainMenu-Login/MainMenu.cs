@@ -65,6 +65,7 @@ public class MainMenu : MonoBehaviour
         CursorManager.Instance.ResetCursor();
         if (isNewGame) PlayerPrefs.SetInt("loading", 0);
         else PlayerPrefs.SetInt("loading", 1);
+        PlayerPrefs.SetInt("profileID", Login.instance.idUser);
         SceneManager.LoadScene(1);
     }
 
