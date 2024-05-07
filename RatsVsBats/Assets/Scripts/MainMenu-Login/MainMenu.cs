@@ -69,7 +69,7 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    public void LoadButton() { loadScroll.SetActive(true); }
+    public void LoadButton() { loadScroll.SetActive(!loadScroll.activeSelf); }
 
     /// <summary>
     /// Delete the saved game

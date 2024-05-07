@@ -261,4 +261,12 @@ public class CanvasManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(2.0f);
         autoSave.SetActive(false);
     }
+
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        Application.Quit();
+    }
 }
