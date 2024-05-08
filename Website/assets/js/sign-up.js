@@ -27,6 +27,7 @@ fetch(apiUsuarios)
     console.log(usuarios);
 
     tempId = usuarios[usuarios.length - 1].id;
+    tempId += 1;
     console.log(tempId);
   })
   .catch((error) => {
@@ -41,17 +42,17 @@ signupBtn.addEventListener("click", (e) => {
   clickedReg = true;
 
   let user = {
-    usuario: document.getElementById("email").value,
-    password: document.getElementById("password").value,
+    userEmail: document.getElementById("email").value,
+    userPassword: document.getElementById("password").value,
   };
 
   let profile = {
-    id_usuario: tempId + 1,
-    nombrePerfil: document.getElementById("nickname").value,
-    ubicacion: document.getElementById("location").value,
+    idProfiles: tempId,
+    nickname: document.getElementById("nickname").value,
+    location: document.getElementById("location").value,
   };
   
-  if (CheckUserRegistered(user.usuario)) {
+  if (CheckUserRegistered(user.userEmail)) {
     console.log("Usuario ya registrado");
     return;
   }
@@ -100,12 +101,12 @@ function popupRegisterSuccesfull() {
 
 // PopUp mapa para registrar Ubicacion
 function verMapa() {
-  window.open("mapa.html", "_blank", "width=800,height=600");
+  window.open("../map/", "_blank", "width=800,height=600");
 }
 
 // Recuperar localizacion usuario
 document.body.addEventListener("mouseover", function () {
-  document.getElementById("profile-location").value =
+  document.getElementById("location").value =
     localStorage.getItem("currentLoc");
 });
 
@@ -145,6 +146,6 @@ async function signInProfile(put) {
 
 
 // Comprobación Usuario registrado
-function CheckUserRegistered(user) {
-  return usuarios.find(userTarget => userTarget.usuario === user) !== undefined;
+function CheckUserRegistered(testEmail) {
+  return usuarios.find(userTarget => userTarget.userEmail === testEmail) !== undefined;
 }

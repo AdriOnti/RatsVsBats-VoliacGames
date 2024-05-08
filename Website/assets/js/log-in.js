@@ -27,7 +27,7 @@ function logindata() {
 
       RecogerIdUsuario(usuariosLogin);
 
-      apiPerfil = apiPerfiles + usuarioId;
+      apiPerfil = apiPerfiles + "/" + usuarioId;
 
       storageProfile();
       if(!(usuarioId == null)) {console.log("El id de usuario es: " + usuarioId);}
@@ -44,13 +44,13 @@ function logindata() {
 function RecogerIdUsuario(usuariosLogin) {
   for (const usuario of usuariosLogin) {
     if (
-      usuario.usuario === loginName.value &&
-      usuario.password === loginPass.value
+      usuario.userEmail == loginName.value &&
+      usuario.userPassword == loginPass.value
     ) {
       console.log(usuario);
       console.log("Hola campeon");
       succesful = true;
-      usuarioId = usuario.id;
+      usuarioId = usuario.idUsers;
       break;
     }
   }
@@ -74,8 +74,8 @@ function storageProfile() {
     })
     .then((data) => {
       localStorage.setItem("idProfile", data.idProfiles);
-      localStorage.setItem("nickname", data.nickName);
-      localStorage.setItem("locationDef", data.location);
+      localStorage.setItem("nickname", data.nickname);
+      localStorage.setItem("location", data.location);
       localStorage.setItem("completedMissions", data.completedMissions);
       localStorage.setItem("completedBranches", data.completedBranches);
       localStorage.setItem("points", data.points);
