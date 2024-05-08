@@ -26,7 +26,7 @@ fetch(apiUsuarios)
 
     console.log(usuarios);
 
-    tempId = usuarios[usuarios.length - 1].id;
+    tempId = usuarios[usuarios.length - 1].idUsers;
     tempId += 1;
     console.log(tempId);
   })
@@ -50,6 +50,9 @@ signupBtn.addEventListener("click", (e) => {
     idProfiles: tempId,
     nickname: document.getElementById("nickname").value,
     location: document.getElementById("location").value,
+    completedMissions: 0,
+    completedBranches: 0,
+    points: 0,
   };
   
   if (CheckUserRegistered(user.userEmail)) {
@@ -86,7 +89,7 @@ signupBtn.addEventListener("click", (e) => {
   signInUser(post);
   signInProfile(put);
 
-  succesful = true;
+  // succesful = true;
 
   setTimeout(function () {
     localStorage.clear();

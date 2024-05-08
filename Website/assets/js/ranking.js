@@ -1,5 +1,5 @@
 // Declaracion de API Perfiles
-const url = apiPerfiles;
+const url = "https://rvbvoliacgamesapi.azurewebsites.net/api/Profiles";
 
 // Definición de elementos del DOM
 const tableSelector = document.getElementById("table-ranking");
@@ -37,7 +37,14 @@ function OrdenarPerfiles(perfiles, records) {
     else if (a.completedMissions < b.completedMissions) {
       return 1;
     } else {
-      return a.points - b.points;
+        if (a.points > b.points){
+          return -1;
+        }
+        else if (a.points < b.points)
+        {
+            return 1;
+        }
+        else return -1;
     }
   });
   return perfiles;
@@ -60,10 +67,10 @@ function CrearPerfiles(perfiles, records) {
     td5.setAttribute("class", "attemps");
 
     td1.textContent = posicion;
-    td2.textContent = perfil.nombrePerfil;
-    td3.textContent = perfil.ubicacion;
-    td4.textContent = perfil.puntuacion;
-    td5.textContent = perfil.intentos;
+    td2.textContent = perfil.nickname;
+    td3.textContent = perfil.location;
+    td4.textContent = perfil.completedMissions;
+    td5.textContent = perfil.points;
 
     tr.appendChild(td1);
     tr.appendChild(td2);

@@ -55,16 +55,16 @@ namespace MinimalAPI.Repositories
             var db = dbConnection();
 
             var sql = @"
-                        UPDATE  public.perfil
-                        SET ""nombrePerfil"" = @nombrePerfil,
-                            ubicacion  =  @ubicacion,
-                            puntuacion = @puntuacion,
-                            intentos = @intentos,
-                            nivel = @nivel
-                        WHERE id_usuario = @id_usuario;
+                        UPDATE  Profiles
+                        SET nickname = @Nickname,
+                            location  =  @Location,
+                            completedMissions = @CompletedMissions,
+                            completedBranches = @CompletedBranches,
+                            points = @points
+                        WHERE idProfiles = @IdProfiles;
                         ";
 
-            var result = await db.ExecuteAsync(sql, new { perfil.idProfiles, perfil.nickname, perfil.location, perfil.points, perfil.completedMissions, perfil.completedBranches });
+            var result = await db.ExecuteAsync(sql, new { IdProfiles = perfil.idProfiles, Nickname = perfil.nickname, Location = perfil.location, CompletedMissions = perfil.completedMissions, CompletedBranches = perfil.completedBranches, Points = perfil.points });
             return result > 0;
         }
     }
