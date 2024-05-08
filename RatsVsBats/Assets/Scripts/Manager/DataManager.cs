@@ -28,14 +28,14 @@ public class DataManager : MonoBehaviour
         if (PlayerPrefs.GetInt("profileID") > 0) profileId = PlayerPrefs.GetInt("profileID");
 
         // LoadGame
-        if (SaveExists() && ActiveSceneIndex() && PlayerPrefs.GetInt("loading") > 0) LoadGame();
+        if (SaveExists() && IsNotMainMenu() && PlayerPrefs.GetInt("loading") > 0) LoadGame();
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    public bool ActiveSceneIndex()
+    public bool IsNotMainMenu()
     {
         return SceneManager.GetActiveScene().buildIndex != 0;
     }
@@ -132,7 +132,7 @@ public class DataManager : MonoBehaviour
     public void ConfirmDelete()
     { 
         File.Delete(GetPersistentPath() + "/data.json");
-        if(ActiveSceneIndex()) CanvasManager.Instance.NotLoad();
+        if(IsNotMainMenu()) CanvasManager.Instance.NotLoad();
     }
 
     /// <summary>

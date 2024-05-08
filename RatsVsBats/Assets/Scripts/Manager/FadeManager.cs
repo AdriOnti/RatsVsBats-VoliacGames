@@ -58,7 +58,7 @@ public class FadeManager : MonoBehaviour
     IEnumerator In()
     {
         yield return new WaitForSeconds(0.1f);
-        if(DataManager.Instance.ActiveSceneIndex()) CanvasManager.Instance.HUDFadesIn();
+        if(DataManager.Instance.IsNotMainMenu()) CanvasManager.Instance.HUDFadesIn();
         GameManager.Instance.isFading = false;
         yield return new WaitForSeconds(0.5f);
         father.SetActive(false);
@@ -73,7 +73,7 @@ public class FadeManager : MonoBehaviour
         GameManager.Instance.isFading = true;
         fadeOut.SetActive(true);
         fadeIn.SetActive(false);
-        if(DataManager.Instance.ActiveSceneIndex()) CanvasManager.Instance.HUDFadesOut();
+        if(DataManager.Instance.IsNotMainMenu()) CanvasManager.Instance.HUDFadesOut();
 
     }
 }
