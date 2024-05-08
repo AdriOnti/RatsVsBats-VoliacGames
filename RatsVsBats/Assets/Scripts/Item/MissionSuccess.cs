@@ -10,7 +10,7 @@ public class MissionSuccess : MonoBehaviour
     /// <param name="other">Cualquier GameObject que tenga collider</param>
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<PlayerController>() != null && InventoryManager.Instance.missionItem != null)
+        if(other.GetComponent<PlayerController>() != null && InventoryManager.Instance.missionItem != null && GameManager.Instance.isMission)
         {
             item = InventoryManager.Instance.missionItem;
             InventoryManager.Instance.missionItem = null;
@@ -18,6 +18,7 @@ public class MissionSuccess : MonoBehaviour
             if(item != null) Destroy(item);
             PlayerController.Instance.ChangeItem();
             GameManager.Instance.isMission = false;
+            DataManager.Instance.UpdateProfile();
         }
     }
 
