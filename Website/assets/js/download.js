@@ -1,5 +1,5 @@
 // Comprobación de niveles
-if (!(localStorage.key("idPerfil"))) {
+if (!(localStorage.key("idProfiles"))) {
   alert("Necesitas loguearte para descargar el juego");
   location.replace("/join-us/");
 }
