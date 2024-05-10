@@ -13,7 +13,8 @@ public class Item : ScriptableObject
 
     public enum ItemType
     {
-        Speed
+        Speed,
+        Key
     }
 
     public enum ItemStatus
