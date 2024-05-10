@@ -5,6 +5,7 @@ public class PrisonDoor : MonoBehaviour
 {
     public Animator animator;
     public bool isOpened;
+    public RatPrisioner[] ratsInJail;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -49,6 +50,11 @@ public class PrisonDoor : MonoBehaviour
             gameObject.transform.parent.Find("Collision").gameObject.SetActive(false);
             isOpened = true;
             CanvasManager.Instance.NonDoorMSG();
+
+            foreach(RatPrisioner rp in ratsInJail)
+            {
+                rp.isFree = true;
+            }
         }
     }
 
