@@ -19,6 +19,7 @@ public class RatPrisioner : MonoBehaviour
 
     private void Update()
     {
+        // TODO: Arreglar el tema del navmesh
         if (isFree)
         {
             agent.enabled = true;
