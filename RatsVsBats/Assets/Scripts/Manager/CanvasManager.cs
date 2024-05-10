@@ -38,6 +38,9 @@ public class CanvasManager : MonoBehaviour
     [HideInInspector] GameObject confirmDelete;
     [HideInInspector] GameObject confirm2ndCour;
 
+    [Header("Prison")]
+    [HideInInspector] GameObject doorMessage;
+
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -81,6 +84,7 @@ public class CanvasManager : MonoBehaviour
         notConfirm = GameManager.Instance.FindObjectsByName("NotConfirm");
         confirmDelete = GameManager.Instance.FindObjectsByName("ConfirmDelete");
         confirm2ndCour = GameManager.Instance.FindObjectsByName("ConfirmDelete2Cour");
+        doorMessage = GameManager.Instance.FindObjectsByName("Prison");
     }
 
     /// <summary>
@@ -104,6 +108,7 @@ public class CanvasManager : MonoBehaviour
         notConfirm.SetActive(false);
         confirmDelete.SetActive(false);
         confirm2ndCour.SetActive(false);
+        doorMessage.SetActive(false);
     }
 
 
@@ -276,5 +281,16 @@ public class CanvasManager : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
         Application.Quit();
+    }
+
+    public void JailDoorMSG(string text)
+    {
+        doorMessage.SetActive(true);
+        doorMessage.GetComponentInChildren<TextMeshProUGUI>().text = text;
+    }
+
+    public void NonDoorMSG()
+    {
+        doorMessage.SetActive(false);
     }
 }

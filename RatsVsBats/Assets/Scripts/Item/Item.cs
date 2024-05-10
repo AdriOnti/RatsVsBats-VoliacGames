@@ -14,7 +14,7 @@ public class Item : ScriptableObject
     public enum ItemType
     {
         Speed,
-        Key
+        PrisonKey
     }
 
     public enum ItemStatus

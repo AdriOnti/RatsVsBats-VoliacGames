@@ -144,4 +144,18 @@ public class GameManager : MonoBehaviour
         }
     }
 #endif
+
+    public void PrisonDoor(Item item)
+    {
+        Image actualItem = FindObjectsByName("ActualItem").GetComponent<Image>();
+
+        if (item != null) actualItem.sprite = item.icon;
+        else actualItem.sprite = null;
+
+        int index = InventoryManager.Instance.Items.IndexOf(item);
+
+        PlayerController.Instance.actualItem = item;
+        PlayerController.Instance.inventoryIndex = index;
+    }
+
 }

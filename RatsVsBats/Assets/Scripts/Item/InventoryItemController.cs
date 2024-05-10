@@ -32,6 +32,9 @@ public class InventoryItemController : MonoBehaviour
             case Item.ItemType.Speed:
                 GameManager.Instance.IncreasePlayerSpeed(item);
                 break;
+            case Item.ItemType.PrisonKey:
+                GameManager.Instance.PrisonDoor(item);
+                break;
         }
         RemoveItem();
     }
