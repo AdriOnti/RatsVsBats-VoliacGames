@@ -142,6 +142,8 @@ public class DataManager : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("loading");
         PlayerPrefs.DeleteKey("profileID");
+        PlayerPrefs.DeleteKey("back");
+        PlayerPrefs.DeleteKey("email");
     }
 
     public void UpdateProfile()

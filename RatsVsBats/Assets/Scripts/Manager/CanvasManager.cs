@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CanvasManager : MonoBehaviour
 {
@@ -260,6 +261,13 @@ public class CanvasManager : MonoBehaviour
         autoSave.SetActive(true);
         yield return new WaitForSecondsRealtime(2.0f);
         autoSave.SetActive(false);
+    }
+
+    public void BackToMainMenu()
+    {
+        PlayerPrefs.SetInt("back", 1);
+        CursorManager.Instance.ResetCursor();
+        SceneManager.LoadScene(0);
     }
 
     public void QuitGame()

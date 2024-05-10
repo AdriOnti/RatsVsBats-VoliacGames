@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Data;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 
@@ -28,17 +29,37 @@ public class Login : MonoBehaviour
 
     [Header("Success Log-in")]
     [SerializeField] private GameObject fadeIn;
-    [HideInInspector] public bool isLogged;
+    /*[HideInInspector]*/ public bool isLogged;
     [HideInInspector] public int idUser;
 
-    private void Awake() { instance = this; }
+    private void Awake()
+    { 
+        instance = this;
+    }
 
     private void Start()
     {
+        login.SetActive(true);
         menu.SetActive(false);
         errorMessage.gameObject.SetActive(false);
         fadeIn.SetActive(false);
         password.onEndEdit.AddListener(ValidadeLogin);
+
+        if (PlayerPrefs.GetInt("back") > 0)
+        {
+            IsBack();
+        }
+    }
+
+    public void IsBack()
+    {
+        idUser = PlayerPrefs.GetInt("profileID");
+        email.text = PlayerPrefs.GetString("email");
+        menu.SetActive(true);
+        login.SetActive(false);
+        isLogged = true;
+
+        Account.Instance.JustLogged(idUser, email.text);
     }
 
 #if UNITY_EDITOR
@@ -169,7 +190,7 @@ public class Login : MonoBehaviour
             idUser = int.Parse(row[columns[0]].ToString());
         }
 
-        Account.Instance.JustLogged();
+        Account.Instance.JustLogged(idUser, email.text);
     }
 
     /// <summary>

@@ -42,8 +42,8 @@ public class MainMenu : MonoBehaviour
         confirmDelete2.SetActive(false);
         loadScroll.SetActive(false);
         loadDelete.SetActive(false);
-        login.SetActive(true);
-        mainMenu.SetActive(false);
+        //login.SetActive(true);
+        //mainMenu.SetActive(false);
         CheckLoad();
     }
 
@@ -66,6 +66,7 @@ public class MainMenu : MonoBehaviour
         if (isNewGame) PlayerPrefs.SetInt("loading", 0);
         else PlayerPrefs.SetInt("loading", 1);
         PlayerPrefs.SetInt("profileID", Login.instance.idUser);
+        PlayerPrefs.SetString("email", Login.instance.email.text);
         SceneManager.LoadScene(1);
     }
 

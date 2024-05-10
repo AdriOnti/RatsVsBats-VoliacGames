@@ -134,4 +134,14 @@ public class GameManager : MonoBehaviour
     {
         UItext.text = text;
     }
+
+#if UNITY_EDITOR
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.H))
+        {
+            PlayerController.Instance.transform.position = new Vector3(-40.2000008f, -33f, -15.9200001f);
+        }
+    }
+#endif
 }

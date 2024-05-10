@@ -29,11 +29,11 @@ public class Account : MonoBehaviour
     /// <summary>
     /// Function that is called after the login. This makes a select query to the profiles table
     /// </summary>
-    public void JustLogged()
+    public void JustLogged(int id, string email)
     {
         string tableName = "Profiles";
         string[] columns = { "idProfiles", "nickname", "completedMissions", "completedBranches", "points" };
-        object[] values = { Login.instance.idUser, Login.instance.email.text };
+        object[] values = { id, email };
 
         if (Login.instance.isLogged) GetData(tableName, columns, values);
     }
