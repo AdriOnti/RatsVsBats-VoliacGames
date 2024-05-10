@@ -18,7 +18,7 @@ $google_client->setClientId('242522315208-8iommf4528ao6679vu4m2dbq36a643je.apps.
 $google_client->setClientSecret('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');
 
 //Set the OAuth 2.0 Redirect URI | URL AUTORIZADO
-$google_client->setRedirectUri('https://rats-vs-bats-558152835.us-east-1.elb.amazonaws.com/index.php');
+$google_client->setRedirectUri('https://rats-vs-bats-558152835.us-east-1.elb.amazonaws.com/sync-google/index.php');
 
 // to get the email and profile 
 $google_client->addScope('email');

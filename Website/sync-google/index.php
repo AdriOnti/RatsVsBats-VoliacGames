@@ -59,9 +59,12 @@ if (!isset($_SESSION['access_token'])) {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         let emailG = "<?php echo $_SESSION['user_email_address']; ?>";
-        localStorage.setItem("emailG", emailG);
+        if (emailG != ""){
+            localStorage.setItem("emailG", emailG);
+            window.location.href = "index2.html"
+        }
+        else document.querySelector("#loginBtnG a").click();
     </script>
-
 </head>
 
 <body>
@@ -80,7 +83,7 @@ if (!isset($_SESSION['access_token'])) {
                         echo '<h3><b>Email :</b> ' . $_SESSION['user_email_address'] . '</h3>';
                         echo '<h3><a href="logout.php">Logout</h3></div>';
                     } else {
-                        echo '<div align="center">' . $login_button . '</div>';
+                        echo '<div id="loginBtnG" align="center">' . $login_button . '</div>';
                     }
                     ?>
                 </div>

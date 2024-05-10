@@ -36,6 +36,34 @@ fetch(apiUsuarios)
 
 let clickedReg = false;
 
+if(localStorage.getItem("emailG")){
+  registerGoogle();
+}
+
+function registerGoogle(){
+  let user = {
+    userEmail: localStorage.getItem("emailG"),
+    userPassword: "",
+  };
+
+  if (CheckUserRegistered(user.userEmail)) {
+    console.log("Usuario ya registrado");
+    return;
+  }
+
+  let post = {
+    method: "POST",
+    body: JSON.stringify(user),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  signInUser(post);
+  // localStorage.clear();
+  localStorage.setItem("rG", "true");
+}
+
 // Al clickar registrar Usuario
 signupBtn.addEventListener("click", (e) => {
 

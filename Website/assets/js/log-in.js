@@ -40,18 +40,37 @@ function logindata() {
     });
 }
 
+let gmailLogin = false;
+if(localStorage.getItem("rg") == "true"){
+  gmailLogin = true;
+  logindata();
+}
+
 // Comprobar usuario existente y correcto
 function RecogerIdUsuario(usuariosLogin) {
   for (const usuario of usuariosLogin) {
-    if (
-      usuario.userEmail == loginName.value &&
-      usuario.userPassword == loginPass.value
-    ) {
-      console.log(usuario);
-      console.log("Hola campeon");
-      succesful = true;
-      usuarioId = usuario.idUsers;
-      break;
+    if (gmailLogin){
+      if (
+        usuario.userEmail == localStorage.getItem("emailG")
+      ) {
+        console.log(usuario);
+        console.log("Hola campeon");
+        succesful = true;
+        usuarioId = usuario.idUsers;
+        break;
+      }
+    }
+    else{
+      if (
+        usuario.userEmail == loginName.value &&
+        usuario.userPassword == loginPass.value
+      ) {
+        console.log(usuario);
+        console.log("Hola campeon");
+        succesful = true;
+        usuarioId = usuario.idUsers;
+        break;
+      }
     }
   }
 
