@@ -18,6 +18,7 @@ public class MissionSuccess : MonoBehaviour
             if(item != null) Destroy(item);
             PlayerController.Instance.ChangeItem();
             GameManager.Instance.isMission = false;
+            GameManager.Instance.missionsCompleted += 1;
             DataManager.Instance.UpdateProfile();
         }
     }

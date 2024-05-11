@@ -75,6 +75,7 @@ public class DataManager : MonoBehaviour
         PlayerController.Instance.jumpForce = data.jumpForce;
         PlayerController.Instance.healingForce = data.healingForce;
 
+        GameManager.Instance.missionsCompleted = data.missionsCompleted;
 
         PlayerController.Instance.transform.position = data.position;
         PlayerController.Instance.originalSpeed = data.speed;
