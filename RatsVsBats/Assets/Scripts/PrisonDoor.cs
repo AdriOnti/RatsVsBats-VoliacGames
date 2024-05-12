@@ -1,65 +1,23 @@
-using UnityEditor;
-using UnityEngine;
-
-public class PrisonDoor : MonoBehaviour
+public class PrisonDoor : BaseDoor
 {
-    public Animator animator;
-    public bool isOpened;
     public RatPrisioner[] ratsInJail;
 
-    private void OnTriggerEnter(Collider other)
+    protected override bool CanOpenDoor(PlayerController player)
     {
-        if(other.TryGetComponent(out PlayerController player))
-        {
-            if (isOpened) 
-            {
-                CanvasManager.Instance.NonDoorMSG();
-                return;
-            }
-
-            if (player.actualItem != null && player.actualItem.itemType == Item.ItemType.PrisonKey)
-            {
-                CanvasManager.Instance.JailDoorMSG("Press [E] to open this cell");
-                return;
-            }
-            else
-            {
-                CanvasManager.Instance.JailDoorMSG("You can't open this door");
-            }
-
-        }
+        return player.actualItem != null && player.actualItem.itemType == Item.ItemType.PrisonKey;
     }
 
-    private void OnTriggerStay(Collider other)
+    protected override void OnInteract(PlayerController player)
     {
-        if (other.TryGetComponent(out PlayerController player))
-        {
-            if (player.actualItem != null && player.actualItem.itemType == Item.ItemType.PrisonKey)
-            {
-                Interact(player);
-            }
-        }
-    }
-
-    private void Interact(PlayerController player)
-    {
-        if (player.isInteracting)
-        {
-            animator.Play("OpenAnim");
-            player.isInteracting = false;
-            gameObject.transform.parent.Find("Collision").gameObject.SetActive(false);
-            isOpened = true;
-            CanvasManager.Instance.NonDoorMSG();
-
-            foreach(RatPrisioner rp in ratsInJail)
-            {
-                rp.isFree = true;
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
+        animator.Play("OpenAnim");
+        player.isInteracting = false;
+        collision.SetActive(false);
+        isOpened = false;
         CanvasManager.Instance.NonDoorMSG();
+
+        foreach (RatPrisioner rp in ratsInJail)
+        {
+            rp.isFree = true;
+        }
     }
 }

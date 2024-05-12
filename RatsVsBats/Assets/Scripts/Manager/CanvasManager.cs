@@ -283,7 +283,7 @@ public class CanvasManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void JailDoorMSG(string text)
+    public void DoorMSG(string text)
     {
         doorMessage.SetActive(true);
         doorMessage.GetComponentInChildren<TextMeshProUGUI>().text = text;
