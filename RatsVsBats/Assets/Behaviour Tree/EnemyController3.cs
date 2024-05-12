@@ -13,8 +13,15 @@ public class EnemyController3 : StateController2
     public float HP;
     private float nextHurt = 0;
     [SerializeField] private float detection_delay;
+    [HideInInspector] public Animator animator;
 
     CoroutineHandle rayacstCoroutineHandle;
+
+    private void Start()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
+
     void Update()
     {
         StateTransition();
