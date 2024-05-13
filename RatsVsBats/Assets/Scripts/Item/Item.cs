@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Item/Create New Item")]
+[CreateAssetMenu(fileName = "New Item", menuName = "ScriptableObjects/Item/Create New Item", order = 0)]
 public class Item : ScriptableObject
 {
     public int id;
@@ -13,7 +13,8 @@ public class Item : ScriptableObject
 
     public enum ItemType
     {
-        Speed
+        Speed,
+        PrisonKey
     }
 
     public enum ItemStatus

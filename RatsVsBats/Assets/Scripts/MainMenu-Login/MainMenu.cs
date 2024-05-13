@@ -11,12 +11,21 @@ public class MainMenu : MonoBehaviour
     }
 
     [SerializeField] private GameObject loadGameBtn;
+    [SerializeField] private GameObject mainMenu;
 
     [Header("Delete")]
     [SerializeField] private GameObject confirmDelete;
     [SerializeField] private GameObject confirmDelete2;
+
+    [Header("Load")]
     [SerializeField] private GameObject loadScroll;
     [SerializeField] private GameObject loadDelete;
+
+    [Header("Login")]
+    [SerializeField] private GameObject login;
+
+    [Header("Account")]
+    public GameObject accountSettings;
 
     // AWAKE
     private void Awake()
@@ -28,10 +37,13 @@ public class MainMenu : MonoBehaviour
     // START
     private void Start()
     {
+        accountSettings.SetActive(false);
         confirmDelete.SetActive(false);
         confirmDelete2.SetActive(false);
         loadScroll.SetActive(false);
         loadDelete.SetActive(false);
+        //login.SetActive(true);
+        //mainMenu.SetActive(false);
         CheckLoad();
     }
 
@@ -40,48 +52,30 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     private void CheckLoad()
     {
-        if (!DataManager.Instance.SaveExists())
-        {
-            CursorManager.Instance.BlockBtn(loadGameBtn);
-        }
-        else
-        {
-            CursorManager.Instance.NotBlockBtn(loadGameBtn);
-        }
+        if (!DataManager.Instance.SaveExists()) CursorManager.Instance.BlockBtn(loadGameBtn);
+        else CursorManager.Instance.NotBlockBtn(loadGameBtn);
     }
 
     /// <summary>
-    /// Start a new game
+    /// Load the game with a especific parameters
     /// </summary>
-    public void NewGame()
+    /// <param name="isNewGame">This bool decides if is a new Game or a previous game</param>
+    public void Game(bool isNewGame)
     {
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-        PlayerPrefs.SetInt("loading", 0);
+        CursorManager.Instance.ResetCursor();
+        if (isNewGame) PlayerPrefs.SetInt("loading", 0);
+        else PlayerPrefs.SetInt("loading", 1);
+        PlayerPrefs.SetInt("profileID", Login.instance.idUser);
+        PlayerPrefs.SetString("email", Login.instance.email.text);
         SceneManager.LoadScene(1);
     }
 
-    /// <summary>
-    /// Load a previous game
-    /// </summary>
-    public void LoadGame()
-    {
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-        PlayerPrefs.SetInt("loading", 1);
-        SceneManager.LoadScene(1);
-    }
-
-    public void LoadButton()
-    {
-        loadScroll.SetActive(true);
-    }
+    public void LoadButton() { loadScroll.SetActive(!loadScroll.activeSelf); }
 
     /// <summary>
     /// Delete the saved game
     /// </summary>
-    public void DeleteGame()
-    {
-        confirmDelete.SetActive(true);
-    }
+    public void DeleteGame() { confirmDelete.SetActive(true); }
 
     public void ConfirmDelete()
     {
@@ -99,5 +93,13 @@ public class MainMenu : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
         Application.Quit();
+    }
+
+    public void EnableAccountSettings() { accountSettings.SetActive(true); }
+
+    public void CloseLoadScroll()
+    {
+        loadScroll.SetActive(false);
+        CursorManager.Instance.ResetCursor();
     }
 }

@@ -20,7 +20,7 @@ public class ScriptableFollow : ScriptableAction
         _enemyController.animator.SetBool("isJumping", true);
     }
 
-    public override void OnUpdate()
+    public override void OnUpdate(StateController2 sc)
     {
         _chaseBehaviour.Chase(_enemyController.target.transform, sc.transform);
     }

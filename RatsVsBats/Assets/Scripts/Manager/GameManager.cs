@@ -134,4 +134,28 @@ public class GameManager : MonoBehaviour
     {
         UItext.text = text;
     }
+
+#if UNITY_EDITOR
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.H))
+        {
+            PlayerController.Instance.transform.position = new Vector3(-40.2000008f, -33f, -15.9200001f);
+        }
+    }
+#endif
+
+    public void PrisonDoor(Item item)
+    {
+        Image actualItem = FindObjectsByName("ActualItem").GetComponent<Image>();
+
+        if (item != null) actualItem.sprite = item.icon;
+        else actualItem.sprite = null;
+
+        int index = InventoryManager.Instance.Items.IndexOf(item);
+
+        PlayerController.Instance.actualItem = item;
+        PlayerController.Instance.inventoryIndex = index;
+    }
+
 }

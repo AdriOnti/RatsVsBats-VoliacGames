@@ -23,7 +23,7 @@ public class DatabaseManager : MonoBehaviour
     void Start()
     {
         instance = this;
-        //OpenSql();
+        OpenSql();
     }
 
     public void OpenSql()
@@ -227,7 +227,7 @@ public class DatabaseManager : MonoBehaviour
             }
             catch (Exception ee)
             {
-                throw new Exception("SQL:" + sqlString + "/ n" + ee.Message.ToString());
+                throw new Exception("SQL:" + sqlString + "\n" + ee.Message.ToString());
             }
             finally { }
             return ds;

@@ -1,3 +1,4 @@
+using System.Data;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +12,8 @@ public class DataManager : MonoBehaviour
         get { return instance; }
     }
 
+    public int profileId;
+
     // AWAKE
     private void Awake()
     {
@@ -21,17 +24,18 @@ public class DataManager : MonoBehaviour
     // START
     private void Start()
     {
-        if (SaveExists() && ActiveSceneIndex() && PlayerPrefs.GetInt("loading") > 0)
-        {
-            LoadGame();
-        }
+        // Get the profile Id for make UPDATE
+        if (PlayerPrefs.GetInt("profileID") > 0) profileId = PlayerPrefs.GetInt("profileID");
+
+        // LoadGame
+        if (SaveExists() && IsNotMainMenu() && PlayerPrefs.GetInt("loading") > 0) LoadGame();
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    public bool ActiveSceneIndex()
+    public bool IsNotMainMenu()
     {
         return SceneManager.GetActiveScene().buildIndex != 0;
     }
@@ -71,6 +75,7 @@ public class DataManager : MonoBehaviour
         PlayerController.Instance.jumpForce = data.jumpForce;
         PlayerController.Instance.healingForce = data.healingForce;
 
+        GameManager.Instance.missionsCompleted = data.missionsCompleted;
 
         PlayerController.Instance.transform.position = data.position;
         PlayerController.Instance.originalSpeed = data.speed;
@@ -128,6 +133,30 @@ public class DataManager : MonoBehaviour
     public void ConfirmDelete()
     { 
         File.Delete(GetPersistentPath() + "/data.json");
-        if(ActiveSceneIndex()) CanvasManager.Instance.NotLoad();
+        if(IsNotMainMenu()) CanvasManager.Instance.NotLoad();
+    }
+
+    /// <summary>
+    /// Delete the keys on the PlayerPrefs
+    /// </summary>
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.DeleteKey("loading");
+        PlayerPrefs.DeleteKey("profileID");
+        PlayerPrefs.DeleteKey("back");
+        PlayerPrefs.DeleteKey("email");
+    }
+
+    public void UpdateProfile()
+    {
+        string tableName = "Profiles";
+        string[] columns = { "completedMissions", "points", "idProfiles" };
+        int[] values = { 1, 100 };
+
+        // UPDATE Profiles
+        //  SET completedMissions = completedMissions + 1, points = points + 100
+        //  WHERE idProfiles = profileId
+        string query = $"UPDATE {tableName} SET {columns[0]} = {columns[0]} + {values[0]}, {columns[1]} = {columns[1]} + {values[1]} WHERE {columns[2]} = {profileId}";
+        DatabaseManager.instance.ExecuteQuery(query);
     }
 }

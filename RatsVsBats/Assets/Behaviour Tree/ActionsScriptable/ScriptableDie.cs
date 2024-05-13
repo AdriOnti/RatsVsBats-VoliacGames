@@ -20,7 +20,7 @@ public class ScriptableDie : ScriptableAction
         _enemyController.animator.SetBool("isDying", true);
     }
 
-    public override void OnUpdate()
+    public override void OnUpdate(StateController2 sc)
     {
         GameManager.Instance.UpdateText("toma mis monedas");
     }

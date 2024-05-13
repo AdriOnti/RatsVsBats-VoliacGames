@@ -21,7 +21,7 @@ public class ScriptableRun : ScriptableAction
         _enemyController = (EnemyController3)sc;
     }
 
-    public override void OnUpdate()
+    public override void OnUpdate(StateController2 sc)
     {
         try
         {

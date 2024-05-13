@@ -7,7 +7,7 @@ public class ScriptablePatrol : ScriptableAction
     private EnemyController3 _enemyController;
     public override void OnFinishedState()
     {
-        GameManager.Instance.UpdateText("donde se metió?");
+        GameManager.Instance.UpdateText("donde se metiÃ³?");
     }
 
     public override void OnSetState(StateController2 sc)
@@ -17,7 +17,7 @@ public class ScriptablePatrol : ScriptableAction
 
     }
 
-    public override void OnUpdate()
+    public override void OnUpdate(StateController2 sc)
     {
         GameManager.Instance.UpdateText("I hear something");
     }

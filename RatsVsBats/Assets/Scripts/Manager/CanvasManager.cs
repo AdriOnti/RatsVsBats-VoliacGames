@@ -1,7 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CanvasManager : MonoBehaviour
 {
@@ -15,23 +15,31 @@ public class CanvasManager : MonoBehaviour
     // InputManager
     private InputManager inputManager;
 
-    // Bools
+    [Header("Bools")]
     [SerializeField] private bool mapInput;
     [SerializeField] public bool pauseInput;
     [SerializeField] private bool inventoryOpened;
 
-    // Canvas
-    GameObject pauseMenu;
-    GameObject map;
-    [SerializeField] GameObject disquete;
-    [SerializeField] GameObject info;
+    [Header("Canvas")]
+    [HideInInspector] GameObject pauseMenu;
+    [HideInInspector] GameObject map;
+    [HideInInspector] GameObject disquete;
+    [HideInInspector] GameObject info;
 
-    // Inventory
+    [Header("Inventory")]
     [HideInInspector] GameObject inventoryBtn;
     [HideInInspector] GameObject inventory;
 
     [Header("AutoSave")]
-    [SerializeField] GameObject autoSave;
+    [HideInInspector] GameObject autoSave;
+
+    [Header("Delete")]
+    [HideInInspector] GameObject notConfirm;
+    [HideInInspector] GameObject confirmDelete;
+    [HideInInspector] GameObject confirm2ndCour;
+
+    [Header("Prison")]
+    [HideInInspector] GameObject doorMessage;
 
     private void Awake()
     {
@@ -72,6 +80,11 @@ public class CanvasManager : MonoBehaviour
         disquete = GameManager.Instance.GetDisquete();
         info = GameManager.Instance.GetInfoMenu();
         autoSave = GameManager.Instance.GetAutoSave();
+
+        notConfirm = GameManager.Instance.FindObjectsByName("NotConfirm");
+        confirmDelete = GameManager.Instance.FindObjectsByName("ConfirmDelete");
+        confirm2ndCour = GameManager.Instance.FindObjectsByName("ConfirmDelete2Cour");
+        doorMessage = GameManager.Instance.FindObjectsByName("Prison");
     }
 
     /// <summary>
@@ -92,9 +105,10 @@ public class CanvasManager : MonoBehaviour
         disquete.SetActive(false);
         info.SetActive(false);
         autoSave.SetActive(false);
-        GameManager.Instance.FindObjectsByName("NotConfirm").SetActive(false);
-        GameManager.Instance.FindObjectsByName("ConfirmDelete").SetActive(false);
-        GameManager.Instance.FindObjectsByName("ConfirmDelete2Cour").SetActive(false);
+        notConfirm.SetActive(false);
+        confirmDelete.SetActive(false);
+        confirm2ndCour.SetActive(false);
+        doorMessage.SetActive(false);
     }
 
 
@@ -117,8 +131,20 @@ public class CanvasManager : MonoBehaviour
         if(inventoryOpened) return;
 
         pauseInput = !pauseInput;
-        if (pauseInput && !mapInput && !GameManager.Instance.isFading) { pauseMenu.SetActive(true); Time.timeScale = 0.0f; }
-        else { pauseMenu.SetActive(false); Time.timeScale = 1f; Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); }
+        if (pauseInput && !mapInput && !GameManager.Instance.isFading)
+        { 
+            pauseMenu.SetActive(true); 
+            Time.timeScale = 0.0f; 
+        }
+        else
+        { 
+            pauseMenu.SetActive(false);
+            notConfirm.SetActive(false);
+            confirmDelete.SetActive(false);
+            confirm2ndCour.SetActive(false);
+            Time.timeScale = 1f; 
+            CursorManager.Instance.ResetCursor(); 
+        }
 
         NotLoad();
         IsMission();
@@ -141,7 +167,6 @@ public class CanvasManager : MonoBehaviour
             InventoryManager.Instance.ListItems();
             Time.timeScale = 0f;
         }
-
     }
 
     /// <summary>
@@ -153,7 +178,7 @@ public class CanvasManager : MonoBehaviour
         inventory.SetActive(false); 
         inventoryOpened = false; 
         Time.timeScale = 1f;
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        CursorManager.Instance.ResetCursor();
     }
 
     /// <summary>
@@ -213,12 +238,12 @@ public class CanvasManager : MonoBehaviour
     /// <summary>
     /// Activa la opción de confirmar el borrado de la partida guardada
     /// </summary>
-    public void ConfirmDelete() { GameManager.Instance.FindObjectsByName("ConfirmDelete").SetActive(true);  }
+    public void ConfirmDelete() { confirmDelete.SetActive(true);  }
 
     /// <summary>
     /// Activa el objeto que indica que no hay ninguna partida guardada
     /// </summary>
-    public void NotConfirmDelete() { GameManager.Instance.FindObjectsByName("NotConfirm").SetActive(true); }
+    public void NotConfirmDelete() { notConfirm.SetActive(true); }
 
     /// <summary>
     /// Muestra un texto si el objeto esta bloqueado
@@ -241,5 +266,31 @@ public class CanvasManager : MonoBehaviour
         autoSave.SetActive(true);
         yield return new WaitForSecondsRealtime(2.0f);
         autoSave.SetActive(false);
+    }
+
+    public void BackToMainMenu()
+    {
+        PlayerPrefs.SetInt("back", 1);
+        CursorManager.Instance.ResetCursor();
+        SceneManager.LoadScene(0);
+    }
+
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        Application.Quit();
+    }
+
+    public void DoorMSG(string text)
+    {
+        doorMessage.SetActive(true);
+        doorMessage.GetComponentInChildren<TextMeshProUGUI>().text = text;
+    }
+
+    public void NonDoorMSG()
+    {
+        doorMessage.SetActive(false);
     }
 }

@@ -19,7 +19,7 @@ public class StateController2 : MonoBehaviour
                 }
                 if (cond)
                 {
-                    if(currentState.action != null) currentState.action.OnFinishedState();
+                    if(currentState.action != null) currentState.action.OnFinishedState(this);
                     currentState = currentState.Children[count - 1];
                     if(currentState.action != null) currentState.action.OnSetState(this);
                 }
@@ -32,7 +32,7 @@ public class StateController2 : MonoBehaviour
     {
         if (currentState.Parent != null)
         {
-            if (currentState.action != null) currentState.action.OnFinishedState();
+            if (currentState.action != null) currentState.action.OnFinishedState(this);
             currentState = currentState.Parent;
             GoToRootState();
         }
