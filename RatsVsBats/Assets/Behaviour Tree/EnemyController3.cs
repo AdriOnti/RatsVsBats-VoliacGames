@@ -26,7 +26,7 @@ public class EnemyController3 : StateController2
     {
         StateTransition();
         if (currentState.action != null)
-            currentState.action.OnUpdate(this);
+            currentState.action.OnUpdate();
 
         if (Input.GetKey("space") && Time.time >= nextHurt)
         {

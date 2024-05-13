@@ -11,7 +11,7 @@ public class DatabaseManager : MonoBehaviour
 {
     public MySqlConnection dbConnection;
 
-    string host = "rats-vs-bats-db.ctusuewsqph4.us-east-1.rds.amazonaws.com";
+    string host = "rats-vs-bats-ddbb.cym2kkocwnwm.us-east-1.rds.amazonaws.com";
     string user = "developer";
     string password = "adminVoliac13";
     string database = "RatsVsBats";

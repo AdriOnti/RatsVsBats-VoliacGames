@@ -17,7 +17,7 @@ public class ScriptablePatrol : ScriptableAction
 
     }
 
-    public override void OnUpdate(StateController2 sc)
+    public override void OnUpdate()
     {
         GameManager.Instance.UpdateText("I hear something");
     }

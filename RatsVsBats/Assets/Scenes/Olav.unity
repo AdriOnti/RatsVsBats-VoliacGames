@@ -13748,6 +13748,7 @@ MonoBehaviour:
   AttackDistance: 1.5
   HP: 8
   detection_delay: 0.5
+  animator: {fileID: 0}
 --- !u!114 &821975356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13763,6 +13764,7 @@ MonoBehaviour:
   Speed: 2
   agent: {fileID: 0}
   target: {fileID: 0}
+  keyObj: {fileID: 0}
 --- !u!82 &821975357
 AudioSource:
   m_ObjectHideFlags: 0

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ScriptableAttack", menuName =
@@ -20,7 +19,7 @@ public class ScriptableAttack : ScriptableAction
         _enemyController.animator.SetBool("isAttacking", true);
     }
 
-    public override void OnUpdate(StateController2 sc)
+    public override void OnUpdate()
     {
         GameManager.Instance.UpdateText("que te meto asin");
     }

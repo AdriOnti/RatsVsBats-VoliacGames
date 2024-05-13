@@ -1,3 +1,4 @@
+
 using UnityEngine;
 [CreateAssetMenu(fileName = "ScriptableFollow", menuName = "ScriptableObjects2/ScriptableAction/ScriptableFollow")]
 
@@ -20,7 +21,7 @@ public class ScriptableFollow : ScriptableAction
         _enemyController.animator.SetBool("isJumping", true);
     }
 
-    public override void OnUpdate(StateController2 sc)
+    public override void OnUpdate()
     {
         _chaseBehaviour.Chase(_enemyController.target.transform, sc.transform);
     }
