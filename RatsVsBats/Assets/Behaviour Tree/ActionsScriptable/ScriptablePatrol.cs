@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ScriptablePatrol", menuName = "ScriptableObjects2/ScriptableAction/ScriptablePatrol", order = 4)]
 public class ScriptablePatrol : ScriptableAction
 {
+    //public GameObject monster;
     private EnemyController3 _enemyController;
     public override void OnFinishedState()
     {
