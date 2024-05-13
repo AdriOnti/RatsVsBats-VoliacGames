@@ -1,3 +1,6 @@
+using System.Collections;
+using UnityEngine;
+
 public class PrisonDoor : BaseDoor
 {
     public RatPrisioner[] ratsInJail;
@@ -12,12 +15,18 @@ public class PrisonDoor : BaseDoor
         animator.Play("OpenAnim");
         player.isInteracting = false;
         collision.SetActive(false);
-        isOpened = false;
+        isOpened = true;
         CanvasManager.Instance.NonDoorMSG();
 
+        StartCoroutine(FreeRats());
+    }
+
+    private IEnumerator FreeRats()
+    {
         foreach (RatPrisioner rp in ratsInJail)
         {
             rp.isFree = true;
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }

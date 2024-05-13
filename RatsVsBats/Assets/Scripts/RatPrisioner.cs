@@ -4,21 +4,17 @@ using UnityEngine.AI;
 public class RatPrisioner : MonoBehaviour
 {
     public bool isFree;
-
     public Transform target;
-
     private NavMeshAgent agent;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.enabled = false;
     }
 
     private void Update()
     {
-        // TODO: Arreglar el tema del navmesh
-        if (isFree)
+        if (isFree && agent != null)
         {
             agent.enabled = true;
             agent.SetDestination(target.position);
