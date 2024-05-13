@@ -13,8 +13,15 @@ public class EnemyController3 : StateController2
     public float HP;
     private float nextHurt = 0;
     [SerializeField] private float detection_delay;
+    [HideInInspector] public Animator animator;
 
     CoroutineHandle rayacstCoroutineHandle;
+
+    private void Start()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
+
     void Update()
     {
         StateTransition();
@@ -48,7 +55,7 @@ public class EnemyController3 : StateController2
         {
             yield return Timing.WaitForSeconds(0.5f);
             Vector3 direction =  player.position - transform.position;
-            direction.y = 0.5f;
+            //direction.y = 0.5f;
             Debug.DrawRay(transform.position, direction * 500f, Color.green);
 
             int wallLayerMask = LayerMask.NameToLayer("Wall");
