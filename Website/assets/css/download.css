@@ -1,0 +1,22 @@
+/* NIVELES SCROLLBAR ORIZONTAL */
+
+.levels {
+  display: flex;
+  overflow-x: scroll;
+  height: 600px;
+}
+
+.levels > div {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.levels article {
+  flex: 0 0 auto;
+  margin-right: 20px;
+  text-align: center;
+  font-size: 24px;
+  line-height: 250px;
+  width: 15%;
+}

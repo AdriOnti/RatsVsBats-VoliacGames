@@ -3,19 +3,21 @@ using UnityEngine;
 
 public class ScriptableFollow : ScriptableAction
 {
-    private ChaseBehaviour _chaseBehaviour;
     private EnemyController3 _enemyController;
-    public override void OnFinishedState(StateController2 sc)
+    private ChaseBehaviour _chaseBehaviour;
+    public override void OnFinishedState()
     {
         _chaseBehaviour.StopChasing();
+        _enemyController.animator.SetBool("isJumping", false);
     }
 
     public override void OnSetState(StateController2 sc)
     {
         base.OnSetState(sc);
-        GameManager.Instance.UpdateText("Te persigo");
+        GameManager.Instance.UpdateText("No toques mi llave");
         _chaseBehaviour = sc.GetComponent<ChaseBehaviour>();
         _enemyController = (EnemyController3)sc;
+        _enemyController.animator.SetBool("isJumping", true);
     }
 
     public override void OnUpdate(StateController2 sc)

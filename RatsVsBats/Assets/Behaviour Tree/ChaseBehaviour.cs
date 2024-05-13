@@ -10,6 +10,7 @@ public class ChaseBehaviour : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
 
     [SerializeField] private Transform target;
+    [SerializeField] private Transform keyObj;
 
     private void Awake()
     {
@@ -17,9 +18,9 @@ public class ChaseBehaviour : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
     }
     public void Chase(Transform target, Transform self)
-    {
-        //agent.destination = target.position;
-        _rb.velocity = (target.position - self.position).normalized * Speed;
+    { 
+        agent.destination = keyObj.position;
+        //_rb.velocity = (target.position - self.position).normalized * Speed;
     }
     public void Run(Transform target, Transform self)
     {

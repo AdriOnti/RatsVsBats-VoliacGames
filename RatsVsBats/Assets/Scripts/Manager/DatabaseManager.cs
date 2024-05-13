@@ -46,12 +46,6 @@ public class DatabaseManager : MonoBehaviour
             dbConnection.Open();
             Debug.Log("Conexión establecida correctamente.");
             Debug.Log("Estado de la conexión: " + dbConnection.State.ToString());
-
-            // Ejecutar una consulta de prueba
-            //string query = "SELECT VERSION()";
-            //MySqlCommand cmd = new MySqlCommand(query, dbConnection);
-            //object result = cmd.ExecuteScalar();
-            //Debug.Log("Versión de MySQL: " + result.ToString());
         }
         catch (Exception e)
         {
@@ -74,36 +68,36 @@ public class DatabaseManager : MonoBehaviour
         dbConnection2.Close();
     }
 
-    public DataSet CreateTable(string name, string[] col, string[] colType)
-    {
-        if (col.Length != colType.Length)
-        {
-            throw new Exception("columns.Length != colType.Length");
-        }
-        string query = "CREATE TABLE " + name + " (" + col[0] + " " + colType[0];
-        for (int i = 1; i < col.Length; ++i)
-        {
-            query += ", " + col[i] + " " + colType[i];
-        }
-        query += ")";
-        return ExecuteQuery(query);
-    }
+    //public DataSet CreateTable(string name, string[] col, string[] colType)
+    //{
+    //    if (col.Length != colType.Length)
+    //    {
+    //        throw new Exception("columns.Length != colType.Length");
+    //    }
+    //    string query = "CREATE TABLE " + name + " (" + col[0] + " " + colType[0];
+    //    for (int i = 1; i < col.Length; ++i)
+    //    {
+    //        query += ", " + col[i] + " " + colType[i];
+    //    }
+    //    query += ")";
+    //    return ExecuteQuery(query);
+    //}
 
-    public DataSet CreateTableAutoID(string name, string[] col, string[] colType)
-    {
-        if (col.Length != colType.Length)
-        {
-            throw new Exception("columns.Length != colType.Length");
-        }
-        string query = "CREATE TABLE " + name + "(" + col[0] + " " + colType[0] + " NOT NULL AUTO INCREMENT";
-        for (int i = 1; i < col.Length; ++i)
-        {
-            query += ", " + col[i] + " " + colType[i];
-        }
-        query += ", PRIMARY KEY(" + col[0] + ")" + ")";
-        Debug.Log(query);
-        return ExecuteQuery(query);
-    }
+    //public DataSet CreateTableAutoID(string name, string[] col, string[] colType)
+    //{
+    //    if (col.Length != colType.Length)
+    //    {
+    //        throw new Exception("columns.Length != colType.Length");
+    //    }
+    //    string query = "CREATE TABLE " + name + "(" + col[0] + " " + colType[0] + " NOT NULL AUTO INCREMENT";
+    //    for (int i = 1; i < col.Length; ++i)
+    //    {
+    //        query += ", " + col[i] + " " + colType[i];
+    //    }
+    //    query += ", PRIMARY KEY(" + col[0] + ")" + ")";
+    //    Debug.Log(query);
+    //    return ExecuteQuery(query);
+    //}
 
     public DataSet InsertInto(string tableName, string[] values)
     {
@@ -117,21 +111,53 @@ public class DatabaseManager : MonoBehaviour
         return ExecuteQuery(query);
     }
 
-    public DataSet InsertInto(string tableName, string[] col, string[] values)
+    //public DataSet InsertInto(string tableName, string[] col, string[] values)
+    //{
+    //    if (col.Length != values.Length)
+    //    {
+    //        throw new Exception("columns.Length != colType.Length");
+    //    }
+    //    string query = "INSERT INTO " + tableName + "(" + col[0];
+    //    for (int i = 1; i < col.Length; ++i)
+    //    {
+    //        query += ", " + col[i];
+    //    }
+    //    query += ") VALUES(" + "'" + values[0] + "'";
+    //    for (int i = 1; i < values.Length; ++i)
+    //    {
+    //        query += ", " + "'" + values[i] + "'";
+    //    }
+    //    query += ")";
+    //    Debug.Log(query);
+    //    return ExecuteQuery(query);
+    //}
+    public DataSet InsertInto(string tableName, string[] col, object[] values)
     {
         if (col.Length != values.Length)
         {
-            throw new Exception("columns.Length != colType.Length");
+            throw new Exception("columns.Length != values.Length");
         }
+
         string query = "INSERT INTO " + tableName + "(" + col[0];
         for (int i = 1; i < col.Length; ++i)
         {
             query += ", " + col[i];
         }
-        query += ") VALUES(" + "'" + values[0] + "'";
+        query += ") VALUES(" + "'" + values[0].ToString() + "'";
         for (int i = 1; i < values.Length; ++i)
         {
-            query += ", " + "'" + values[i] + "'";
+            if (values[i] is string)
+            {
+                query += ", " + "'" + values[i].ToString() + "'";
+            }
+            else if (values[i] is int || values[i] is float || values[i] is double)
+            {
+                query += ", " + values[i].ToString();
+            }
+            else
+            {
+                throw new Exception("Unsupported data type for column: " + col[i]);
+            }
         }
         query += ")";
         Debug.Log(query);

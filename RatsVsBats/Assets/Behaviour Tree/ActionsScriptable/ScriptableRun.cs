@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class ScriptableRun : ScriptableAction
 {
-    private ChaseBehaviour _chaseBehaviour;
     private EnemyController3 _enemyController;
-    public override void OnFinishedState(StateController2 sc)
+    private ChaseBehaviour _chaseBehaviour;
+    //private EnemyController3 _enemyController;
+    public override void OnFinishedState()
     {
         _chaseBehaviour.StopChasing();
     }
