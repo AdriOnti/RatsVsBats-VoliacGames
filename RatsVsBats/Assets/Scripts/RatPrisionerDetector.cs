@@ -7,6 +7,7 @@ public class RatPrisionerDetector : MonoBehaviour
         if(other.TryGetComponent(out RatPrisioner rp))
         {
             rp.GetComponent<Animator>().SetBool("isShooting", true);
+            rp.isFree = false;
         }
     }
 }
