@@ -10200,22 +10200,22 @@ PrefabInstance:
         type: 3}
       propertyPath: m1_mainCamera
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 748194269}
     - target: {fileID: -5010893824282152612, guid: e317062077fff8143b5d42977f671bec,
         type: 3}
       propertyPath: m2_bossCamera
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1554536608}
     - target: {fileID: -5010893824282152612, guid: e317062077fff8143b5d42977f671bec,
         type: 3}
       propertyPath: m3_jailCamera
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 834943293}
     - target: {fileID: -5010893824282152612, guid: e317062077fff8143b5d42977f671bec,
         type: 3}
       propertyPath: m4_doorCamera
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 874851485}
     - target: {fileID: 267324689437886391, guid: e317062077fff8143b5d42977f671bec,
         type: 3}
       propertyPath: Inventory
