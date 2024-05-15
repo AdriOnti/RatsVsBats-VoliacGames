@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Data;
-using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 
@@ -31,6 +30,14 @@ public class Login : MonoBehaviour
     [SerializeField] private GameObject fadeIn;
     /*[HideInInspector]*/ public bool isLogged;
     [HideInInspector] public int idUser;
+
+
+
+
+    [SerializeField] private string response;
+    [SerializeField] private int id;
+    [SerializeField] private string mail;
+    [SerializeField] private string pwd;
 
     private void Awake()
     { 
@@ -153,24 +160,47 @@ public class Login : MonoBehaviour
     public bool PasswordCorrect(string tableName, string[] columns, object[] values)
     {
         // SELECT userEmail, userPassword FROM Users WHERE userEmail = 'developer@voliac-games.com';
-        string query = $"SELECT {columns[0]}, {columns[1]} FROM {tableName} WHERE {columns[0]} = \'{values[0].ToString()}\'";
+        //string query = $"SELECT {columns[0]}, {columns[1]} FROM {tableName} WHERE {columns[0]} = \'{values[0].ToString()}\'";
 
-        try
-        {
-            // Execute the query
-            DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
+        //try
+        //{
+        //    // Execute the query
+        //    DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
 
-            // Find the password in the result of the select query and saved it
-            if (resultDataSet != null && resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0)
-            {
-                string storedPassword = resultDataSet.Tables[0].Rows[0][columns[1]].ToString();
-                if (storedPassword == values[1].ToString()) return true;
-            }
-        }
-        catch { return false; }
+        //    // Find the password in the result of the select query and saved it
+        //    if (resultDataSet != null && resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0)
+        //    {
+        //        string storedPassword = resultDataSet.Tables[0].Rows[0][columns[1]].ToString();
+        //        if (storedPassword == values[1].ToString()) return true;
+        //    }
+        //}
+        //catch { return false; }
+        //return false;
+        StartCoroutine(Wait());
+
+        return NoTengoNiIdea();
+
+
+    }
+
+    public bool NoTengoNiIdea()
+    {
+        if(pwd == password.text) return true;
         return false;
     }
     
+    IEnumerator Wait()
+    {
+        dbManager.instance.GetUsersWhereEmail(email.text, response =>
+        {
+            this.response = response;
+        });
+        yield return new WaitForSeconds(0.5f);
+        ProcessJSON(response);
+
+        yield return new WaitForSeconds(0.5f);
+    }
+
     /// <summary>
     /// Get the ID of the logged user
     /// </summary>
@@ -201,5 +231,21 @@ public class Login : MonoBehaviour
         fadeIn.SetActive(true);
         yield return new WaitForSecondsRealtime(1.51f);
         fadeIn.SetActive(false);
+    }
+
+    void ProcessJSON(string json)
+    {
+        // Deserializar el JSON
+        UserData userData = JsonUtility.FromJson<UserData>(json);
+
+        // Obtener los valores
+        int idUsers = userData.idUsers;
+        string userEmail = userData.userEmail;
+        string userPassword = userData.userPassword;
+
+        // Hacer algo con los valores obtenidos
+        id = idUsers;
+        mail = userEmail;
+        pwd = userPassword;
     }
 }
