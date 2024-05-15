@@ -49,6 +49,19 @@ namespace MinimalAPI.Repositories
             return await db.QueryFirstOrDefaultAsync<User>(sql, new { Id = id });
         }
 
+        public async Task<User> GetPasswordByEmail(string email)
+        {
+            var db = dbConnection();
+
+            var sql = @"
+                SELECT idUsers, userPassword
+                FROM Users
+                WHERE userEmail = @Email
+            ";
+
+            return await db.QueryFirstOrDefaultAsync<User>(sql, new { Email = email });
+        }
+
         // Método para insertar un usuario mediante un objeto parametrizado.
         public async Task<bool> InsertUser(NoIdUser usuario)
         {
@@ -69,13 +82,13 @@ namespace MinimalAPI.Repositories
             var db = dbConnection();
 
             var sql = @"
-                        UPDATE  public.usuario
-                        SET usuario = @usuario,
-                            password  =  @password
-                        WHERE id = @id;
+                        UPDATE Users
+                        SET userEmail = @email,
+                            userPassword  =  @password
+                        WHERE idUsers = @id;
                         ";
 
-            var result = await db.ExecuteAsync(sql, new { usuario.userEmail, usuario.userPassword, usuario.idUsers });
+            var result = await db.ExecuteAsync(sql, new { id = usuario.idUsers, email = usuario.userEmail, password = usuario.userPassword });
             return result > 0;
         }
 

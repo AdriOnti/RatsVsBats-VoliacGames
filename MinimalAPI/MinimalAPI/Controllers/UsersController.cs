@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using MinimalAPI.Models;
 using MinimalAPI.Repositories;
 using System.Text.Json.Nodes;
@@ -30,6 +31,19 @@ namespace MinimalAPI.Controllers
         public async Task<IActionResult> GetUsuarioNombre(int id)
         {
             return Ok(await usuariosRepository.GetUser(id));
+        }
+
+        // Método GET para recuperar la contraseña de un usuario por correo electrónico.
+        [HttpGet("email")]
+        public async Task<IActionResult> GetPasswordByEmail([FromQuery] string email)
+        {
+            var password = await usuariosRepository.GetPasswordByEmail(email);
+            if (password == null)
+            {
+                return NotFound("User Not Found");
+            }
+
+            return Ok(password);
         }
 
         // Método POST para crear un usuario e insertarlo en la tabla.
@@ -65,7 +79,7 @@ namespace MinimalAPI.Controllers
             }
 
             var update = await usuariosRepository.UpdateUser(usuario);
-            return Created("Actualizado!", update); 
+            return Created("Actualizado!", update);
         }
 
         // Método DELETE para eliminar un usuario concreto de la tabla.
