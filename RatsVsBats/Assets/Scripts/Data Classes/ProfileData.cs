@@ -1,5 +1,5 @@
 [System.Serializable]
-public class ProfileData
+public class ProfileData // This class is used by the APIManager
 {
     public int idProfiles;
     public string? nickname;

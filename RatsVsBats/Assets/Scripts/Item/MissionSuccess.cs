@@ -9,7 +9,7 @@ public class MissionSuccess : MonoBehaviour
     /// Elimina el objeto de la misión, para evitar que el jugador tenga un objeto infinito
     /// </summary>
     /// <param name="other">Cualquier GameObject que tenga collider</param>
-    private void OnTriggerEnter(Collider other)
+    private async void OnTriggerEnter(Collider other)
     {
         if(other.GetComponent<PlayerController>() != null && InventoryManager.Instance.missionItem != null && GameManager.Instance.isMission)
         {
@@ -20,7 +20,7 @@ public class MissionSuccess : MonoBehaviour
             PlayerController.Instance.ChangeItem();
             GameManager.Instance.isMission = false;
             GameManager.Instance.missionsCompleted += 1;
-            DataManager.Instance.UpdateProfile(points);
+            await DataManager.Instance.UpdateProfile(points);
         }
     }
 

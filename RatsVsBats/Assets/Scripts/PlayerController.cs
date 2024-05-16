@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
-using System.Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Rendering;
 
 public class PlayerController : Character
 {
@@ -264,14 +261,14 @@ public class PlayerController : Character
         {
             ip.Collected();
         }
-        if (other.gameObject.CompareTag("Test"))
-        {
-            CameraManager.instance.ChangeCamera(Cameras.m2_bossCamera);
-            string tableName = "Profiles";
-            string[] columns = { "userEmail", "userPassword" };
-            object[] values = { "example@example.com", "password123" };
+        //if (other.gameObject.CompareTag("Test"))
+        //{
+        //    CameraManager.instance.ChangeCamera(Cameras.m2_bossCamera);
+        //    string tableName = "Profiles";
+        //    string[] columns = { "userEmail", "userPassword" };
+        //    object[] values = { "example@example.com", "password123" };
 
-            DatabaseManager.instance.InsertInto(tableName, columns, values);
-        }
+        //    DatabaseManager.instance.InsertInto(tableName, columns, values);
+        //}
     }
 }

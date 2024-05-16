@@ -151,15 +151,6 @@ public class DataManager : MonoBehaviour
 
     public async Task UpdateProfile(int points)
     {
-        //string tableName = "Profiles";
-        //string[] columns = { "completedMissions", "points", "idProfiles" };
-        //int[] values = { 1, 100 };
-
-        //// UPDATE Profiles
-        ////  SET completedMissions = completedMissions + 1, points = points + 100
-        ////  WHERE idProfiles = profileId
-        //string query = $"UPDATE {tableName} SET {columns[0]} = {columns[0]} + {values[0]}, {columns[1]} = {columns[1]} + {values[1]} WHERE {columns[2]} = {profileId}";
-        //DatabaseManager.instance.ExecuteQuery(query);
         try
         {
             await APIManager.instance.UpdateProfileAsync(profileId, 1, points);

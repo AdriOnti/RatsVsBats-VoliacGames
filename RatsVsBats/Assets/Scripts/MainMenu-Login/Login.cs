@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Data;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -31,7 +30,7 @@ public class Login : MonoBehaviour
     [Header("Success Log-in")]
     [SerializeField] private GameObject fadeIn;
     [HideInInspector] public bool isLogged;
-    /*[HideInInspector]*/ public int idUser;
+    [HideInInspector] public int idUser;
 
     private void Awake()
     { 
@@ -112,13 +111,8 @@ public class Login : MonoBehaviour
     public async void LoginBtn(bool validate)
     {
         if (!validate) ValidadeLogin("");
-        
-        // Values to the call the DBManager
-        //string tableName = "Users";
-        //string[] columns = { "userEmail", "userPassword" };
-        //object[] values = { email.text, password.text };
 
-        //bool correctPassword = PasswordCorrect(tableName, columns, values);
+        // Check with the API if the password is correct
         bool correctPassword = await PasswordCorrectAsync(email.text);
 
         if (correctPassword)
@@ -129,9 +123,7 @@ public class Login : MonoBehaviour
             menu.gameObject.SetActive(true);
             Debug.Log("<color=green>Login successful!</color>");
 
-            // Get the ID of the user
-            //string[] newColumns = { "idUsers", "userEmail"};
-            //GetID(tableName, newColumns, values);
+            // Get the profile data
             Account.Instance.JustLogged(idUser, email.text);
 
             // Do the Fade In and reset cursor
@@ -146,33 +138,9 @@ public class Login : MonoBehaviour
     }
 
     /// <summary>
-    /// Check if the password introduced equals the password in the db
+    /// Ask to the API and get the info of the user using the email
     /// </summary>
-    /// <param name="tableName">Table of the database</param>
-    /// <param name="columns">Columns of the table</param>
-    /// <param name="values">The values to check</param>
     /// <returns>If the two passoword are correct</returns>
-    //public bool PasswordCorrect(string tableName, string[] columns, object[] values)
-    //{
-        // SELECT userEmail, userPassword FROM Users WHERE userEmail = 'developer@voliac-games.com';
-        //string query = $"SELECT {columns[0]}, {columns[1]} FROM {tableName} WHERE {columns[0]} = \'{values[0].ToString()}\'";
-
-        //try
-        //{
-        //    // Execute the query
-        //    DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
-
-        //    // Find the password in the result of the select query and saved it
-        //    if (resultDataSet != null && resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0)
-        //    {
-        //        string storedPassword = resultDataSet.Tables[0].Rows[0][columns[1]].ToString();
-        //        if (storedPassword == values[1].ToString()) return true;
-        //    }
-        //}
-        //catch { return false; }
-        //return false;
-    //}
-
     public async Task<bool> PasswordCorrectAsync(string email)
     {
         try
@@ -200,29 +168,6 @@ public class Login : MonoBehaviour
         }
     }
 
-
-    /// <summary>
-    /// Get the ID of the logged user
-    /// </summary>
-    /// <param name="tableName">Name of the table</param>
-    /// <param name="columns">The columns to make the select</param>
-    /// <param name="values">The values to check in the where</param>
-    //private void GetID(string tableName, string[] columns, object[] values)
-    //{
-    //    // SELECT idUsers FROM Users WHERE email = 'email';
-    //    string query = $"SELECT {columns[0]} FROM {tableName} WHERE {columns[1]} = \'{values[0]}\'";
-    //    DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
-
-    //    // Save the id like a integer
-    //    if(resultDataSet != null && resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0)
-    //    {
-    //        DataRow row = resultDataSet.Tables[0].Rows[0];
-    //        idUser = int.Parse(row[columns[0]].ToString());
-    //    }
-
-    //    Account.Instance.JustLogged(idUser, email.text);
-    //}
-
     /// <summary>
     /// Enable the fade in after login
     /// </summary>
@@ -235,13 +180,6 @@ public class Login : MonoBehaviour
 
     UserData ProcessJSON(string json)
     {
-        // Deserializar el JSON
-        //UserData userData = JsonUtility.FromJson<UserData>(json);
-
         return JsonUtility.FromJson<UserData>(json);
-
-        // Obtener los valores
-        //idUser = userData.idUsers;
-        //pwd = userData.userPassword;
     }
 }
