@@ -50,5 +50,17 @@ namespace MinimalAPI.Controllers
             var update = await perfilesRepository.UpdatePerfil(perfil);
             return Created("Actualizado!", update);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> MissionSuccess(int id, [FromQuery] int missions, [FromQuery] int points)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var update = await perfilesRepository.MissionCompleted(id, missions, points);
+            return Created("Updated!", update);
+        }
     }
 }
