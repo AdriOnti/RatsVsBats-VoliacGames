@@ -177,7 +177,7 @@ public class Login : MonoBehaviour
     {
         try
         {
-            string response = await dbManager.instance.GetUsersWhereEmailAsync(email);
+            string response = await APIManager.instance.GetUsersWhereEmailAsync(email);
 
             if (string.IsNullOrEmpty(response))
             {

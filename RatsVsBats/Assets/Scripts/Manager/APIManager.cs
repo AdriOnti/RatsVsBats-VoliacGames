@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class dbManager : MonoBehaviour
+public class APIManager : MonoBehaviour
 {
-    public static dbManager instance;
+    public static APIManager instance;
     private string apiUrl = "https://rvbvoliacgamesapi.azurewebsites.net/api/";
 
     private void Awake()

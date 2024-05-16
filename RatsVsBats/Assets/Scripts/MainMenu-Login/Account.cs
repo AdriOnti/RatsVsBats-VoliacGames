@@ -45,7 +45,7 @@ public class Account : MonoBehaviour
     {
         try
         {
-            string response = await dbManager.instance.GetProfileWhereIdUserAsync(id);
+            string response = await APIManager.instance.GetProfileWhereIdUserAsync(id);
             if (string.IsNullOrEmpty(response))
             {
                 return;
