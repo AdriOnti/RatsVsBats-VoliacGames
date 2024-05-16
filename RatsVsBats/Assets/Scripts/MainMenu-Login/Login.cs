@@ -30,14 +30,8 @@ public class Login : MonoBehaviour
 
     [Header("Success Log-in")]
     [SerializeField] private GameObject fadeIn;
-    /*[HideInInspector]*/ public bool isLogged;
+    [HideInInspector] public bool isLogged;
     [HideInInspector] public int idUser;
-
-
-
-
-    [SerializeField] private string response;
-    [SerializeField] private string pwd;
 
     private void Awake()
     { 
@@ -190,9 +184,9 @@ public class Login : MonoBehaviour
                 return false;
             }
 
-            ProcessJSON(response);
+            UserData userData = ProcessJSON(response);
 
-            return pwd == password.text;
+            return userData.userPassword == password.text;
         }
         catch (Exception ex)
         {
@@ -235,13 +229,15 @@ public class Login : MonoBehaviour
         fadeIn.SetActive(false);
     }
 
-    void ProcessJSON(string json)
+    UserData ProcessJSON(string json)
     {
         // Deserializar el JSON
-        UserData userData = JsonUtility.FromJson<UserData>(json);
+        //UserData userData = JsonUtility.FromJson<UserData>(json);
+
+        return JsonUtility.FromJson<UserData>(json);
 
         // Obtener los valores
-        idUser = userData.idUsers;
-        pwd = userData.userPassword;
+        //idUser = userData.idUsers;
+        //pwd = userData.userPassword;
     }
 }
