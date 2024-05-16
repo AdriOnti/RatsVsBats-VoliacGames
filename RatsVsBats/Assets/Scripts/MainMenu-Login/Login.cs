@@ -31,7 +31,7 @@ public class Login : MonoBehaviour
     [Header("Success Log-in")]
     [SerializeField] private GameObject fadeIn;
     [HideInInspector] public bool isLogged;
-    [HideInInspector] public int idUser;
+    /*[HideInInspector]*/ public int idUser;
 
     private void Awake()
     { 
@@ -185,8 +185,12 @@ public class Login : MonoBehaviour
             }
 
             UserData userData = ProcessJSON(response);
-
-            return userData.userPassword == password.text;
+            if(userData.userPassword == password.text)
+            {
+                idUser = userData.idUsers;
+                return true;
+            }
+            return false;
         }
         catch (Exception ex)
         {

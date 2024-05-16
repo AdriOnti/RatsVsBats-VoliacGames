@@ -64,6 +64,11 @@ public class dbManager : MonoBehaviour
         return await GetRequestAsync($"Users/email?email={userEmail}");
     }
 
+    public async Task<string> GetProfileWhereIdUserAsync(int idUser)
+    {
+        return await GetRequestAsync($"Profiles/{idUser}");
+    }
+
     public async void UpdateUserProfileAsync(int idProfiles, string jsonData)
     {
         await PostRequestAsync($"Profiles/{idProfiles}", jsonData);
