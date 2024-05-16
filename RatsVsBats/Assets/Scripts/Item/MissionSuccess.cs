@@ -3,6 +3,7 @@ using UnityEngine;
 public class MissionSuccess : MonoBehaviour
 {
     [HideInInspector] GameObject item;
+    public int points;
 
     /// <summary>
     /// Elimina el objeto de la misión, para evitar que el jugador tenga un objeto infinito
@@ -19,7 +20,7 @@ public class MissionSuccess : MonoBehaviour
             PlayerController.Instance.ChangeItem();
             GameManager.Instance.isMission = false;
             GameManager.Instance.missionsCompleted += 1;
-            DataManager.Instance.UpdateProfile();
+            DataManager.Instance.UpdateProfile(points);
         }
     }
 

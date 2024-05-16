@@ -1,5 +1,7 @@
+using System;
 using System.Data;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -147,16 +149,24 @@ public class DataManager : MonoBehaviour
         PlayerPrefs.DeleteKey("email");
     }
 
-    public void UpdateProfile()
+    public async Task UpdateProfile(int points)
     {
-        string tableName = "Profiles";
-        string[] columns = { "completedMissions", "points", "idProfiles" };
-        int[] values = { 1, 100 };
+        //string tableName = "Profiles";
+        //string[] columns = { "completedMissions", "points", "idProfiles" };
+        //int[] values = { 1, 100 };
 
-        // UPDATE Profiles
-        //  SET completedMissions = completedMissions + 1, points = points + 100
-        //  WHERE idProfiles = profileId
-        string query = $"UPDATE {tableName} SET {columns[0]} = {columns[0]} + {values[0]}, {columns[1]} = {columns[1]} + {values[1]} WHERE {columns[2]} = {profileId}";
-        DatabaseManager.instance.ExecuteQuery(query);
+        //// UPDATE Profiles
+        ////  SET completedMissions = completedMissions + 1, points = points + 100
+        ////  WHERE idProfiles = profileId
+        //string query = $"UPDATE {tableName} SET {columns[0]} = {columns[0]} + {values[0]}, {columns[1]} = {columns[1]} + {values[1]} WHERE {columns[2]} = {profileId}";
+        //DatabaseManager.instance.ExecuteQuery(query);
+        try
+        {
+            await APIManager.instance.UpdateProfileAsync(profileId, 1, points);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error updating profile: {ex.Message}");
+        }
     }
 }

@@ -67,5 +67,17 @@ namespace MinimalAPI.Repositories
             var result = await db.ExecuteAsync(sql, new { IdProfiles = perfil.idProfiles, Nickname = perfil.nickname, Location = perfil.location, CompletedMissions = perfil.completedMissions, CompletedBranches = perfil.completedBranches, Points = perfil.points });
             return result > 0;
         }
+
+        public async Task<bool> MissionCompleted(int id, int mission, int points)
+        {
+            var db = dbConnection();
+            var sql = @"
+                        UPDATE Profiles
+                        SET completedMissions = completedMissions + @CompletedMissions, points = points + @Points
+                        WHERE idProfiles = @Id
+                      ";
+            var result = await db.ExecuteAsync(sql, new { Id = id, CompletedMissions = mission, Points = points });
+            return result > 0;
+        }
     }
 }

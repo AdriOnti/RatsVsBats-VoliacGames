@@ -33,9 +33,9 @@ public class APIManager : MonoBehaviour
         return webRequest.downloadHandler.text;
     }
 
-    public async Task<string> PostRequestAsync(string endpoint, string jsonBody)
+    public async Task<string> PutRequestAsync(string endpoint, string jsonBody)
     {
-        using (UnityWebRequest webRequest = new UnityWebRequest(apiUrl + endpoint, "POST"))
+        using (UnityWebRequest webRequest = new UnityWebRequest(apiUrl + endpoint, "PUT"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonBody);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
@@ -69,9 +69,11 @@ public class APIManager : MonoBehaviour
         return await GetRequestAsync($"Profiles/{idUser}");
     }
 
-    public async void UpdateUserProfileAsync(int idProfiles, string jsonData)
+    public async Task UpdateProfileAsync(int idProfiles, int missions, int points)
     {
-        await PostRequestAsync($"Profiles/{idProfiles}", jsonData);
+        var jsonBody = new { id = idProfiles, missions = missions, points = points };
+        var jsonBodyString = JsonUtility.ToJson(jsonBody);
+        await PutRequestAsync($"Profiles/{idProfiles}?missions={missions}&points={points}", jsonBodyString);
     }
 
 }
