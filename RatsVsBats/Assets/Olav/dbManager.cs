@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -14,56 +14,59 @@ public class dbManager : MonoBehaviour
         instance = this;
     }
 
-    public IEnumerator GetRequest(string endpoint, Action<string> callback)
+    public async Task<string> GetRequestAsync(string endpoint)
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(apiUrl + endpoint))
-        {
-            yield return webRequest.SendWebRequest();
+        UnityWebRequest webRequest = UnityWebRequest.Get(apiUrl + endpoint);
+        UnityWebRequestAsyncOperation asyncOperation = webRequest.SendWebRequest();
 
-            if (webRequest.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError("Error: " + webRequest.error);
-            }
-            else
-            {
-                string responseBody = webRequest.downloadHandler.text;
-                callback(responseBody);
-            }
+        while (!asyncOperation.isDone)
+        {
+            await Task.Yield();
         }
+
+        if (webRequest.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Error: " + webRequest.error);
+            throw new Exception("Error: " + webRequest.error);
+        }
+
+        return webRequest.downloadHandler.text;
     }
 
-    public IEnumerator PostRequest(string endpoint, string jsonBody, Action<string> callback)
+    public async Task<string> PostRequestAsync(string endpoint, string jsonBody)
     {
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonBody);
-
-        using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(apiUrl + endpoint, "POST"))
+        using (UnityWebRequest webRequest = new UnityWebRequest(apiUrl + endpoint, "POST"))
         {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonBody);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
             webRequest.SetRequestHeader("Content-Type", "application/json");
 
-            yield return webRequest.SendWebRequest();
+            UnityWebRequestAsyncOperation asyncOperation = webRequest.SendWebRequest();
+
+            while (!asyncOperation.isDone)
+            {
+                await Task.Yield();
+            }
 
             if (webRequest.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError("Error: " + webRequest.error);
+                throw new Exception("Error: " + webRequest.error);
             }
-            else
-            {
-                string responseBody = webRequest.downloadHandler.text;
-                callback(responseBody);
-            }
+
+            return webRequest.downloadHandler.text;
         }
     }
 
-    public void GetUsersWhereEmail(string userEmail, Action<string> callback)
+    public async Task<string> GetUsersWhereEmailAsync(string userEmail)
     {
-        StartCoroutine(GetRequest($"Users/email?email={userEmail}", callback));
+        return await GetRequestAsync($"Users/email?email={userEmail}");
     }
 
-    public void UpdateUserProfile(int idProfiles, string jsonData, Action<string> callback)
+    public async void UpdateUserProfileAsync(int idProfiles, string jsonData)
     {
-        StartCoroutine(PostRequest($"Profiles/{idProfiles}", jsonData, callback));
+        await PostRequestAsync($"Profiles/{idProfiles}", jsonData);
     }
 
 }
