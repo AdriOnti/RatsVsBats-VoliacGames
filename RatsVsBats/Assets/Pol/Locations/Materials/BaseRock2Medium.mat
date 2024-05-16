@@ -25,7 +25,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: BaseRock2Medium
   m_Shader: {fileID: 4800000, guid: 6e4ae4064600d784cac1e41a9e6f2e59, type: 3}
-  m_Parent: {fileID: 2100000, guid: 9b5f29ee7af104d7bb2b5e7b943124d2, type: 2}
+  m_Parent: {fileID: 2100000, guid: e69c6a781ef024c78a646b2bdffd30c2, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
