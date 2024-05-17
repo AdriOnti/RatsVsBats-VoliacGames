@@ -15,6 +15,7 @@ public class PlayerData
     public float speed;
     public int missionsCompleted;
     public List<Item> items;
+    public List<bool> missions;
 
     public PlayerData(PlayerController player) 
     {
@@ -34,5 +35,6 @@ public class PlayerData
         speed = player.originalSpeed;
         missionsCompleted = GameManager.Instance.missionsCompleted;
         items = InventoryManager.Instance.Items;
+        missions = MissionManager.instance.missions;
     }
 }

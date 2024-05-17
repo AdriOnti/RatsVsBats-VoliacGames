@@ -84,6 +84,7 @@ public class DataManager : MonoBehaviour
 
         InventoryManager.Instance.Items.Clear();
         InventoryManager.Instance.Items = data.items;
+        MissionManager.instance.missions = data.missions;
 
         if (CanvasManager.Instance.pauseInput) CanvasManager.Instance.PauseGame();
     }
