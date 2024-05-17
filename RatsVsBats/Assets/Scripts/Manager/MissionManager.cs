@@ -17,7 +17,7 @@ public class MissionManager : MonoBehaviour
         if (missionId == 1) CanvasManager.Instance.ShowMSG("TODO");
         if (missionId == 2) CanvasManager.Instance.ShowMSG("TODO");
         if (missionId == 3) CanvasManager.Instance.ShowMSG("TODO");
-        if (missionId == 4) CanvasManager.Instance.ShowMSG($"Steal the key from the bat and free the {prisonMission.ratsInJail.Count} prisioners");
+        if (missionId == 4) CanvasManager.Instance.ShowMSG($"Steal the key from the bat and free the {prisonMission.ratsInJail.Count} Zauberer"); // Mago en Aleman
         if (missionId == 5) CanvasManager.Instance.ShowMSG("TODO");
     }
 

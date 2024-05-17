@@ -19,7 +19,7 @@ public class ItemPickup : MonoBehaviour, ICollectable
     /// </summary>
     public void Pickup()
     {
-        if (item.itemType == Item.ItemType.PrisonKey)
+        if (item.itemType == Item.ItemType.PrisonKey && GameManager.Instance.missionsCompleted < 4)
         {
             Destroy(transform.GetChild(0).gameObject);
         }
