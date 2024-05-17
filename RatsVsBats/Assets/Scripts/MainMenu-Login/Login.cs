@@ -152,7 +152,7 @@ public class Login : MonoBehaviour
                 return false;
             }
 
-            UserData userData = ProcessJSON(response);
+            UserData userData = DataManager.Instance.ProcessJSON<UserData>(response);
             if(userData.userPassword == password.text)
             {
                 idUser = userData.idUsers;
@@ -176,10 +176,5 @@ public class Login : MonoBehaviour
         fadeIn.SetActive(true);
         yield return new WaitForSecondsRealtime(1.51f);
         fadeIn.SetActive(false);
-    }
-
-    UserData ProcessJSON(string json)
-    {
-        return JsonUtility.FromJson<UserData>(json);
     }
 }

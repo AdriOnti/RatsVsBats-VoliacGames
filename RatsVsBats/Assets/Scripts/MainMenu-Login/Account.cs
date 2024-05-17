@@ -36,7 +36,7 @@ public class Account : MonoBehaviour
         else Debug.Log($"IsLogged: {Login.instance.isLogged}, the profile data can't appeared");
     }
 
-    private async Task CheckProfile(int id, string email)
+    private async Task CheckProfile(int id, string mail)
     {
         try
         {
@@ -46,7 +46,14 @@ public class Account : MonoBehaviour
                 return;
             }
 
-            ProcessJSON(response, email);
+            ProfileData profileData = DataManager.Instance.ProcessJSON<ProfileData>(response);
+            nickname.text = profileData.nickname;
+            email.text = mail;
+            missionsCompleted.text = profileData.completedMissions.ToString();
+            historyBranches.text = profileData.completedBranches.ToString();
+            points.text = profileData.points.ToString();
+
+            Debug.Log($"<color=blue>Welcome {nickname.text} to RatsVsBats!!</color>");
 
         }
         catch (Exception ex)
@@ -75,21 +82,4 @@ public class Account : MonoBehaviour
     /// Go to the Website for change the data
     /// </summary>
     public void GoToWebsite() { Application.OpenURL(URL); }
-
-    /// <summary>
-    /// Deserialize the json returned by the API and show the info
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="mail"></param>
-    void ProcessJSON(string json, string mail)
-    {
-        ProfileData profileData = JsonUtility.FromJson<ProfileData>(json);
-        nickname.text = profileData.nickname;
-        email.text = mail;
-        missionsCompleted.text = profileData.completedMissions.ToString();
-        historyBranches.text = profileData.completedBranches.ToString();
-        points.text = profileData.points.ToString();
-        
-        Debug.Log($"<color=blue>Welcome {nickname.text} to RatsVsBats!!</color>");
-    }
 }

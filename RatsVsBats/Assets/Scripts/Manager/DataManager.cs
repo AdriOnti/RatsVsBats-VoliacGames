@@ -1,5 +1,4 @@
 using System;
-using System.Data;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -159,5 +158,15 @@ public class DataManager : MonoBehaviour
         {
             Debug.LogError($"Error updating profile: {ex.Message}");
         }
+    }
+
+    /// <summary>
+    /// Deserialize any type of JSON and returned like a class in the game
+    /// </summary>
+    /// <param name="json">The info in a string</param>
+    /// <returns>A instance of the class selected</returns>
+    public T ProcessJSON<T>(string json)
+    {
+        return JsonUtility.FromJson<T>(json);
     }
 }
