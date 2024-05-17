@@ -1,10 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class PrisonDoor : BaseDoor
 {
-    public RatPrisioner[] ratsInJail;
+    public List<RatPrisioner> ratsInJail;
 
     protected override bool CanOpenDoor(PlayerController player)
     {
@@ -17,7 +18,7 @@ public class PrisonDoor : BaseDoor
         player.isInteracting = false;
         collision.SetActive(false);
         isOpened = true;
-        CanvasManager.Instance.NonDoorMSG();
+        CanvasManager.Instance.HideMSG();
 
         StartCoroutine(FreeRats());
     }

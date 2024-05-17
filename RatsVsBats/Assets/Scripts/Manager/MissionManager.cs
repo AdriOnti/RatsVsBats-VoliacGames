@@ -4,7 +4,8 @@ using UnityEngine;
 public class MissionManager : MonoBehaviour
 {
     public static MissionManager instance;
-    public List<bool> missions;
+    public PrisonDoor prisonMission;
+    public List<bool> missions; // 0: NONE; 1: NONE; 2: NONE; 3: JAIL; 4: NONE
 
     private void Awake()
     {
@@ -13,19 +14,19 @@ public class MissionManager : MonoBehaviour
 
     public void MissionGoal(int missionId)
     {
-        if (missionId == 1) CanvasManager.Instance.DoorMSG("TODO");
-        if (missionId == 2) CanvasManager.Instance.DoorMSG("TODO");
-        if (missionId == 3) CanvasManager.Instance.DoorMSG("TODO");
-        if (missionId == 4) CanvasManager.Instance.DoorMSG("Steal the key from the bat and free your race");
-        if (missionId == 5) CanvasManager.Instance.DoorMSG("TODO");
+        if (missionId == 1) CanvasManager.Instance.ShowMSG("TODO");
+        if (missionId == 2) CanvasManager.Instance.ShowMSG("TODO");
+        if (missionId == 3) CanvasManager.Instance.ShowMSG("TODO");
+        if (missionId == 4) CanvasManager.Instance.ShowMSG($"Steal the key from the bat and free the {prisonMission.ratsInJail.Count} prisioners");
+        if (missionId == 5) CanvasManager.Instance.ShowMSG("TODO");
     }
 
     public void MissionSuccess(int missionId)
     {
-        if (missionId == 1) CanvasManager.Instance.DoorMSG("TODO");
-        if (missionId == 2) CanvasManager.Instance.DoorMSG("TODO");
-        if (missionId == 3) CanvasManager.Instance.DoorMSG("TODO");
-        if (missionId == 4) CanvasManager.Instance.DoorMSG("Prision Mission Cleared!");
-        if (missionId == 5) CanvasManager.Instance.DoorMSG("TODO");
+        if (missionId == 1) CanvasManager.Instance.ShowMSG("TODO");
+        if (missionId == 2) CanvasManager.Instance.ShowMSG("TODO");
+        if (missionId == 3) CanvasManager.Instance.ShowMSG("TODO");
+        if (missionId == 4) CanvasManager.Instance.ShowMSG("Prision Mission Cleared!");
+        if (missionId == 5) CanvasManager.Instance.ShowMSG("TODO");
     }
 }

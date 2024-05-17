@@ -18,16 +18,16 @@ public class StartMission : MonoBehaviour
 
             if(MissionNumber == GameManager.Instance.missionsCompleted)
             {
-                CanvasManager.Instance.DoorMSG("This mission is cleared");
+                CanvasManager.Instance.ShowMSG("This mission is cleared");
                 return;
             }
 
-            CanvasManager.Instance.DoorMSG("You can't do this mission right now");
+            CanvasManager.Instance.ShowMSG("You can't do this mission right now");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        CanvasManager.Instance.NonDoorMSG();
+        CanvasManager.Instance.HideMSG();
     }
 }

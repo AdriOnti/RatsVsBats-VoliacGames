@@ -69,22 +69,24 @@ public class DataManager : MonoBehaviour
     {
         string path = GetPersistentPath() + "/data.json";
         string playerData = File.ReadAllText(path);
-        PlayerData data = JsonUtility.FromJson<PlayerData>(playerData);
+        PlayerData data = ProcessJSON<PlayerData>(playerData);
 
+        // PlayerController
         PlayerController.Instance.hp = data.maxHP;
         PlayerController.Instance.currentHP = data.currentHP;
         PlayerController.Instance.jumpForce = data.jumpForce;
         PlayerController.Instance.healingForce = data.healingForce;
-
-        GameManager.Instance.missionsCompleted = data.missionsCompleted;
-
         PlayerController.Instance.transform.position = data.position;
         PlayerController.Instance.originalSpeed = data.speed;
         PlayerController.Instance.speed = data.speed;
 
+        // Missions
+        GameManager.Instance.missionsCompleted = data.missionsCompleted;
+        MissionManager.instance.missions = data.missions;
+
+        // Inventory
         InventoryManager.Instance.Items.Clear();
         InventoryManager.Instance.Items = data.items;
-        MissionManager.instance.missions = data.missions;
 
         if (CanvasManager.Instance.pauseInput) CanvasManager.Instance.PauseGame();
     }

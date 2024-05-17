@@ -27,17 +27,17 @@ public abstract class BaseDoor : MonoBehaviour
         {
             if (isOpened)
             {
-                CanvasManager.Instance.NonDoorMSG();
+                CanvasManager.Instance.HideMSG();
                 return;
             }
 
             if(CanOpenDoor(player))
             {
-                CanvasManager.Instance.DoorMSG("Press [E] to open this door");
+                CanvasManager.Instance.ShowMSG("Press [E] to open this door");
             }
             else
             {
-                CanvasManager.Instance.DoorMSG("You can't open this door");
+                CanvasManager.Instance.ShowMSG("You can't open this door");
             }
         }
     }
@@ -58,6 +58,6 @@ public abstract class BaseDoor : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        CanvasManager.Instance.NonDoorMSG();
+        CanvasManager.Instance.HideMSG();
     }
 }
