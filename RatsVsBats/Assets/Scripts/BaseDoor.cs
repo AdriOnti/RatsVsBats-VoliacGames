@@ -4,7 +4,7 @@ public abstract class BaseDoor : MonoBehaviour
 {
     public Animator animator;
     public bool isOpened;
-    public GameObject collision;
+    [HideInInspector] public GameObject collision;
 
     private void Start()
     {

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class PrisonDoor : BaseDoor
@@ -26,7 +27,15 @@ public class PrisonDoor : BaseDoor
         foreach (RatPrisioner rp in ratsInJail)
         {
             rp.isFree = true;
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.7f);
+        }
+    }
+
+    private void Update()
+    {
+        if (ratsInJail.All(rat => rat.targetArrived)) 
+        {
+            Debug.Log("The Last Rat arrived, the Bat Beast gonna die");
         }
     }
 }

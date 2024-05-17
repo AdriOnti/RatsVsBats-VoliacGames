@@ -12102,7 +12102,8 @@ PrefabInstance:
       propertyPath: missionsCompleted
       value: 
       objectReference: {fileID: 1202099551}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5356656531526962835, guid: cdeaf671c6a32844ca49b94627a9a61c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
