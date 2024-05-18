@@ -10,6 +10,7 @@ public class StartMission : MonoBehaviour
             if (MissionNumber - 1 == GameManager.Instance.missionsCompleted)
             {
                 MissionManager.instance.MissionGoal(MissionNumber);
+                MissionManager.instance.MissionObjects(MissionNumber);
                 GameManager.Instance.isMission = true;
                 CanvasManager.Instance.AutoSave();
                 DataManager.Instance.SaveGame();

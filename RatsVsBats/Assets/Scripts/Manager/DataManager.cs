@@ -83,6 +83,7 @@ public class DataManager : MonoBehaviour
         // Missions
         GameManager.Instance.missionsCompleted = data.missionsCompleted;
         MissionManager.instance.missions = data.missions;
+        MissionManager.instance.CheckMissionsCleared();
 
         // Inventory
         InventoryManager.Instance.Items.Clear();
