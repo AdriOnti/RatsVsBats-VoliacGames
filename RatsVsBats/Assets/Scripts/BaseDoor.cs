@@ -5,10 +5,12 @@ public abstract class BaseDoor : MonoBehaviour
     public Animator animator;
     public bool isOpened;
     [HideInInspector] public GameObject collision;
+    [HideInInspector] public GameObject lockDoor;
 
     private void Start()
     {
         collision = gameObject.transform.parent.Find("Collision").gameObject;
+        lockDoor = gameObject.transform.parent.Find("Lock").gameObject;
     }
 
     protected virtual bool CanOpenDoor(PlayerController player)
@@ -50,6 +52,7 @@ public abstract class BaseDoor : MonoBehaviour
             {
                 if (player.isInteracting)
                 {
+                    lockDoor.SetActive(false);
                     OnInteract(player);
                 }
             }
