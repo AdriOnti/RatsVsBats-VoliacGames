@@ -25,6 +25,7 @@ public class CanvasManager : MonoBehaviour
     [HideInInspector] GameObject map;
     [HideInInspector] GameObject disquete;
     [HideInInspector] GameObject info;
+    [HideInInspector] GameObject missionInfo;
 
     [Header("Inventory")]
     [HideInInspector] GameObject inventoryBtn;
@@ -85,6 +86,7 @@ public class CanvasManager : MonoBehaviour
         confirmDelete = GameManager.Instance.FindObjectsByName("ConfirmDelete");
         confirm2ndCour = GameManager.Instance.FindObjectsByName("ConfirmDelete2Cour");
         message = GameManager.Instance.FindObjectsByName("MSG");
+        missionInfo = GameManager.Instance.FindObjectsByName("MissionInfo");
     }
 
     /// <summary>
@@ -109,6 +111,7 @@ public class CanvasManager : MonoBehaviour
         confirmDelete.SetActive(false);
         confirm2ndCour.SetActive(false);
         message.SetActive(false);
+        missionInfo.SetActive(false);
     }
 
 
@@ -292,5 +295,16 @@ public class CanvasManager : MonoBehaviour
     public void HideMSG()
     {
         message.SetActive(false);
+    }
+
+    public void MissionInfo(string info)
+    {
+        missionInfo.SetActive(true);
+        missionInfo.GetComponentInChildren<TextMeshProUGUI>().text = info;
+    }
+
+    public void EndInfo()
+    {
+        missionInfo.SetActive(false);
     }
 }
