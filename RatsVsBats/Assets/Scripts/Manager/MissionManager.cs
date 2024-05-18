@@ -26,13 +26,21 @@ public class MissionManager : MonoBehaviour
 
     public void MissionGoal(int missionId)
     {
-        if (missionId == 1) CanvasManager.Instance.ShowMSG("TODO");
-        if (missionId == 2) CanvasManager.Instance.ShowMSG("TODO");
-        if (missionId == 3) CanvasManager.Instance.ShowMSG("TODO");
-        if (missionId == 4) 
+        if (missionId == 1)
+            CanvasManager.Instance.ShowMSG("TODO");
+            CanvasManager.Instance.MissionInfo("TODO");
+        if (missionId == 2)
+            CanvasManager.Instance.ShowMSG("TODO");
+            CanvasManager.Instance.MissionInfo("TODO");
+        if (missionId == 3) 
+            CanvasManager.Instance.ShowMSG("TODO");
+            CanvasManager.Instance.MissionInfo("TODO");
+        if (missionId == 4)
             CanvasManager.Instance.ShowMSG($"Steal the key from the bat and free the {prisonMission.ratsInJail.Count} Zauberer"); // Mago en Aleman
             CanvasManager.Instance.MissionInfo($"Steal the key from the bat and free the {prisonMission.ratsInJail.Count} Zauberer");
-        if (missionId == 5) CanvasManager.Instance.ShowMSG("TODO");
+        if (missionId == 5)
+            CanvasManager.Instance.ShowMSG("TODO");
+            CanvasManager.Instance.MissionInfo("TODO");
     }
 
     public void MissionSuccess(int missionId)
@@ -40,7 +48,9 @@ public class MissionManager : MonoBehaviour
         if (missionId == 1) CanvasManager.Instance.ShowMSG("TODO");
         if (missionId == 2) CanvasManager.Instance.ShowMSG("TODO");
         if (missionId == 3) CanvasManager.Instance.ShowMSG("TODO");
-        if (missionId == 4) CanvasManager.Instance.ShowMSG("Prision Mission Cleared!");
+        if (missionId == 4) 
+            CanvasManager.Instance.ShowMSG("Prision Mission Cleared!");
+            CanvasManager.Instance.ClearMission();
         if (missionId == 5) CanvasManager.Instance.ShowMSG("TODO");
     }
 

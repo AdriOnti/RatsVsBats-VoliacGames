@@ -10030,7 +10030,22 @@ PrefabInstance:
       objectReference: {fileID: 9147877761621350844}
     - target: {fileID: 5882329850030634728, guid: e317062077fff8143b5d42977f671bec,
         type: 3}
+      propertyPath: tasks.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5882329850030634728, guid: e317062077fff8143b5d42977f671bec,
+        type: 3}
       propertyPath: missions.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5882329850030634728, guid: e317062077fff8143b5d42977f671bec,
+        type: 3}
+      propertyPath: missionTasks.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5882329850030634728, guid: e317062077fff8143b5d42977f671bec,
+        type: 3}
+      propertyPath: missionsInfo.Array.size
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5882329850030634728, guid: e317062077fff8143b5d42977f671bec,
@@ -10038,6 +10053,36 @@ PrefabInstance:
       propertyPath: invisibleWall.Array.size
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5882329850030634728, guid: e317062077fff8143b5d42977f671bec,
+        type: 3}
+      propertyPath: missionsInfo.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1ee3cf39a6005eb4bbe5a1797996675e,
+        type: 2}
+    - target: {fileID: 5882329850030634728, guid: e317062077fff8143b5d42977f671bec,
+        type: 3}
+      propertyPath: missionsInfo.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: cd59a925d549c7e4c894e409bc007979,
+        type: 2}
+    - target: {fileID: 5882329850030634728, guid: e317062077fff8143b5d42977f671bec,
+        type: 3}
+      propertyPath: missionsInfo.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8caa0942997547145a4692989f2df61b,
+        type: 2}
+    - target: {fileID: 5882329850030634728, guid: e317062077fff8143b5d42977f671bec,
+        type: 3}
+      propertyPath: missionsInfo.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 619856fe4985ff043957d3b42bec3f78,
+        type: 2}
+    - target: {fileID: 5882329850030634728, guid: e317062077fff8143b5d42977f671bec,
+        type: 3}
+      propertyPath: missionsInfo.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 301c5dfe443843b47a3da12221667a92,
+        type: 2}
     - target: {fileID: 5882329850030634728, guid: e317062077fff8143b5d42977f671bec,
         type: 3}
       propertyPath: invisibleWall.Array.data[3]
@@ -16600,7 +16645,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

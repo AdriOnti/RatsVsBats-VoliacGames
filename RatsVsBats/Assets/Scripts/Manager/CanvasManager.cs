@@ -303,7 +303,7 @@ public class CanvasManager : MonoBehaviour
         missionInfo.GetComponentInChildren<TextMeshProUGUI>().text = info;
     }
 
-    public void EndInfo()
+    public void ClearMission()
     {
         missionInfo.SetActive(false);
     }
