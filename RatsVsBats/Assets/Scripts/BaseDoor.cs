@@ -6,6 +6,7 @@ public abstract class BaseDoor : MonoBehaviour
     public bool isOpened;
     [HideInInspector] public GameObject collision;
     [HideInInspector] public GameObject lockDoor;
+    public Item.ItemType lockType;
 
     private void Start()
     {
@@ -13,9 +14,9 @@ public abstract class BaseDoor : MonoBehaviour
         lockDoor = gameObject.transform.parent.Find("Lock").gameObject;
     }
 
-    protected virtual bool CanOpenDoor(PlayerController player)
+    private bool CanOpenDoor(PlayerController player)
     {
-        return false;
+        return player.actualItem != null && player.actualItem.itemType == lockType;
     }
 
     protected virtual void OnInteract(PlayerController player)

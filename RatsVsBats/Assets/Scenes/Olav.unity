@@ -11039,6 +11039,7 @@ MonoBehaviour:
   isOpened: 0
   collision: {fileID: 0}
   lockDoor: {fileID: 0}
+  lockType: 0
   ratsInJail:
   - {fileID: 2003591165}
   - {fileID: 2048329330}
@@ -17247,6 +17248,7 @@ MonoBehaviour:
   isOpened: 0
   collision: {fileID: 0}
   lockDoor: {fileID: 0}
+  lockType: 0
   ratsInJail:
   - {fileID: 1110756756}
   - {fileID: 958189520}
@@ -22717,6 +22719,7 @@ MonoBehaviour:
   isOpened: 0
   collision: {fileID: 0}
   lockDoor: {fileID: 0}
+  lockType: 1
   ratsInJail:
   - {fileID: 324806111}
   - {fileID: 1110162448}

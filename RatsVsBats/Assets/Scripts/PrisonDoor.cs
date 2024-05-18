@@ -7,11 +7,6 @@ public class PrisonDoor : BaseDoor
 {
     public List<RatPrisioner> ratsInJail;
 
-    protected override bool CanOpenDoor(PlayerController player)
-    {
-        return player.actualItem != null && player.actualItem.itemType == Item.ItemType.PrisonKey;
-    }
-
     protected override void OnInteract(PlayerController player)
     {
         animator.Play("OpenAnim");
