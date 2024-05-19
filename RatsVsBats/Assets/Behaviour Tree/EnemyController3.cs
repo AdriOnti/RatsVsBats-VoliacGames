@@ -47,6 +47,11 @@ public class EnemyController3 : StateController2
         {
             rayacstCoroutineHandle = Timing.RunCoroutine(DetectPlayer(player.transform));
         }
+
+        //if (collision.TryGetComponent(out PlayerController player2)) //rats
+        //{
+        //    HP = 0;
+        //}
     }
 
     private IEnumerator<float> DetectPlayer(Transform player)

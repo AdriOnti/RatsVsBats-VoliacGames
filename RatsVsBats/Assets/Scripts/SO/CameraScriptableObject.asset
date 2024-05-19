@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f76de41cf3b34c84797af2eb33234e0b, type: 3}
+  m_Name: CameraScriptableObject
+  m_EditorClassIdentifier: 
+  camerasDB:
+  - {fileID: 3514337287679316121, guid: ed433133f33c5404085c415f2e0f13ed, type: 3}
+  - {fileID: 4202490241218794920, guid: 95ecfe95e2b0ac34a9ce53853ab739a5, type: 3}
+  - {fileID: 5074227905851750860, guid: b43ba68f348bae54a862472f95976b32, type: 3}
+  - {fileID: 2647719650469006521, guid: 69ad8438591beb648aaaad87312766d1, type: 3}
+  - {fileID: 8081140791326303099, guid: b4b7e7062e642a94e9aad08ff38cf8a8, type: 3}

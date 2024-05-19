@@ -266,12 +266,7 @@ public class PlayerController : Character
         }
         if (other.gameObject.CompareTag("Test"))
         {
-            CameraManager.instance.ChangeCamera(Cameras.m2_bossCamera);
-            string tableName = "Profiles";
-            string[] columns = { "userEmail", "userPassword" };
-            object[] values = { "example@example.com", "password123" };
-
-            DatabaseManager.instance.InsertInto(tableName, columns, values);
+            CameraManager.instance.ChangeCamera(Cameras.BossCamera);
         }
     }
 }
