@@ -1,4 +1,5 @@
-using System.Data;
+using System;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,13 +30,36 @@ public class Account : MonoBehaviour
     /// <summary>
     /// Function that is called after the login. This makes a select query to the profiles table
     /// </summary>
-    public void JustLogged(int id, string email)
+    public async void JustLogged(int id, string email)
     {
-        string tableName = "Profiles";
-        string[] columns = { "idProfiles", "nickname", "completedMissions", "completedBranches", "points" };
-        object[] values = { id, email };
+        if (Login.instance.isLogged) await CheckProfile(id, email);
+        else Debug.Log($"IsLogged: {Login.instance.isLogged}, the profile data can't appeared");
+    }
 
-        if (Login.instance.isLogged) GetData(tableName, columns, values);
+    private async Task CheckProfile(int id, string mail)
+    {
+        try
+        {
+            string response = await APIManager.instance.GetProfileWhereIdUserAsync(id);
+            if (string.IsNullOrEmpty(response))
+            {
+                return;
+            }
+
+            ProfileData profileData = DataManager.Instance.ProcessJSON<ProfileData>(response);
+            nickname.text = profileData.nickname;
+            email.text = mail;
+            missionsCompleted.text = profileData.completedMissions.ToString();
+            historyBranches.text = profileData.completedBranches.ToString();
+            points.text = profileData.points.ToString();
+
+            Debug.Log($"<color=blue>Welcome {nickname.text} to RatsVsBats!!</color>");
+
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError(ex.Message);
+        }
     }
 
     /// <summary>
@@ -58,32 +82,4 @@ public class Account : MonoBehaviour
     /// Go to the Website for change the data
     /// </summary>
     public void GoToWebsite() { Application.OpenURL(URL); }
-
-    /// <summary>
-    /// Get all the information from the SQL query
-    /// </summary>
-    /// <param name="tableName">Name of the table of the database</param>
-    /// <param name="columns">Columns of the table</param>
-    /// <param name="values">The values to check in the where</param>
-    public void GetData(string tableName, string[] columns, object[] values)
-    {
-        // SELECT nickName, completedMissions, completedBranches, points FROM Profiles WHERE idProfiles = idUsers
-        string query = $"SELECT {columns[1]}, {columns[2]}, {columns[3]}, {columns[4]} FROM {tableName} WHERE {columns[0]} = {values[0]}";
-        DataSet resultDataSet = DatabaseManager.instance.ExecuteQuery(query);
-
-        if (resultDataSet != null && resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0)
-        {
-            DataRow row = resultDataSet.Tables[0].Rows[0];
-
-            // Set the TMP text values with the result of the select query
-            nickname.text = row[columns[1]].ToString();
-            email.text = values[1].ToString();
-            missionsCompleted.text = row[columns[2]].ToString();
-            historyBranches.text = $"{row[columns[3]]}/{maxBranches}";
-            points.text = row[columns[4]].ToString();
-
-            Debug.Log("<color=green>Profile data get successfully</color>");
-            Debug.Log($"<color=blue>Welcome {nickname.text} to RatsVsBats!!</color>");
-        }
-    }
 }

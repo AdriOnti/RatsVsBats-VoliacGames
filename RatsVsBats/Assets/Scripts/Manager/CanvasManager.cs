@@ -25,6 +25,7 @@ public class CanvasManager : MonoBehaviour
     [HideInInspector] GameObject map;
     [HideInInspector] GameObject disquete;
     [HideInInspector] GameObject info;
+    [HideInInspector] GameObject missionInfo;
 
     [Header("Inventory")]
     [HideInInspector] GameObject inventoryBtn;
@@ -39,7 +40,7 @@ public class CanvasManager : MonoBehaviour
     [HideInInspector] GameObject confirm2ndCour;
 
     [Header("Prison")]
-    [HideInInspector] GameObject doorMessage;
+    [HideInInspector] GameObject message;
 
     private void Awake()
     {
@@ -84,7 +85,8 @@ public class CanvasManager : MonoBehaviour
         notConfirm = GameManager.Instance.FindObjectsByName("NotConfirm");
         confirmDelete = GameManager.Instance.FindObjectsByName("ConfirmDelete");
         confirm2ndCour = GameManager.Instance.FindObjectsByName("ConfirmDelete2Cour");
-        doorMessage = GameManager.Instance.FindObjectsByName("Prison");
+        message = GameManager.Instance.FindObjectsByName("MSG");
+        missionInfo = GameManager.Instance.FindObjectsByName("MissionInfo");
     }
 
     /// <summary>
@@ -108,7 +110,8 @@ public class CanvasManager : MonoBehaviour
         notConfirm.SetActive(false);
         confirmDelete.SetActive(false);
         confirm2ndCour.SetActive(false);
-        doorMessage.SetActive(false);
+        message.SetActive(false);
+        missionInfo.SetActive(false);
     }
 
 
@@ -283,14 +286,25 @@ public class CanvasManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void DoorMSG(string text)
+    public void ShowMSG(string text)
     {
-        doorMessage.SetActive(true);
-        doorMessage.GetComponentInChildren<TextMeshProUGUI>().text = text;
+        message.SetActive(true);
+        message.GetComponentInChildren<TextMeshProUGUI>().text = text;
     }
 
-    public void NonDoorMSG()
+    public void HideMSG()
     {
-        doorMessage.SetActive(false);
+        message.SetActive(false);
+    }
+
+    public void MissionInfo(string info)
+    {
+        missionInfo.SetActive(true);
+        missionInfo.GetComponentInChildren<TextMeshProUGUI>().text = info;
+    }
+
+    public void ClearMission()
+    {
+        missionInfo.SetActive(false);
     }
 }

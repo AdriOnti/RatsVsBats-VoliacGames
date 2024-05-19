@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddTransient<MySqlConnection>(_ =>
 {
-    var connectionString = "Server=rats-vs-bats-db.ctusuewsqph4.us-east-1.rds.amazonaws.com; Database=RatsVsBats; Uid=developer; Pwd=adminVoliac13; Port=3306;";
+    var connectionString = "Server=ratsvsbatsbbdd.cym2kkocwnwm.us-east-1.rds.amazonaws.com; Database=RatsVsBats; Uid=developer; Pwd=adminVoliac13; Port=3306;";
     return new MySqlConnection(connectionString);
 });
 builder.Services.AddSingleton(builder.Services.AddDbContext<MySQLConfig>(options =>

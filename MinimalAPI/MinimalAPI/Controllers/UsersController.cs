@@ -32,6 +32,19 @@ namespace MinimalAPI.Controllers
             return Ok(await usuariosRepository.GetUser(id));
         }
 
+        // Método GET para recuperar la contraseña de un usuario por correo electrónico.
+        [HttpGet("email")]
+        public async Task<IActionResult> GetPasswordByEmail([FromQuery] string email)
+        {
+            var password = await usuariosRepository.GetPasswordByEmail(email);
+            if (password == null)
+            {
+                return NotFound("User Not Found");
+            }
+
+            return Ok(password);
+        }
+
         // Método POST para crear un usuario e insertarlo en la tabla.
         [HttpPost]
         public async Task<IActionResult> CreateUsuarioWeb([FromBody] NoIdUser usuario)
