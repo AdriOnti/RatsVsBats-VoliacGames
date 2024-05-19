@@ -11,6 +11,7 @@ public class ChaseBehaviour : MonoBehaviour
 
     [SerializeField] private Transform target;
     [SerializeField] private Transform keyObj;
+    [SerializeField] private Transform spawn;
 
     private void Awake()
     {
@@ -29,6 +30,6 @@ public class ChaseBehaviour : MonoBehaviour
 
     public void StopChasing()
     {
-        //_rb.velocity = Vector2.zero;
+        agent.destination = spawn.position;
     }
 }

@@ -30,7 +30,7 @@
 //    {
 //        string connectionString = "Server=" + host + ";Port=" + port + ";Database=" + database + ";Uid=" + user + ";Pwd=" + password + ";SslMode=none";
 //        Debug.Log("Intentando conectar a la base de datos...");
-//        Debug.Log("Cadena de conexión: " + connectionString);
+//        Debug.Log("Cadena de conexiÃ³n: " + connectionString);
 //        ConnectToDatabase(connectionString);
 //    }
 
@@ -44,8 +44,8 @@
 //                dbConnection.Close();
 //            }
 //            dbConnection.Open();
-//            Debug.Log("Conexión establecida correctamente.");
-//            Debug.Log("Estado de la conexión: " + dbConnection.State.ToString());
+//            Debug.Log("ConexiÃ³n establecida correctamente.");
+//            Debug.Log("Estado de la conexiÃ³n: " + dbConnection.State.ToString());
 //        }
 //        catch (Exception e)
 //        {
@@ -58,7 +58,7 @@
 //        if (dbConnection != null && dbConnection.State != System.Data.ConnectionState.Closed)
 //        {
 //            dbConnection.Close();
-//            Debug.Log("Conexión cerrada.");
+//            Debug.Log("ConexiÃ³n cerrada.");
 //        }
 //    }
 
@@ -175,10 +175,10 @@
 //        {
 //            query += ", " + items[i];
 //        }
-//        query += " FROM " + tableName + " WHERE " + col[0] + operation[0] + "'" + values[0] + "’ ";
+//        query += " FROM " + tableName + " WHERE " + col[0] + operation[0] + "'" + values[0] + "â€™ ";
 //        for (int i = 1; i < col.Length; ++i)
 //        {
-//            query += " AND " + col[i] + operation[i] + "'" + values[i] + "’ ";
+//            query += " AND " + col[i] + operation[i] + "'" + values[i] + "â€™ ";
 //        }
 //        return ExecuteQuery(query);
 //    }

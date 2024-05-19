@@ -47,6 +47,11 @@ public class EnemyController3 : StateController2
         {
             rayacstCoroutineHandle = Timing.RunCoroutine(DetectPlayer(player.transform));
         }
+
+        //if (collision.TryGetComponent(out PlayerController player2)) //rats
+        //{
+        //    HP = 0;
+        //}
     }
 
     private IEnumerator<float> DetectPlayer(Transform player)
@@ -62,7 +67,7 @@ public class EnemyController3 : StateController2
             int playerLayerMask = LayerMask.NameToLayer("Player");
             LayerMask layerMask = (1 << 3 | 1 << 8);
 
-            RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, 500f, layerMask);
+            RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, 500f /*,layerMask*/);
 
             for (int i = 0; i < hits.Length; i++)
             {

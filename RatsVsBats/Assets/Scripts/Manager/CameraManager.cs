@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,20 +6,24 @@ using UnityEngine;
 
 public enum Cameras
 {
-    m1_mainCamera,
-    m2_bossCamera,
-    m3_jailCamera,
-    m4_doorCamera
+    MainCamera,
+    StartKeyCamera,
+    JailCamera,
+    LabCamera,
+    BossCamera,
+    BossCamera2,
+    ExtraCamera
 }
 
 public class CameraManager : MonoBehaviour
 {
-    public Camera m1_mainCamera;
-    public Camera m2_bossCamera;
-    public Camera m3_jailCamera;
-    public Camera m4_doorCamera;
+    public List<Camera> cameras;
+    //public Camera m2_bossCamera;
+    //public Camera m3_jailCamera;
+    //public Camera m4_doorCamera;
 
     private Camera currentCamera;
+    //public CamerasContainer camerasDatabase;
 
     private readonly Dictionary<Cameras, Camera> cameraDictionary = new Dictionary<Cameras, Camera>();
     public static CameraManager instance;
@@ -33,10 +38,14 @@ public class CameraManager : MonoBehaviour
 
         currentCamera = Camera.main;
 
-        cameraDictionary.Add(Cameras.m1_mainCamera, m1_mainCamera);
-        cameraDictionary.Add(Cameras.m2_bossCamera, m2_bossCamera);
-        cameraDictionary.Add(Cameras.m3_jailCamera, m3_jailCamera);
-        cameraDictionary.Add(Cameras.m4_doorCamera, m4_doorCamera);
+        bool sucess;
+        foreach (Camera cam in cameras)
+        {
+            if (sucess = Enum.TryParse(cam.name, out Cameras value))
+                cameraDictionary.Add(value, cam);
+            else Debug.Log(cam.name);
+        }
+        cameraDictionary.Add(Cameras.MainCamera, Camera.main);
     }
 
     // Update is called once per frame

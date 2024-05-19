@@ -4,24 +4,21 @@ using UnityEngine;
 
 public class Lava : MonoBehaviour
 {
-    private int damage;
-    public float speed = 1f; // Speed of the up and down movement
-    public float height = 1f; // Maximum height of the movement
-    private float startTime; // Time at which the movement started
+    public float delta; 
+    public float speed;
+    private Vector3 startPos;
+
     // Start is called before the first frame update
     void Start()
     {
-        damage = 10;
-        startTime = Time.time; // Record the start time
+        startPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Calculate the movement using sine function
-        float yOffset = Mathf.Sin((Time.time - startTime) * speed) * height;
-
-        // Update the object's position
-        transform.position = new Vector3(transform.position.x, yOffset, transform.position.z);
+        Vector3 v = startPos;
+        v.y += delta * Mathf.Sin(Time.time * speed);
+        transform.position = v;
     }
 }
