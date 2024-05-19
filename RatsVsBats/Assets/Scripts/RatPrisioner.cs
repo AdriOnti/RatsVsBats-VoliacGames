@@ -4,7 +4,8 @@ using UnityEngine.AI;
 public class RatPrisioner : MonoBehaviour
 {
     public bool isFree;
-    public Transform target;
+    public bool targetArrived;
+    public Transform finalTarget;
     private NavMeshAgent agent;
 
     private void Start()
@@ -16,9 +17,10 @@ public class RatPrisioner : MonoBehaviour
     {
         if (isFree && agent != null)
         {
-            agent.enabled = true;
-            agent.SetDestination(target.position);
-            transform.LookAt(target.position);
+            agent.SetDestination(finalTarget.position);
+            transform.LookAt(finalTarget.position);
         }
+
+        if (targetArrived) finalTarget = null;
     }
 }

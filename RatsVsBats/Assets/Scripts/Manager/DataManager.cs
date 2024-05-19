@@ -1,5 +1,6 @@
-using System.Data;
+using System;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -68,19 +69,23 @@ public class DataManager : MonoBehaviour
     {
         string path = GetPersistentPath() + "/data.json";
         string playerData = File.ReadAllText(path);
-        PlayerData data = JsonUtility.FromJson<PlayerData>(playerData);
+        PlayerData data = ProcessJSON<PlayerData>(playerData);
 
+        // PlayerController
         PlayerController.Instance.hp = data.maxHP;
         PlayerController.Instance.currentHP = data.currentHP;
         PlayerController.Instance.jumpForce = data.jumpForce;
         PlayerController.Instance.healingForce = data.healingForce;
-
-        GameManager.Instance.missionsCompleted = data.missionsCompleted;
-
         PlayerController.Instance.transform.position = data.position;
         PlayerController.Instance.originalSpeed = data.speed;
         PlayerController.Instance.speed = data.speed;
 
+        // Missions
+        GameManager.Instance.missionsCompleted = data.missionsCompleted;
+        MissionManager.instance.missions = data.missions;
+        MissionManager.instance.CheckMissionsCleared();
+
+        // Inventory
         InventoryManager.Instance.Items.Clear();
         InventoryManager.Instance.Items = data.items;
 
@@ -147,16 +152,25 @@ public class DataManager : MonoBehaviour
         PlayerPrefs.DeleteKey("email");
     }
 
-    public void UpdateProfile()
+    public async Task UpdateProfile(int points)
     {
-        string tableName = "Profiles";
-        string[] columns = { "completedMissions", "points", "idProfiles" };
-        int[] values = { 1, 100 };
+        try
+        {
+            await APIManager.instance.UpdateProfileAsync(profileId, 1, points);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error updating profile: {ex.Message}");
+        }
+    }
 
-        // UPDATE Profiles
-        //  SET completedMissions = completedMissions + 1, points = points + 100
-        //  WHERE idProfiles = profileId
-        string query = $"UPDATE {tableName} SET {columns[0]} = {columns[0]} + {values[0]}, {columns[1]} = {columns[1]} + {values[1]} WHERE {columns[2]} = {profileId}";
-        DatabaseManager.instance.ExecuteQuery(query);
+    /// <summary>
+    /// Deserialize any type of JSON and returned like a class in the game
+    /// </summary>
+    /// <param name="json">The info in a string</param>
+    /// <returns>A instance of the class selected</returns>
+    public T ProcessJSON<T>(string json)
+    {
+        return JsonUtility.FromJson<T>(json);
     }
 }

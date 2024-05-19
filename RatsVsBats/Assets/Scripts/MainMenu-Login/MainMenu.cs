@@ -42,8 +42,6 @@ public class MainMenu : MonoBehaviour
         confirmDelete2.SetActive(false);
         loadScroll.SetActive(false);
         loadDelete.SetActive(false);
-        //login.SetActive(true);
-        //mainMenu.SetActive(false);
         CheckLoad();
     }
 

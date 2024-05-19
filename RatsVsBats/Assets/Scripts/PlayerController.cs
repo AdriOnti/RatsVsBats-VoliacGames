@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
-using System.Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Rendering;
 
 public class PlayerController : Character
 {
@@ -264,6 +261,7 @@ public class PlayerController : Character
         {
             ip.Collected();
         }
+        
         if (other.gameObject.CompareTag("Test"))
         {
             CameraManager.instance.ChangeCamera(Cameras.BossCamera);
