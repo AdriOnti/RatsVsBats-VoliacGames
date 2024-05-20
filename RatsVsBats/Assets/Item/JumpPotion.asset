@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ffbade6fabfb6c45a3ecd8b8368bfd4, type: 3}
   m_Name: JumpPotion
   m_EditorClassIdentifier: 
-  id: 2
+  id: 3
   itemName: Jump Potion
-  value: 5
+  value: 20
   waitTime: 25
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e3de7b88a4fc0d8469bb138680bffe5a, type: 3}
   itemType: 1
   status: 1

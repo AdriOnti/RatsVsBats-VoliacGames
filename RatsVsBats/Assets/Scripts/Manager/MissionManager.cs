@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -70,20 +71,28 @@ public class MissionManager : MonoBehaviour
             CanvasManager.Instance.ShowMSG("Laberynth Cleared!");
             CanvasManager.Instance.ClearMission();
         }
+
+        StartCoroutine(ByeMSG());
+    }
+
+    IEnumerator ByeMSG()
+    {
+        yield return new WaitForSeconds(1f);
+        CanvasManager.Instance.HideMSG();
     }
 
     public void MissionObjects(int mission)
     {
-        if(mission == 1)
+        if (mission == 1)
         {
             DisableWalls(mission);
         }
-        if(mission == 2)
+        if (mission == 2)
         {
             foreach (GameObject go in objectsOfTheMissionJail) go.SetActive(true);
             DisableWalls(mission);
         }
-        if(mission == 3)
+        if (mission == 3)
         {
             DisableWalls(mission);
         }
