@@ -5,7 +5,7 @@ public class MissionManager : MonoBehaviour
 {
     public static MissionManager instance;
     public PrisonDoor prisonMission;
-    public List<bool> missions; // 0: NONE; 1: NONE; 2: NONE; 3: JAIL; 4: NONE
+    public List<bool> missions; // 0: FROZEN; 1: JAIL; 2: PARKOUR; 3: LABERYNTH
 
     [Header("Invisible Wall")]
     public List<GameObject> invisibleWall;
@@ -28,60 +28,77 @@ public class MissionManager : MonoBehaviour
     {
         if (missionId == 1)
         {
-            CanvasManager.Instance.ShowMSG("TODO");
-            CanvasManager.Instance.MissionInfo("TODO");
+            CanvasManager.Instance.ShowMSG("Recover the frozen key");
+            CanvasManager.Instance.MissionInfo("Recover the frozen key");
         }
         if (missionId == 2)
         {
-            CanvasManager.Instance.MissionInfo("TODO");
-            CanvasManager.Instance.ShowMSG("TODO");
+            CanvasManager.Instance.ShowMSG($"Steal the key from the bat and free the prisioners");
+            CanvasManager.Instance.MissionInfo($"Steal the key from the bat and free the prisioners");
         }
         if (missionId == 3)
         {
-            CanvasManager.Instance.ShowMSG("TODO");
-            CanvasManager.Instance.MissionInfo("TODO");
+            CanvasManager.Instance.MissionInfo("Survive the lava parkour");
+            CanvasManager.Instance.ShowMSG("Survive the lava parkour");
         }
         if (missionId == 4)
         {
-            CanvasManager.Instance.ShowMSG($"Steal the key from the bat and free the {prisonMission.ratsInJail.Count} rats");
-            CanvasManager.Instance.MissionInfo($"Steal the key from the bat and free the {prisonMission.ratsInJail.Count} rats");
-        }
-        if (missionId == 5)
-        {
-            CanvasManager.Instance.ShowMSG("TODO");
-            CanvasManager.Instance.MissionInfo("TODO");
+            CanvasManager.Instance.ShowMSG("Pass the laberynth");
+            CanvasManager.Instance.MissionInfo("Pass the laberynth");
         }
     }
 
     public void MissionSuccess(int missionId)
     {
-        if (missionId == 1) CanvasManager.Instance.ShowMSG("TODO");
-        if (missionId == 2) CanvasManager.Instance.ShowMSG("TODO");
-        if (missionId == 3) CanvasManager.Instance.ShowMSG("TODO");
-        if (missionId == 4)
+        if (missionId == 1)
+        {
+            CanvasManager.Instance.ShowMSG("Frozek Mission Cleared!");
+            CanvasManager.Instance.ClearMission();
+        }
+        if (missionId == 2)
         {
             CanvasManager.Instance.ShowMSG("Prision Mission Cleared!");
             CanvasManager.Instance.ClearMission();
         }
-        if (missionId == 5) CanvasManager.Instance.ShowMSG("TODO");
+        if (missionId == 3)
+        {
+            CanvasManager.Instance.ShowMSG("Parkour Cleared!");
+            CanvasManager.Instance.ClearMission();
+        }
+        if (missionId == 4)
+        {
+            CanvasManager.Instance.ShowMSG("Laberynth Cleared!");
+            CanvasManager.Instance.ClearMission();
+        }
     }
 
     public void MissionObjects(int mission)
     {
-        if(mission == 4)
+        if(mission == 1)
+        {
+            DisableWalls(mission);
+        }
+        if(mission == 2)
         {
             foreach (GameObject go in objectsOfTheMissionJail) go.SetActive(true);
+            DisableWalls(mission);
+        }
+        if(mission == 3)
+        {
+            DisableWalls(mission);
+        }
+        if (mission == 4)
+        {
             DisableWalls(mission);
         }
     }
 
     public void DisableWalls(int mission)
     {
-        //if (mission == 1) invisibleWall[0].SetActive(false);
-        //if (mission == 2) invisibleWall[1].SetActive(false);
-        //if (mission == 3) invisibleWall[2].SetActive(false);
+        if (mission == 1) invisibleWall[0].SetActive(false);
+        if (mission == 2) invisibleWall[1].SetActive(false);
+        if (mission == 3) invisibleWall[2].SetActive(false);
         if (mission == 4) invisibleWall[3].SetActive(false);
-        //if (mission == 5) invisibleWall[4].SetActive(false);
     }
 
     public void CheckMissionsCleared()
@@ -90,6 +107,5 @@ public class MissionManager : MonoBehaviour
         if (missions[1]) DisableWalls(2);
         if (missions[2]) DisableWalls(3);
         if (missions[3]) DisableWalls(4);
-        if (missions[4]) DisableWalls(5);
     }
 }

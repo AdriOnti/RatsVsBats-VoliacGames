@@ -34,7 +34,7 @@ public class PrisonDoor : BaseDoor
         if (ratsInJail.All(rat => rat.targetArrived)) 
         {
             Debug.Log("The Last Rat arrived, the Bat Beast gonna die");
-            MissionManager.instance.missions[3] = true;
+            MissionManager.instance.missions[1] = true;
         }
     }
 }
