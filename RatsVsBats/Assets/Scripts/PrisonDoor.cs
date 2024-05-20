@@ -6,10 +6,12 @@ using UnityEngine;
 public class PrisonDoor : BaseDoor
 {
     public List<RatPrisioner> ratsInJail;
+    public Animator jailBars;
 
     protected override void OnInteract(PlayerController player)
     {
         animator.Play("OpenAnim");
+        jailBars.Play("JailBarsOpen");
         player.isInteracting = false;
         collision.SetActive(false);
         isOpened = true;
