@@ -150,6 +150,7 @@ public class PlayerController : Character
         if (rb.velocity.y < 0) // Character is falling
         {
             rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed - 1) * Time.fixedDeltaTime;
+            ratAnimator.SetBool("isJumping", false);
         }
     }
 
@@ -216,7 +217,7 @@ public class PlayerController : Character
         if (isGrounded && !isCrawling)
         {
             isJumping = false;
-            ratAnimator.SetBool("isJumping", false);
+            //ratAnimator.SetBool("isJumping", false);
             speed = 20;
         }
     }
@@ -256,6 +257,7 @@ public class PlayerController : Character
 
         if (!isJumping)
         {
+            ratAnimator.SetBool("isWalking", false);
             rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
             ratAnimator.SetBool("isJumping", true);
         }
