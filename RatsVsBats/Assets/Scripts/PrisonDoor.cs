@@ -7,6 +7,8 @@ public class PrisonDoor : BaseDoor
 {
     public List<RatPrisioner> ratsInJail;
     public Animator jailBars;
+    public EnemyController3 enemyController;
+    public GameObject romboKey;
 
     protected override void OnInteract(PlayerController player)
     {
@@ -16,6 +18,8 @@ public class PrisonDoor : BaseDoor
         collision.SetActive(false);
         isOpened = true;
         CanvasManager.Instance.HideMSG();
+        InventoryManager.Instance.Remove(player.actualItem);
+        player.ChangeItem();
 
         StartCoroutine(FreeRats());
     }
@@ -35,6 +39,11 @@ public class PrisonDoor : BaseDoor
         {
             Debug.Log("The Last Rat arrived, the Bat Beast gonna die");
             MissionManager.instance.missions[1] = true;
+            enemyController.HP = 0;
+            if(romboKey != null)
+            {
+                romboKey.SetActive(true);
+            }
         }
     }
 }

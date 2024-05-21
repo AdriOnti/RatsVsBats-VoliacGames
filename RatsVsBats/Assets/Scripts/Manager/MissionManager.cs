@@ -14,6 +14,9 @@ public class MissionManager : MonoBehaviour
     [Header("Jail Mission")]
     public List<GameObject> objectsOfTheMissionJail;
 
+    [Header("Mission Doors")]
+    public List<NewDoor> doorAnimators;
+
     private void Awake()
     {
         instance = this;
@@ -116,5 +119,22 @@ public class MissionManager : MonoBehaviour
         if (missions[1]) DisableWalls(2);
         if (missions[2]) DisableWalls(3);
         if (missions[3]) DisableWalls(4);
+    }
+
+    public void AnimDoor(PlayerController player)
+    {
+        if (missions[0]) doorAnimators[0].SimulateInteract(player);
+        if (missions[1])
+        {
+            doorAnimators[1].SimulateInteract(player);
+            doorAnimators[2].SimulateInteract(player);
+            doorAnimators[3].SimulateInteract(player);
+        }
+        if (missions[2])
+        {
+            doorAnimators[2].SimulateInteract(player);
+            doorAnimators[3].SimulateInteract(player);
+        }
+        if (missions[3]) doorAnimators[4].SimulateInteract(player);
     }
 }

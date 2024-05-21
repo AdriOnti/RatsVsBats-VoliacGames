@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using UnityEditor.AnimatedValues;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -84,6 +85,7 @@ public class DataManager : MonoBehaviour
         GameManager.Instance.missionsCompleted = data.missionsCompleted;
         MissionManager.instance.missions = data.missions;
         MissionManager.instance.CheckMissionsCleared();
+        MissionManager.instance.AnimDoor(PlayerController.Instance);
 
         // Inventory
         InventoryManager.Instance.Items.Clear();

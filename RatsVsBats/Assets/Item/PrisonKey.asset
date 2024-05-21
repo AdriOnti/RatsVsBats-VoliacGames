@@ -17,5 +17,5 @@ MonoBehaviour:
   value: 0
   waitTime: 0
   icon: {fileID: 21300000, guid: 2ad62fdb1d7b59244a0bd5595def3c56, type: 3}
-  itemType: 1
-  status: 1
+  itemType: 7
+  status: 0
