@@ -44,8 +44,8 @@ public class MissionManager : MonoBehaviour
         }
         if (missionId == 4)
         {
-            CanvasManager.Instance.ShowMSG("Pass the laberynth");
-            CanvasManager.Instance.MissionInfo("Pass the laberynth");
+            CanvasManager.Instance.ShowMSG("Pass the labyrinth");
+            CanvasManager.Instance.MissionInfo("Pass the labyrinth");
         }
     }
 
@@ -68,7 +68,7 @@ public class MissionManager : MonoBehaviour
         }
         if (missionId == 4)
         {
-            CanvasManager.Instance.ShowMSG("Laberynth Cleared!");
+            CanvasManager.Instance.ShowMSG("Labyrinth Cleared!");
             CanvasManager.Instance.ClearMission();
         }
 
