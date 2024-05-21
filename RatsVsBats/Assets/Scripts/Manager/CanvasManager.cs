@@ -334,14 +334,12 @@ public class CanvasManager : MonoBehaviour
     public void StartIntro()
     {
         introCanvas.SetActive(true);
-        // Crear una nueva RenderTexture para el video
-        RenderTexture renderTexture = new RenderTexture((int)vp.clip.width, (int)vp.clip.height, 0);
-        vp.targetTexture = renderTexture;
-        rawImage.texture = renderTexture;
+        StartCoroutine(Intro());
+    }
 
-        // Configurar y reproducir el video
-        vp.renderMode = VideoRenderMode.RenderTexture;
-        vp.source = VideoSource.VideoClip;
+    IEnumerator Intro()
+    {
+        yield return new WaitForSeconds(0.5f);
         vp.clip = bookIntro;
         vp.Play();
         vp.loopPointReached += SecondIntro;
