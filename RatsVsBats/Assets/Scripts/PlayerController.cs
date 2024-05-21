@@ -285,6 +285,7 @@ public class PlayerController : Character
         // If the mouse scroll is lesser than 0, rest 1 to the inventory index
         else if (isChangingItem < 0) inventoryIndex = (inventoryIndex - 1 + itemCount) % itemCount;
 
+        if (InventoryManager.Instance.Items.Count == 1) inventoryIndex = 0;
         actualItem = InventoryManager.Instance.Items[inventoryIndex];
         GameManager.Instance.UpdateItem(actualItem);
     }
@@ -311,6 +312,7 @@ public class PlayerController : Character
             {
                 ip.Collected();
                 CanvasManager.Instance.HideMSG();
+                isInteracting = false;
             }
         }
     }

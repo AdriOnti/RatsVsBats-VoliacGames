@@ -18,4 +18,4 @@ MonoBehaviour:
   waitTime: 0
   icon: {fileID: 0}
   itemType: 2
-  status: 1
+  status: 0

@@ -6,6 +6,10 @@ public class MissionCleared : MonoBehaviour
     {
         if(other.TryGetComponent(out PlayerController playerController) && GameManager.Instance.isMission)
         {
+            if(GameManager.Instance.missionsCompleted == 0)
+            {
+                MissionManager.instance.missions[0] = true;
+            }
             if(GameManager.Instance.missionsCompleted == 2)
             {
                 MissionManager.instance.missions[2] = true;

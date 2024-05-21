@@ -14,26 +14,23 @@ public class MissionSuccess : MonoBehaviour
     {
         if(other.GetComponent<PlayerController>() != null && MissionStatus())
         {
-            if(MissionStatus())
-            {
-                // Destroy the mission Item
-                item = InventoryManager.Instance.missionItem;
-                InventoryManager.Instance.missionItem = null;
-                InventoryManager.Instance.ClearMissionItem(item.GetComponent<ItemPickup>().item);
-                if (item != null) Destroy(item);
-                PlayerController.Instance.ChangeItem();
+            // Destroy the mission Item
+            item = InventoryManager.Instance.missionItem;
+            InventoryManager.Instance.missionItem = null;
+            InventoryManager.Instance.ClearMissionItem(item.GetComponent<ItemPickup>().item);
+            if (item != null) Destroy(item);
+            PlayerController.Instance.ChangeItem();
 
-                // Desactivate the mission state and update the profile
-                GameManager.Instance.isMission = false;
-                GameManager.Instance.missionsCompleted += 1;
-                await DataManager.Instance.UpdateProfile(points);
+            // Desactivate the mission state and update the profile
+            GameManager.Instance.isMission = false;
+            GameManager.Instance.missionsCompleted += 1;
+            await DataManager.Instance.UpdateProfile(points);
 
-                // Make an auto save
-                CanvasManager.Instance.AutoSave();
-                DataManager.Instance.SaveGame();
+            // Make an auto save
+            CanvasManager.Instance.AutoSave();
+            DataManager.Instance.SaveGame();
 
-                MissionManager.instance.MissionSuccess(mission.MissionNumber);
-            }
+            MissionManager.instance.MissionSuccess(mission.MissionNumber);
         }
     }
 

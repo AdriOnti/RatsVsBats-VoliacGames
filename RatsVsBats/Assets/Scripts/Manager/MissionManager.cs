@@ -53,7 +53,7 @@ public class MissionManager : MonoBehaviour
     {
         if (missionId == 1)
         {
-            CanvasManager.Instance.ShowMSG("Frozek Mission Cleared!");
+            CanvasManager.Instance.ShowMSG("Frozen Mission Cleared!");
             CanvasManager.Instance.ClearMission();
         }
         if (missionId == 2)
