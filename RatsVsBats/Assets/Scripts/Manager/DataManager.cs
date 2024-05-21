@@ -175,4 +175,9 @@ public class DataManager : MonoBehaviour
     {
         return JsonUtility.FromJson<T>(json);
     }
+
+    public async Task RespawnCost(int points)
+    {
+        await APIManager.instance.UpdateProfileAsync(profileId, 0, points);
+    }
 }

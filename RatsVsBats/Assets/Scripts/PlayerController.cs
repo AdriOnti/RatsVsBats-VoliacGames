@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -129,6 +130,7 @@ public class PlayerController : Character
         FadeManager.Instance.FadeOut();
         yield return new WaitForSecondsRealtime(1.5f);
         PlayerPrefs.SetInt("loading", 1);
+        DataManager.Instance.RespawnCost(-69);
         if(SceneManager.GetActiveScene().buildIndex == 1) SceneManager.LoadScene(1);
         else SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
