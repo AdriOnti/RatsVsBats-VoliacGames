@@ -16,6 +16,6 @@ MonoBehaviour:
   itemName: Key Trebol
   value: 0
   waitTime: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 5ea8a52c126183f41b430d1f635c8c81, type: 3}
   itemType: 3
   status: 1

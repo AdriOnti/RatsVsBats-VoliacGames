@@ -16,6 +16,6 @@ MonoBehaviour:
   itemName: Key Eye
   value: 0
   waitTime: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: ed325c00e43b6634abdbd4f12a529580, type: 3}
   itemType: 2
   status: 0

@@ -16,6 +16,6 @@ MonoBehaviour:
   itemName: Key Circle
   value: 0
   waitTime: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 7799fd8fcb0418e4c8a5288edc2c5056, type: 3}
   itemType: 4
   status: 0

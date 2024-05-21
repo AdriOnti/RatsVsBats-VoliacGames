@@ -16,6 +16,6 @@ MonoBehaviour:
   itemName: Key Rombo
   value: 0
   waitTime: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 7931564517b117946904a10d663f6a74, type: 3}
   itemType: 6
   status: 1

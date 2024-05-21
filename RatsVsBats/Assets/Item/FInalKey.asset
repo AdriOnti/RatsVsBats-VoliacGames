@@ -16,6 +16,6 @@ MonoBehaviour:
   itemName: Final Key
   value: 0
   waitTime: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: d733bdd39d9a2cc45b81300c97963c67, type: 3}
   itemType: 8
   status: 1
