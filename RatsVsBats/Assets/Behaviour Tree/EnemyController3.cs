@@ -28,11 +28,11 @@ public class EnemyController3 : StateController2
         if (currentState.action != null)
             currentState.action.OnUpdate();
 
-        if (Input.GetKey("space") && Time.time >= nextHurt)
-        {
-            OnHurt(1);
-            nextHurt = Time.time + 0.3f;
-        }
+        //if (Input.GetKey("space") && Time.time >= nextHurt)
+        //{
+        //    OnHurt(1);
+        //    nextHurt = Time.time + 0.3f;
+        //}
     }
 
     public void OnHurt(float damage)

@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateText(string text)
     {
-        UItext.text = text;
+        //UItext.text = text;
     }
 
 #if UNITY_EDITOR

@@ -42,6 +42,10 @@ public class CanvasManager : MonoBehaviour
     [Header("Prison")]
     [HideInInspector] GameObject message;
 
+    [Header("Finale")]
+    [HideInInspector] GameObject finale;
+    public TextMeshProUGUI finaleMSG;
+
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -87,6 +91,7 @@ public class CanvasManager : MonoBehaviour
         confirm2ndCour = GameManager.Instance.FindObjectsByName("ConfirmDelete2Cour");
         message = GameManager.Instance.FindObjectsByName("MSG");
         missionInfo = GameManager.Instance.FindObjectsByName("MissionInfo");
+        finale = GameManager.Instance.FindObjectsByName("Finale");
     }
 
     /// <summary>
@@ -112,6 +117,7 @@ public class CanvasManager : MonoBehaviour
         confirm2ndCour.SetActive(false);
         message.SetActive(false);
         missionInfo.SetActive(false);
+        finale.SetActive(false);
     }
 
 
@@ -306,5 +312,11 @@ public class CanvasManager : MonoBehaviour
     public void ClearMission()
     {
         missionInfo.SetActive(false);
+    }
+
+    public void Credits(string text)
+    {
+        finale.SetActive(true);
+        finaleMSG.text = text;
     }
 }

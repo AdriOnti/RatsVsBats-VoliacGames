@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -67,6 +68,34 @@ public class APIManager : MonoBehaviour
         }
     }
 
+    public async Task<string> FinalePutRequestAsync(string endpoint, string jsonBody)
+    {
+        using (UnityWebRequest webRequest = new UnityWebRequest(apiUrl + endpoint, "PUT"))
+        {
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
+            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+
+            UnityWebRequestAsyncOperation asyncOperation = webRequest.SendWebRequest();
+
+            while (!asyncOperation.isDone)
+            {
+                await Task.Yield();
+            }
+
+            if (webRequest.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Error: " + webRequest.error);
+                throw new Exception("Error: " + webRequest.error);
+            }
+
+            Debug.Log("Response: " + webRequest.downloadHandler.text); // Log the response
+            return webRequest.downloadHandler.text;
+        }
+    }
+
+
     /// <summary>
     /// Get the user info using the email
     /// </summary>
@@ -96,5 +125,11 @@ public class APIManager : MonoBehaviour
         var jsonBody = new { id = idProfiles, missions = missions, points = points };
         var jsonBodyString = JsonUtility.ToJson(jsonBody);
         await PutRequestAsync($"Profiles/{idProfiles}?missions={missions}&points={points}", jsonBodyString);
+    }
+
+    public async Task FinaleUpdate(ProfileData pd)
+    {
+        var jsonBodyString = JsonUtility.ToJson(pd);
+        await FinalePutRequestAsync($"Profiles", jsonBodyString);
     }
 }

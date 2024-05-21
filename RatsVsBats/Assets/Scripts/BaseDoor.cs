@@ -40,7 +40,7 @@ public abstract class BaseDoor : MonoBehaviour
             }
             else
             {
-                CanvasManager.Instance.ShowMSG("You can't open this door");
+                CanvasManager.Instance.ShowMSG("Search for the correct key");
             }
         }
     }
