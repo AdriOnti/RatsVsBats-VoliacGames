@@ -340,7 +340,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6023208727446058898}
   m_Layer: 0
-  m_Name: New JailMission
+  m_Name: JailMission
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
