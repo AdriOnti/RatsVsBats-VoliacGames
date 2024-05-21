@@ -340,6 +340,7 @@ public class CanvasManager : MonoBehaviour
     IEnumerator Intro()
     {
         yield return new WaitForSeconds(0.5f);
+        GameManager.Instance.GetHUD().SetActive(false);
         vp.clip = bookIntro;
         vp.Play();
         vp.loopPointReached += SecondIntro;
@@ -356,5 +357,6 @@ public class CanvasManager : MonoBehaviour
     {
         vp.gameObject.SetActive(false);
         introCanvas.SetActive(false);
+        HUDFadesIn();
     }
 }
