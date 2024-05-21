@@ -16,6 +16,7 @@ public class PlayerController : Character
     private CharacterController characterController;
     private Rigidbody rb;
     private Vector3 _velocity;
+    private Animator ratAnimator;
 
     [Header("Bools & Test Bools")]
     [SerializeField] private bool isGrounded;
@@ -60,7 +61,8 @@ public class PlayerController : Character
         // _rb = GetComponent<Rigidbody>();
         if(currentHP <= 0 || currentHP > hp) currentHP = hp;
         characterController = GetComponent<CharacterController>();
-        //rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
+        ratAnimator = GetComponentInChildren<Animator>();
     }
 
     private void OnEnable()
@@ -89,15 +91,20 @@ public class PlayerController : Character
 
     private void Update()
     {
-        DetectMovement();
         DetectJump();
-        Rotate();
-        StartCoroutine(FallToTouchGround());
+        //StartCoroutine(FallToTouchGround());
 
         // Move();
         CheckHP();
 
         if (Input.GetKeyUp(KeyCode.J)) StartCoroutine(Hurt());
+    }
+
+    private void FixedUpdate()
+    {
+        Rotate();
+        DetectMovement();
+        FallToTouchGround();
     }
 
     IEnumerator Hurt()
@@ -125,32 +132,44 @@ public class PlayerController : Character
         else SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     
-    IEnumerator FallToTouchGround()
+    private void FallToTouchGround()
     {
-        float currentVerticalSpeed = 0f;
+        //float currentVerticalSpeed = 0f;
 
-        while (!isGrounded && !isJumping)
+        //while (!isGrounded && !isJumping)
+        //{
+        //    Debug.Log(isGrounded);
+        //    currentVerticalSpeed += gravity * Time.deltaTime * 0.5f;
+        //    characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
+        //    yield return null;
+        //}
+
+        if (rb.velocity.y < 0) // Character is falling
         {
-            Debug.Log(isGrounded);
-            currentVerticalSpeed += gravity * Time.deltaTime * 0.5f;
-            characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
-            yield return null;
+            rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed - 1) * Time.fixedDeltaTime;
         }
     }
 
     private void DetectMovement()
     {
         movementInput = inputManager.GetPlayerMovement();
-        if (movementInput.magnitude > 0.1f)
+        if (movementInput.magnitude > 0.5f)
         {
+            ratAnimator.SetBool("isWalking", true);
             Move();
         }
+        else ratAnimator.SetBool("isWalking", false);
     }
 
     private void Move()
     {
+        //Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
+        //characterController.Move(speed * Time.deltaTime * direction);
+
         Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
-        characterController.Move(speed * Time.deltaTime * direction);
+        Vector3 targetPosition = rb.position + speed * Time.fixedDeltaTime * direction;
+
+        rb.MovePosition(targetPosition);
     }
 
     private void Rotate()
@@ -163,44 +182,62 @@ public class PlayerController : Character
 
     private void DetectJump()
     {
-        isGrounded = characterController.isGrounded;
-        //Debug.Log(isGrounded);
+        //isGrounded = characterController.isGrounded;
+        ////Debug.Log(isGrounded);
 
+        //if (isGrounded)
+        //{
+        //    isJumping = false;
+        //}
+
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, 3f);
+        Debug.Log(isGrounded);
         if (isGrounded)
         {
             isJumping = false;
+            speed = 20;
         }
     }
 
     public void Jump()
     {
-        if (!isJumping)
+        if (!isJumping && isGrounded)
         {
-            isJumping = true;
-            StartCoroutine(PerformJump());
+            //isJumping = true;
+            Debug.Log("jumping");
+            speed = 3;
+            PerformJump();
         }
     }
 
-    IEnumerator PerformJump()
+    void PerformJump()
     {
-        float currentVerticalSpeed = 0f;
+        //float currentVerticalSpeed = 0f;
 
-        while (currentVerticalSpeed < jumpForce)
+        //while (currentVerticalSpeed < jumpForce)
+        //{
+        //    currentVerticalSpeed += Time.deltaTime * jumpForce * 10;
+        //    characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
+        //    yield return null;
+        //}
+
+        //while (!isGrounded)
+        //{
+        //    Debug.Log("falling");
+        //    currentVerticalSpeed += gravity * Time.deltaTime * 2;
+        //    characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
+        //    yield return null;
+        //}
+
+
+        //isJumping = false;
+
+        if (!isJumping)
         {
-            currentVerticalSpeed += Time.deltaTime * jumpForce * 10;
-            characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
-            yield return null;
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
         }
 
-        while (!isGrounded)
-        {
-            Debug.Log("falling");
-            currentVerticalSpeed += gravity * Time.deltaTime * 2;
-            characterController.Move(new Vector3(0, currentVerticalSpeed, 0) * Time.deltaTime);
-            yield return null;
-        }
-
-        isJumping = false;
+        isJumping = true;
     }
 
     public void Aim()

@@ -26,7 +26,7 @@ public class AdriDie : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Lava lava))
+        if (other.gameObject.CompareTag("Lava"))
         {
             isHit = true;
             //animator.SetBool("isHit", true);
@@ -35,7 +35,7 @@ public class AdriDie : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.TryGetComponent(out Lava lava))
+        if (other.gameObject.CompareTag("Lava"))
         {
             lavaHits++;
             if (lavaHits > 70 && !isDead)
