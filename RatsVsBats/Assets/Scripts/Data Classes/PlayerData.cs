@@ -21,7 +21,7 @@ public class PlayerData
     {
         maxHP = player.hp; 
         currentHP = player.currentHP; 
-        jumpForce = player.jumpForce; 
+        jumpForce = player.originalJump; 
         healingForce = player.healingForce;
 
         position = player.transform.position;

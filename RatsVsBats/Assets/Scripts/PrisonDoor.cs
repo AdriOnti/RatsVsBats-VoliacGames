@@ -6,10 +6,12 @@ using UnityEngine;
 public class PrisonDoor : BaseDoor
 {
     public List<RatPrisioner> ratsInJail;
+    public Animator jailBars;
 
     protected override void OnInteract(PlayerController player)
     {
         animator.Play("OpenAnim");
+        jailBars.Play("JailBarsOpen");
         player.isInteracting = false;
         collision.SetActive(false);
         isOpened = true;
@@ -32,7 +34,7 @@ public class PrisonDoor : BaseDoor
         if (ratsInJail.All(rat => rat.targetArrived)) 
         {
             Debug.Log("The Last Rat arrived, the Bat Beast gonna die");
-            MissionManager.instance.missions[3] = true;
+            MissionManager.instance.missions[1] = true;
         }
     }
 }

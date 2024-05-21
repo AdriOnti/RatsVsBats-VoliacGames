@@ -31,6 +31,7 @@ public class PlayerController : Character
     // Public Variables
     [Header("Stadistics")]
     public float originalSpeed;
+    public float originalJump;
     public Vector3 _playerCamera;
     public Transform playerCamera;
     public float groundDistance = 5f;
@@ -50,6 +51,7 @@ public class PlayerController : Character
         else instance = this;
         _playerCamera = Camera.main.transform.forward;
         originalSpeed = speed;
+        originalJump = jumpForce;
     }
 
     private void Start()

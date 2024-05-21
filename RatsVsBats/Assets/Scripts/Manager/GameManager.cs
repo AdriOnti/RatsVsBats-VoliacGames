@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -97,6 +98,11 @@ public class GameManager : MonoBehaviour
         StartCoroutine(IncreaseSpeedCoroutine(item.value, item.waitTime));
     }
 
+    public void IncreaseJumpBoost(Item item)
+    {
+        StartCoroutine(IncreaseJumpCoroutine(item.value, item.waitTime));
+    }
+
     /// <summary>
     /// Incrementa la velocidad y luega la decrementa
     /// </summary>
@@ -115,6 +121,17 @@ public class GameManager : MonoBehaviour
         // Decrement
         PlayerController.Instance.speed -= itemValue;
         speedUsed = false;
+        FindObjectsByName("TEST_Effect").SetActive(false);
+    }
+
+    IEnumerator IncreaseJumpCoroutine(float itemValue, float waitTime)
+    {
+        PlayerController.Instance.jumpForce += itemValue;
+        FindObjectsByName("TEST_Effect").SetActive(true);
+
+        yield return new WaitForSeconds(waitTime);
+
+        PlayerController.Instance.jumpForce -= itemValue;
         FindObjectsByName("TEST_Effect").SetActive(false);
     }
 
@@ -145,7 +162,7 @@ public class GameManager : MonoBehaviour
     }
 #endif
 
-    public void PrisonDoor(Item item)
+    public void DoorKey(Item item)
     {
         Image actualItem = FindObjectsByName("ActualItem").GetComponent<Image>();
 
