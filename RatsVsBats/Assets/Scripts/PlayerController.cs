@@ -295,15 +295,23 @@ public class PlayerController : Character
     }
 
     private void OnTriggerEnter(Collider other)
-    {
-        if(other.TryGetComponent<ItemPickup>(out ItemPickup ip))
-        {
-            ip.Collected();
-        }
-        
+    {        
         if (other.gameObject.CompareTag("Test"))
         {
             CameraManager.instance.ChangeCamera(Cameras.BossCamera);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.TryGetComponent<ItemPickup>(out ItemPickup ip))
+        {
+            CanvasManager.Instance.ShowMSG("Press [E] to pickup");
+            if (isInteracting)
+            {
+                ip.Collected();
+                CanvasManager.Instance.HideMSG();
+            }
         }
     }
 }

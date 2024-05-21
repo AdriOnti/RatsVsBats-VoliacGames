@@ -15,9 +15,13 @@ public class Item : ScriptableObject
     {
         Speed,
         JumpBoost,
-        FrozenKey,
+        KeyEye,
+        KeyTrebol,
+        KeyCircle,
+        KeyHeart,
+        KeyRombo,
         PrisonKey,
-        LaberynthKey
+        FinalKey
     }
 
     public enum ItemStatus

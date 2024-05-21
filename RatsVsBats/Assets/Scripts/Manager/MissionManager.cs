@@ -104,10 +104,10 @@ public class MissionManager : MonoBehaviour
 
     public void DisableWalls(int mission)
     {
-        if (mission == 1) invisibleWall[0].SetActive(false);
-        if (mission == 2) invisibleWall[1].SetActive(false);
-        if (mission == 3) invisibleWall[2].SetActive(false);
-        if (mission == 4) invisibleWall[3].SetActive(false);
+        //if (mission == 1) invisibleWall[0].SetActive(false);
+        //if (mission == 2) invisibleWall[1].SetActive(false);
+        //if (mission == 3) invisibleWall[2].SetActive(false);
+        //if (mission == 4) invisibleWall[3].SetActive(false);
     }
 
     public void CheckMissionsCleared()
