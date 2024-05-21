@@ -37,7 +37,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Stealth"",
+                    ""name"": ""Crawling"",
                     ""type"": ""Button"",
                     ""id"": ""478a1c0c-752e-4478-b1d8-891f47e83dd3"",
                     ""expectedControlType"": ""Button"",
@@ -208,7 +208,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Stealth"",
+                    ""action"": ""Crawling"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -341,7 +341,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Game
         m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
         m_Game_Movement = m_Game.FindAction("Movement", throwIfNotFound: true);
-        m_Game_Stealth = m_Game.FindAction("Stealth", throwIfNotFound: true);
+        m_Game_Crawling = m_Game.FindAction("Crawling", throwIfNotFound: true);
         m_Game_Crouch = m_Game.FindAction("Crouch", throwIfNotFound: true);
         m_Game_Jump = m_Game.FindAction("Jump", throwIfNotFound: true);
         m_Game_Climb = m_Game.FindAction("Climb", throwIfNotFound: true);
@@ -415,7 +415,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Game;
     private List<IGameActions> m_GameActionsCallbackInterfaces = new List<IGameActions>();
     private readonly InputAction m_Game_Movement;
-    private readonly InputAction m_Game_Stealth;
+    private readonly InputAction m_Game_Crawling;
     private readonly InputAction m_Game_Crouch;
     private readonly InputAction m_Game_Jump;
     private readonly InputAction m_Game_Climb;
@@ -432,7 +432,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         private @PlayerControls m_Wrapper;
         public GameActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Game_Movement;
-        public InputAction @Stealth => m_Wrapper.m_Game_Stealth;
+        public InputAction @Crawling => m_Wrapper.m_Game_Crawling;
         public InputAction @Crouch => m_Wrapper.m_Game_Crouch;
         public InputAction @Jump => m_Wrapper.m_Game_Jump;
         public InputAction @Climb => m_Wrapper.m_Game_Climb;
@@ -456,9 +456,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
-            @Stealth.started += instance.OnStealth;
-            @Stealth.performed += instance.OnStealth;
-            @Stealth.canceled += instance.OnStealth;
+            @Crawling.started += instance.OnCrawling;
+            @Crawling.performed += instance.OnCrawling;
+            @Crawling.canceled += instance.OnCrawling;
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
@@ -499,9 +499,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
-            @Stealth.started -= instance.OnStealth;
-            @Stealth.performed -= instance.OnStealth;
-            @Stealth.canceled -= instance.OnStealth;
+            @Crawling.started -= instance.OnCrawling;
+            @Crawling.performed -= instance.OnCrawling;
+            @Crawling.canceled -= instance.OnCrawling;
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
@@ -555,7 +555,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IGameActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnStealth(InputAction.CallbackContext context);
+        void OnCrawling(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnClimb(InputAction.CallbackContext context);

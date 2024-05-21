@@ -8,6 +8,7 @@ public class NewDoor : BaseDoor
         animator.Play("OpenAnim");
         if (siblingdoor != null) siblingdoor.SimulateInteract(player);
         player.isInteracting = false;
+        player.ratAnimator.SetBool("openDoor", true);
         collision.SetActive(false);
         isOpened = true;
         CanvasManager.Instance.HideMSG();

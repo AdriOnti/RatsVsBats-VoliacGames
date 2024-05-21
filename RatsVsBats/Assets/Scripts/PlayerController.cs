@@ -16,14 +16,14 @@ public class PlayerController : Character
     private CharacterController characterController;
     private Rigidbody rb;
     private Vector3 _velocity;
-    private Animator ratAnimator;
+    [HideInInspector] public Animator ratAnimator;
 
     [Header("Bools & Test Bools")]
     [SerializeField] private bool isGrounded;
     [SerializeField] private bool isWalking;
     [HideInInspector] private bool isAiming;
     [HideInInspector] private bool isCrouching;
-    [HideInInspector] private bool isStealthing;
+    [HideInInspector] private bool isCrawling;
     [SerializeField] private bool isJumping;
     [HideInInspector] private bool isClimbing;
     [SerializeField] private float isChangingItem;
@@ -70,7 +70,7 @@ public class PlayerController : Character
         InputManager.PlayerJump += Jump;
         InputManager.PlayerAim += Aim;
         InputManager.PlayerCrouch += Crouch;
-        InputManager.PlayerStealth += Stealth;
+        InputManager.PlayerCrawl += Crawl;
         InputManager.PlayerClimb += Climb;
         InputManager.PlayerAttack += Attack;
         InputManager.PlayerChangeItem += ChangeItem;
@@ -82,7 +82,7 @@ public class PlayerController : Character
         InputManager.PlayerJump -= Jump;
         InputManager.PlayerAim -= Aim;
         InputManager.PlayerCrouch -= Crouch;
-        InputManager.PlayerStealth -= Stealth;
+        InputManager.PlayerCrawl -= Crawl;
         InputManager.PlayerClimb -= Climb;
         InputManager.PlayerAttack -= Attack;
         InputManager.PlayerChangeItem -= ChangeItem;
@@ -92,6 +92,7 @@ public class PlayerController : Character
     private void Update()
     {
         DetectJump();
+        DetectWall();
         //StartCoroutine(FallToTouchGround());
 
         // Move();
@@ -153,6 +154,10 @@ public class PlayerController : Character
     private void DetectMovement()
     {
         movementInput = inputManager.GetPlayerMovement();
+        if (ratAnimator.GetBool("openDoor"))
+        {
+            ratAnimator.SetBool("openDoor", false);
+        }
         if (movementInput.magnitude > 0.5f)
         {
             ratAnimator.SetBool("isWalking", true);
@@ -180,6 +185,20 @@ public class PlayerController : Character
         transform.rotation = rotation;
     }
 
+    private void DetectWall()
+    {
+        isClimbing = Physics.Raycast(transform.position, Vector3.forward, 3f);
+        if (isClimbing)
+        {
+            ratAnimator.SetBool("isWalking", false);
+            ratAnimator.SetBool("isClimbing", true);
+        }
+        else
+        {
+            ratAnimator.SetBool("isClimbing", false);
+        }
+    }
+
     private void DetectJump()
     {
         //isGrounded = characterController.isGrounded;
@@ -192,16 +211,17 @@ public class PlayerController : Character
 
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 3f);
         Debug.Log(isGrounded);
-        if (isGrounded)
+        if (isGrounded && !isCrawling)
         {
             isJumping = false;
+            ratAnimator.SetBool("isJumping", false);
             speed = 20;
         }
     }
 
     public void Jump()
     {
-        if (!isJumping && isGrounded)
+        if (!isJumping && isGrounded && !isCrawling)
         {
             //isJumping = true;
             Debug.Log("jumping");
@@ -235,6 +255,7 @@ public class PlayerController : Character
         if (!isJumping)
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+            ratAnimator.SetBool("isJumping", true);
         }
 
         isJumping = true;
@@ -250,9 +271,11 @@ public class PlayerController : Character
         isCrouching = !isCrouching;
     }
 
-    public void Stealth()
+    public void Crawl()
     {
-        isStealthing = !isStealthing;
+        isCrawling = !isCrawling;
+        speed = 30;
+        ratAnimator.SetBool("isCrawling", !ratAnimator.GetBool("isCrawling"));
     }
 
     public void Climb()

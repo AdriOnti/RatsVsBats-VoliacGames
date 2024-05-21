@@ -28,8 +28,8 @@ public class InputManager : MonoBehaviour
     public static event OnPlayerClimb PlayerClimb;
 
     // Stealth
-    public delegate void OnPlayerStealth();
-    public static event OnPlayerStealth PlayerStealth;
+    public delegate void OnPlayerCrawl();
+    public static event OnPlayerCrawl PlayerCrawl;
 
     // Attack
     public delegate void OnPlayerAttack();
@@ -68,7 +68,7 @@ public class InputManager : MonoBehaviour
         playerControls.Game.Aim.performed += _ => PlayerAim.Invoke();
         playerControls.Game.Crouch.performed += _ => PlayerCrouch.Invoke();
         playerControls.Game.Climb.performed += _ => PlayerClimb.Invoke();
-        playerControls.Game.Stealth.performed += _ => PlayerStealth.Invoke();
+        playerControls.Game.Crawling.performed += _ => PlayerCrawl.Invoke();
         playerControls.Game.Attack.performed += _ => PlayerAttack.Invoke();
         playerControls.Game.ChangeItem.performed += _ => PlayerChangeItem.Invoke();
         playerControls.Game.Interact.performed += _ => PlayerInteract.Invoke();
@@ -84,7 +84,7 @@ public class InputManager : MonoBehaviour
         playerControls.Game.Aim.performed -= _ => PlayerAim.Invoke();
         playerControls.Game.Crouch.performed -= _ => PlayerCrouch.Invoke();
         playerControls.Game.Climb.performed -= _ => PlayerClimb.Invoke();
-        playerControls.Game.Stealth.performed -= _ => PlayerStealth.Invoke();
+        playerControls.Game.Crawling.performed -= _ => PlayerCrawl.Invoke();
         playerControls.Game.Attack.performed -= _ => PlayerAttack.Invoke();
         playerControls.Game.ChangeItem.performed -= _ => PlayerChangeItem.Invoke();
         playerControls.Game.Interact.performed -= _ => PlayerInteract.Invoke();

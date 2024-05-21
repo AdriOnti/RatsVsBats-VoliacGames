@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Stealth",
+                    "name": "Crawling",
                     "type": "Button",
                     "id": "478a1c0c-752e-4478-b1d8-891f47e83dd3",
                     "expectedControlType": "Button",
@@ -186,7 +186,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Stealth",
+                    "action": "Crawling",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
