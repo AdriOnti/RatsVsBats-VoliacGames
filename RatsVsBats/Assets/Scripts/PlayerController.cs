@@ -188,7 +188,7 @@ public class PlayerController : Character
         //    isJumping = false;
         //}
 
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, 3f, groundMask);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, 3f);
         Debug.Log(isGrounded);
         if (isGrounded)
         {
