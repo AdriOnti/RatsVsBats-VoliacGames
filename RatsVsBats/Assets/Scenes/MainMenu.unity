@@ -12007,6 +12007,11 @@ PrefabInstance:
       propertyPath: errorMessage
       value: 
       objectReference: {fileID: 870524432}
+    - target: {fileID: 1729724843218362530, guid: cdeaf671c6a32844ca49b94627a9a61c,
+        type: 3}
+      propertyPath: registerPage
+      value: rats-vs-bats-558152835.us-east-1.elb.amazonaws.com/join-us/
+      objectReference: {fileID: 0}
     - target: {fileID: 3131283801188323036, guid: cdeaf671c6a32844ca49b94627a9a61c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12061,6 +12066,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193931637661119787, guid: cdeaf671c6a32844ca49b94627a9a61c,
+        type: 3}
+      propertyPath: URL
+      value: rats-vs-bats-558152835.us-east-1.elb.amazonaws.com
       objectReference: {fileID: 0}
     - target: {fileID: 9193931637661119787, guid: cdeaf671c6a32844ca49b94627a9a61c,
         type: 3}

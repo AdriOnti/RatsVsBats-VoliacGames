@@ -2,6 +2,8 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class CanvasManager : MonoBehaviour
 {
@@ -45,6 +47,13 @@ public class CanvasManager : MonoBehaviour
     [Header("Finale")]
     [HideInInspector] GameObject finale;
     public TextMeshProUGUI finaleMSG;
+
+    [Header("Intro")]
+    public RawImage rawImage;
+    public VideoPlayer vp;
+    public VideoClip bookIntro;
+    public VideoClip animIntro;
+    [HideInInspector] GameObject introCanvas;
 
     private void Awake()
     {
@@ -92,6 +101,7 @@ public class CanvasManager : MonoBehaviour
         message = GameManager.Instance.FindObjectsByName("MSG");
         missionInfo = GameManager.Instance.FindObjectsByName("MissionInfo");
         finale = GameManager.Instance.FindObjectsByName("Finale");
+        introCanvas = GameManager.Instance.FindObjectsByName("Intro");
     }
 
     /// <summary>
@@ -118,6 +128,7 @@ public class CanvasManager : MonoBehaviour
         message.SetActive(false);
         missionInfo.SetActive(false);
         finale.SetActive(false);
+        introCanvas.SetActive(false);
     }
 
 
@@ -318,5 +329,34 @@ public class CanvasManager : MonoBehaviour
     {
         finale.SetActive(true);
         finaleMSG.text = text;
+    }
+
+    public void StartIntro()
+    {
+        introCanvas.SetActive(true);
+        // Crear una nueva RenderTexture para el video
+        RenderTexture renderTexture = new RenderTexture((int)vp.clip.width, (int)vp.clip.height, 0);
+        vp.targetTexture = renderTexture;
+        rawImage.texture = renderTexture;
+
+        // Configurar y reproducir el video
+        vp.renderMode = VideoRenderMode.RenderTexture;
+        vp.source = VideoSource.VideoClip;
+        vp.clip = bookIntro;
+        vp.Play();
+        vp.loopPointReached += SecondIntro;
+    }
+
+    public void SecondIntro(VideoPlayer vp)
+    {
+        vp.clip = animIntro;
+        vp.Play();
+        vp.loopPointReached += NewGameStart;
+    }
+
+    public void NewGameStart(VideoPlayer vp)
+    {
+        vp.gameObject.SetActive(false);
+        introCanvas.SetActive(false);
     }
 }

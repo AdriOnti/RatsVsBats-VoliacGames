@@ -31,6 +31,7 @@ public class DataManager : MonoBehaviour
 
         // LoadGame
         if (SaveExists() && IsNotMainMenu() && PlayerPrefs.GetInt("loading") > 0) LoadGame();
+        else CanvasManager.Instance.StartIntro();
     }
 
     /// <summary>
