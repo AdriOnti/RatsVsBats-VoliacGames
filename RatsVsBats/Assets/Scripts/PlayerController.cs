@@ -16,6 +16,7 @@ public class PlayerController : Character
     private CharacterController characterController;
     private Rigidbody rb;
     private Vector3 _velocity;
+    private Animator ratAnimator;
 
     [Header("Bools & Test Bools")]
     [SerializeField] private bool isGrounded;
@@ -59,6 +60,7 @@ public class PlayerController : Character
         if(currentHP <= 0 || currentHP > hp) currentHP = hp;
         characterController = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
+        ratAnimator = GetComponentInChildren<Animator>();
     }
 
     private void OnEnable()
@@ -88,7 +90,6 @@ public class PlayerController : Character
     private void Update()
     {
         DetectJump();
-        Rotate();
         //StartCoroutine(FallToTouchGround());
 
         // Move();
@@ -99,6 +100,7 @@ public class PlayerController : Character
 
     private void FixedUpdate()
     {
+        Rotate();
         DetectMovement();
         FallToTouchGround();
     }
@@ -151,8 +153,10 @@ public class PlayerController : Character
         movementInput = inputManager.GetPlayerMovement();
         if (movementInput.magnitude > 0.5f)
         {
+            ratAnimator.SetBool("isWalking", true);
             Move();
         }
+        else ratAnimator.SetBool("isWalking", false);
     }
 
     private void Move()
@@ -184,19 +188,20 @@ public class PlayerController : Character
         //    isJumping = false;
         //}
 
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, 1f, groundMask);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, 3f, groundMask);
         Debug.Log(isGrounded);
         if (isGrounded)
         {
             isJumping = false;
+            speed = 20;
         }
     }
 
     public void Jump()
     {
-        if (!isJumping && !isGrounded)
+        if (!isJumping && isGrounded)
         {
-            isJumping = true;
+            //isJumping = true;
             Debug.Log("jumping");
             speed = 3;
             PerformJump();
@@ -223,16 +228,14 @@ public class PlayerController : Character
         //}
 
 
-        rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
         //isJumping = false;
 
-        while (!isGrounded)
+        if (!isJumping)
         {
-            
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
         }
 
-        isJumping = false;
-        speed = 20;
+        isJumping = true;
     }
 
     public void Aim()
