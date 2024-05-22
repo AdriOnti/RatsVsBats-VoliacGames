@@ -1,11 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MEC;
-using System;
-using Unity.Burst.CompilerServices;
-using UnityEngine.SocialPlatforms;
-using Unity.VisualScripting;
 
 public class EnemyController3 : StateController2
 {

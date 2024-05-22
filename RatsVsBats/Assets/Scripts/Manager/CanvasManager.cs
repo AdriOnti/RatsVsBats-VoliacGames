@@ -333,17 +333,21 @@ public class CanvasManager : MonoBehaviour
 
     public void StartIntro()
     {
-        //introCanvas.SetActive(true);
-        //StartCoroutine(Intro());
+        introCanvas.SetActive(true);
+        StartCoroutine(Intro());
     }
 
     IEnumerator Intro()
     {
+        //inventoryBtn.SetActive(false);
+        HUDFadesOut();
         yield return new WaitForSeconds(0.5f);
         GameManager.Instance.GetHUD().SetActive(false);
-        vp.clip = bookIntro;
-        vp.Play();
-        vp.loopPointReached += SecondIntro;
+        CameraManager.instance.ChangeCamera(Cameras.ExtraCamera);
+        //vp.clip = bookIntro;
+        //vp.Play();
+        //vp.loopPointReached += SecondIntro;
+        vp.loopPointReached += NewGameStart;
     }
 
     public void SecondIntro(VideoPlayer vp)
@@ -355,8 +359,10 @@ public class CanvasManager : MonoBehaviour
 
     public void NewGameStart(VideoPlayer vp)
     {
+        CameraManager.instance.ChangeCamera(Cameras.MainCamera);
         vp.gameObject.SetActive(false);
         introCanvas.SetActive(false);
         HUDFadesIn();
+        inventoryBtn.SetActive(true);
     }
 }

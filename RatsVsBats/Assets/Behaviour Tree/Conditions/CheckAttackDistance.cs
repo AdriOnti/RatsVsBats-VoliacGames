@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "Attack", menuName = "ScriptableNodes/ScriptableConditions/Attack")]
 public class CheckAttackDistance : ScriptableCondition

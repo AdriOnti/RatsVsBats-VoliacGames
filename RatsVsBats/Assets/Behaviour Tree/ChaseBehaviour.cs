@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-
 public class ChaseBehaviour : MonoBehaviour
 {
     public float Speed;

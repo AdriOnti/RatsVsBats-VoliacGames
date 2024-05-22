@@ -123,6 +123,12 @@ public class MissionManager : MonoBehaviour
 
     public void AnimDoor(PlayerController player)
     {
+        StartCoroutine(OpenDoor(player));
+    }
+
+    IEnumerator OpenDoor(PlayerController player)
+    {
+        yield return new WaitForSeconds(1f);
         if (missions[0]) doorAnimators[0].SimulateInteract(player);
         if (missions[1])
         {

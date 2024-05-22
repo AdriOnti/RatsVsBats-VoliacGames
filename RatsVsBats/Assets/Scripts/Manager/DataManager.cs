@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using UnityEditor.AnimatedValues;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -31,7 +30,7 @@ public class DataManager : MonoBehaviour
 
         // LoadGame
         if (SaveExists() && IsNotMainMenu() && PlayerPrefs.GetInt("loading") > 0) LoadGame();
-        else CanvasManager.Instance.StartIntro();
+        else if (IsNotMainMenu()) CanvasManager.Instance.StartIntro();
     }
 
     /// <summary>

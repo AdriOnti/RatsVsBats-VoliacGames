@@ -1,4 +1,3 @@
-
 using UnityEngine;
 [CreateAssetMenu(fileName = "ScriptableFollow", menuName = "ScriptableObjects2/ScriptableAction/ScriptableFollow")]
 

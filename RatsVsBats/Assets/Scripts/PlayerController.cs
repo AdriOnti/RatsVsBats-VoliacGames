@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -157,7 +156,7 @@ public class PlayerController : Character
 
         if (rb.velocity.y < 0) // Character is falling
         {
-            rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed - 1) * Time.fixedDeltaTime;
+            rb.velocity += Vector3.up * Physics.gravity.y * (fallSpeed) * Time.fixedDeltaTime;
             ratAnimator.SetBool("isJumping", false);
         }
     }
@@ -187,7 +186,7 @@ public class PlayerController : Character
     {
         //Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
         //characterController.Move(speed * Time.deltaTime * direction);
-        if (!isCrawling) ratAnimator.SetBool("isWalking", true);
+        if (!isCrawling && !isJumping) ratAnimator.SetBool("isWalking", true);
         else ratAnimator.SetBool("isWalking", false);
 
         Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
@@ -365,6 +364,14 @@ public class PlayerController : Character
                 CanvasManager.Instance.HideMSG();
                 isInteracting = false;
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent<ItemPickup>(out ItemPickup ip))
+        {
+            CanvasManager.Instance.HideMSG();
         }
     }
 }
