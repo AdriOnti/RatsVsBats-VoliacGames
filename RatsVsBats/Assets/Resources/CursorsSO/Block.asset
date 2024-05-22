@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ab071867a40734480d9b081beb34e6, type: 3}
+  m_Name: Block
+  m_EditorClassIdentifier: 
+  cursorTexture: {fileID: 2800000, guid: da21d847362b61e4298e4472662dabc5, type: 3}
+  hotspot: {x: 16, y: 16}
