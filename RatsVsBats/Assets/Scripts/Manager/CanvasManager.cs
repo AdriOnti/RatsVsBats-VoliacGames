@@ -333,8 +333,8 @@ public class CanvasManager : MonoBehaviour
 
     public void StartIntro()
     {
-        introCanvas.SetActive(true);
-        StartCoroutine(Intro());
+        //introCanvas.SetActive(true);
+        //StartCoroutine(Intro());
     }
 
     IEnumerator Intro()

@@ -14,6 +14,7 @@ public class PrisonDoor : BaseDoor
     {
         animator.Play("OpenAnim");
         jailBars.Play("JailBarsOpen");
+        SoundManager.Instance.PlayEffect(Audios.effectDoorOpen);
         player.ratAnimator.SetBool("openDoor", true);
         player.isInteracting = false;
         collision.SetActive(false);

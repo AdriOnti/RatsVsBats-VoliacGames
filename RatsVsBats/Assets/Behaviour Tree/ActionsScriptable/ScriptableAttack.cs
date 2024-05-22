@@ -17,6 +17,7 @@ public class ScriptableAttack : ScriptableAction
         GameManager.Instance.UpdateText("a q te meto");
         _enemyController = (EnemyController3)sc;
         _enemyController.animator.SetBool("isAttacking", true);
+        SoundManager.Instance.PlayEffect(Audios.effectMonsterAttack);
     }
 
     public override void OnUpdate()

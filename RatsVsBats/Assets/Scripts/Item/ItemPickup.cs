@@ -19,6 +19,7 @@ public class ItemPickup : MonoBehaviour, ICollectable
     /// </summary>
     public void Pickup()
     {
+        SoundManager.Instance.PlayEffect(Audios.effectKeyGet);
         if (item.itemType == Item.ItemType.PrisonKey && GameManager.Instance.missionsCompleted < 4)
         {
             Destroy(transform.GetChild(0).gameObject);

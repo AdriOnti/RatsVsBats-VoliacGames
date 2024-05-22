@@ -28,6 +28,7 @@ public class BossRotate : MonoBehaviour
             if (currentRotation >= maxRotationAngle)
             {
                 rotateRight = false;
+                SoundManager.Instance.PlayEffect(Audios.effectMonsterIdle);
             }
         }
         // Rotate to the left if rotateRight is false

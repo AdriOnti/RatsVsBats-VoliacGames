@@ -6,6 +6,7 @@ public class NewDoor : BaseDoor
     protected override void OnInteract(PlayerController player)
     {
         animator.Play("OpenAnim");
+        SoundManager.Instance.PlayEffect(Audios.effectDoorOpen);
         if (siblingdoor != null) siblingdoor.SimulateInteract(player);
         player.isInteracting = false;
         player.ratAnimator.SetBool("openDoor", true);

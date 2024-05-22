@@ -19,6 +19,7 @@ public class RatPrisioner : MonoBehaviour
         {
             agent.SetDestination(finalTarget.position);
             transform.LookAt(finalTarget.position);
+            SoundManager.Instance.PlayEffect(Audios.effectMouseSounds);
         }
 
         if (targetArrived) finalTarget = null;

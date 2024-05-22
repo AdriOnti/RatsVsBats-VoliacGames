@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d6de29ecb7a5a7479b24f3d34365805, type: 3}
   m_Name: SoundEffects
   m_EditorClassIdentifier: 
-  soundsDB: []
+  soundsDB:
+  - {fileID: 8300000, guid: 97f28a6830e624d46b1719d70c05b0e8, type: 3}
+  - {fileID: 8300000, guid: 8c204510d9315494da2cab71fccef415, type: 3}
+  - {fileID: 8300000, guid: 8391a4d88aa54974788e9802cdc2311f, type: 3}
+  - {fileID: 8300000, guid: 74fb475912fd1fe4cae400a98e48700a, type: 3}
+  - {fileID: 8300000, guid: 74bc9995d23f6da4192069d260d929e0, type: 3}
+  - {fileID: 8300000, guid: 9610012461098734eb44b8f4d168912a, type: 3}
+  - {fileID: 8300000, guid: 7265f3a4941f5074e939fec7118ad3d3, type: 3}
+  - {fileID: 8300000, guid: fe7fb7319134eae48b45c8cbe5c6bfcf, type: 3}
+  - {fileID: 8300000, guid: 35b6d508a32e0534e8e7a1dbafd8de5d, type: 3}
+  - {fileID: 8300000, guid: b8ccb8a569a546c45809da1d531ebe6d, type: 3}

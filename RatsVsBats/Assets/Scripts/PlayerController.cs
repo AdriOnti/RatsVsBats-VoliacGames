@@ -20,6 +20,7 @@ public class PlayerController : Character
     [HideInInspector] public Animator ratAnimator;
 
     [Header("Bools & Test Bools")]
+    [SerializeField] private bool isSound;
     [SerializeField] private bool isGrounded;
     [SerializeField] private bool isWalking;
     [HideInInspector] private bool isAiming;
@@ -99,7 +100,7 @@ public class PlayerController : Character
         // Move();
         CheckHP();
 
-        if (Input.GetKeyUp(KeyCode.J)) StartCoroutine(Hurt());
+        //if (Input.GetKeyUp(KeyCode.J)) StartCoroutine(Hurt());
     }
 
     private void FixedUpdate()
@@ -109,10 +110,16 @@ public class PlayerController : Character
         FallToTouchGround();
     }
 
+    public void GetHurt()
+    {
+        StartCoroutine(Hurt());
+    }
+
     IEnumerator Hurt()
     {
         GameManager.Instance.FindObjectsByName("Hurt").SetActive(true);
         currentHP -= 1;
+        SoundManager.Instance.PlayEffect(Audios.effectPlayerHurt);
         yield return new WaitForSeconds(1.0f);
         GameManager.Instance.FindObjectsByName("Hurt").SetActive(false);
     }
@@ -127,6 +134,7 @@ public class PlayerController : Character
 
     private IEnumerator Die()
     {
+        SoundManager.Instance.PlayEffect(Audios.effectPlayerDie);
         FadeManager.Instance.FadeOut();
         yield return new WaitForSecondsRealtime(1.5f);
         PlayerPrefs.SetInt("loading", 1);
@@ -163,16 +171,24 @@ public class PlayerController : Character
         }
         if (movementInput.magnitude > 0.5f)
         {
-            ratAnimator.SetBool("isWalking", true);
+            if (isSound) SoundManager.Instance.PlayPlayer(Audios.effectPlayerSteps);
+            isSound = false;
             Move();
         }
-        else ratAnimator.SetBool("isWalking", false);
+        else 
+        {
+            ratAnimator.SetBool("isWalking", false);
+            SoundManager.Instance.StopPlayer();
+            isSound = true;
+        }
     }
 
     private void Move()
     {
         //Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
         //characterController.Move(speed * Time.deltaTime * direction);
+        if (!isCrawling) ratAnimator.SetBool("isWalking", true);
+        else ratAnimator.SetBool("isWalking", false);
 
         Vector3 direction = transform.forward * movementInput.y + transform.right * movementInput.x;
         Vector3 targetPosition = rb.position + speed * Time.fixedDeltaTime * direction;
@@ -218,7 +234,7 @@ public class PlayerController : Character
         {
             isJumping = false;
             //ratAnimator.SetBool("isJumping", false);
-            speed = 20;
+            speed = 30;
         }
     }
 
@@ -228,7 +244,7 @@ public class PlayerController : Character
         {
             //isJumping = true;
             Debug.Log("jumping");
-            speed = 3;
+            speed = 5;
             PerformJump();
         }
     }
@@ -278,8 +294,9 @@ public class PlayerController : Character
     public void Crawl()
     {
         isCrawling = !isCrawling;
-        speed = 30;
+        speed = 50;
         ratAnimator.SetBool("isCrawling", !ratAnimator.GetBool("isCrawling"));
+        SoundManager.Instance.PlayPlayer(Audios.effectPlayerSteps);
     }
 
     public void Climb()
@@ -319,7 +336,14 @@ public class PlayerController : Character
 
     public void Interact()
     {
-        isInteracting = !isInteracting;
+        isInteracting = true;
+        StartCoroutine(QuitInteract());
+    }
+
+    IEnumerator QuitInteract()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        isInteracting = false;
     }
 
     private void OnTriggerEnter(Collider other)

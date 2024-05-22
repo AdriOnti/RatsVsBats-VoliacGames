@@ -5,14 +5,24 @@ using UnityEngine;
 
 public enum Audios
 {
-
+    ambientLava,
+    effectDoorOpen,
+    effectKeyGet,
+    effectMonsterAttack,
+    effectMonsterIdle,
+    effectMouseSounds,
+    effectPlayerDie,
+    effectPlayerHurt,
+    effectPlayerRun,
+    effectPlayerSteps
 }
 
 public class SoundManager : MonoBehaviour
 {
     private AudioSource soundEffectsManager;
-    private AudioSource extraSoundsManager;
+    private AudioSource ambientSoundsManager;
     private AudioSource musicManager;
+    private AudioSource playerSoundsManager;
 
     public static SoundManager Instance;
     public AudiosContainer audiosDatabase;
@@ -25,8 +35,9 @@ public class SoundManager : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(Instance);
         else Instance = this;
         soundEffectsManager = GetComponent<AudioSource>();
-        extraSoundsManager = transform.GetChild(0).GetComponentInChildren<AudioSource>();
-        musicManager = transform.GetChild(1).GetComponentInChildren<AudioSource>();
+        ambientSoundsManager = transform.GetChild(0).GetComponent<AudioSource>();
+        musicManager = transform.GetChild(1).GetComponent<AudioSource>();
+        playerSoundsManager = transform.GetChild(2).GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -38,7 +49,7 @@ public class SoundManager : MonoBehaviour
                 soundsDatabase.Add(value, clip);
         }
     }
-    public void PlayEnvironment(Audios clip)
+    public void PlayEffect(Audios clip)
     {
         if (soundsDatabase.TryGetValue(clip, out AudioClip value))
         {
@@ -55,12 +66,62 @@ public class SoundManager : MonoBehaviour
         }
 
     }
-    public void PlayEffect(Audios clip)
+
+    public void StopAmbient()
+    {
+        ambientSoundsManager.Stop();
+    }
+
+    public void StopPlayer()
+    {
+        playerSoundsManager.Stop();
+    }
+
+    public void PlayAmbient(Audios clip)
     {
         if (soundsDatabase.TryGetValue(clip, out AudioClip value))
         {
-            //if (clip == Audios.AbilityStarMario) musicManager.mute = true;
-            extraSoundsManager.PlayOneShot(value);
+            try
+            {
+                ambientSoundsManager.PlayOneShot(value);
+            }
+            catch (ArgumentNullException)
+            {
+
+                //NO IDEA
+            }
+        }
+    }
+
+    public void PlayMusic(Audios clip)
+    {
+        if (soundsDatabase.TryGetValue(clip, out AudioClip value))
+        {
+            try
+            {
+                musicManager.PlayOneShot(value);
+            }
+            catch (ArgumentNullException)
+            {
+
+                //NO IDEA
+            }
+        }
+    }
+
+    public void PlayPlayer(Audios clip)
+    {
+        if (soundsDatabase.TryGetValue(clip, out AudioClip value))
+        {
+            try
+            {
+                playerSoundsManager.PlayOneShot(value);
+            }
+            catch (ArgumentNullException)
+            {
+
+                //NO IDEA
+            }
         }
     }
 }

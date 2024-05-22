@@ -29,6 +29,7 @@ public class AdriDie : MonoBehaviour
         if (other.gameObject.CompareTag("Lava"))
         {
             isHit = true;
+            PlayerController.Instance.GetHurt();
             //animator.SetBool("isHit", true);
         }
     }
@@ -42,6 +43,7 @@ public class AdriDie : MonoBehaviour
             {
                 Debug.Log("u dead");
                 isDead = true;
+                PlayerController.Instance.currentHP = 0;
                 //animator.SetBool("isDying", true);
             }
         }
