@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: fbaa2457b7e0ec14b98c03a1455e5d99
   - enabled: 1
     path: Assets/Scenes/Adri.unity
     guid: 1805c0b0ad4cc5649b0222a277ae14db
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/RatsVsBats.unity
     guid: 8383d5a806d372446b0495dee5ca748e
   m_configObjects: {}
